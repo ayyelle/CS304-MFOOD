@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 public class CustomerViewReviewsPanel extends JPanel {
@@ -24,7 +25,7 @@ public class CustomerViewReviewsPanel extends JPanel {
 	JLabel restaurantLabel;
 	JLabel title;
 	JScrollPane displayResultPanel;
-	JTextArea displayResult;
+	JTable displayResult;
 	
 	public CustomerViewReviewsPanel(CustomerPanel parent) {
 		this.parent = parent;
@@ -36,14 +37,20 @@ public class CustomerViewReviewsPanel extends JPanel {
 	title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 	restaurantComboBox = new JComboBox(restaurantOptions);
 	restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
+//	String[] colNames = { "Test", "c2", "c3" };
+//	Object[][] data = { 
+//			{"Lauren", "Coombe", "4"},
+//			{"Matti", "Hiob", "5"}
+//	};
+	//displayResult = new JTable(data, colNames);
+	displayResult = new JTable();
 	
-	displayResult = new JTextArea();
-	displayResult.setLineWrap(true);
-	displayResultPanel = new JScrollPane(displayResult);
-	displayResult.setSize(400, 500);
-	displayResultPanel.setPreferredSize(new Dimension(600, 200));
-	displayResult.setVisible(false);
-	displayResult.setText("SHOULDNT SEE THIS");
+	//displayResult.setLineWrap(true);
+	displayResultPanel = new JScrollPane();
+	//displayResult.setSize(400, 500);
+	displayResultPanel.setPreferredSize(new Dimension(900, 400));
+	//displayResult.setVisible(false);
+	//displayResult.setText("SHOULDNT SEE THIS");
 	submit = new JButton("Submit");
 	
 	submit.addActionListener(new ActionListener() {
@@ -52,9 +59,16 @@ public class CustomerViewReviewsPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			String restaurant = (String) restaurantComboBox.getSelectedItem();
 			System.out.println(restaurant);
-			displayResult.setText("Rating: 3\n"
-					+ "Restaurant comments: This is OK");
-			displayResult.setVisible(true);
+			String[] colNames = { "Test", "c2", "c3" };
+			Object[][] data = { 
+					{"Lauren", "Coombe", "4"},
+					{"Anna", "Leong", "<html>5dafakjsdhflaksjdhflakjsdhflakjsdhfla<br>kjsdhflaksjdhflaksjdhflaksjdhfasldkjfh</html>"}
+			};
+			displayResult = new JTable(data, colNames);
+			
+			displayResult.setRowHeight(40);
+			displayResultPanel.getViewport().add(displayResult);
+
 			
 		}
 		
@@ -101,7 +115,7 @@ public class CustomerViewReviewsPanel extends JPanel {
 	public void start() {
 		this.customerId = parent.getCustomerID();
 		System.out.println(customerId);
-		displayResult.setText("");
+		displayResultPanel.getViewport().remove(displayResult);
 	}
     
 }

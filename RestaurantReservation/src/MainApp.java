@@ -116,7 +116,7 @@ public class MainApp implements ItemListener {
          
         pane.add(comboBoxPane, BorderLayout.PAGE_START);
         pane.add(cards, BorderLayout.CENTER);
-        pane.setPreferredSize(new Dimension(1000, 700));
+        pane.setPreferredSize(new Dimension(1500, 700));
         
     }
      
