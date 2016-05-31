@@ -31,7 +31,7 @@ public class MainApp implements ItemListener {
 						new JLabel("Password"),
 						password
 				};
-				JOptionPane.showMessageDialog(null, inputs, "Login", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
 				System.out.println("You entered " +
 						restaurantID.getText() + ", " +
 						password.getText());
@@ -59,7 +59,7 @@ public class MainApp implements ItemListener {
 						new JLabel("Password"),
 						password
 				};
-				JOptionPane.showMessageDialog(null, inputs, "Login", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
 				System.out.println("You entered " +
 						userName.getText() + ", " +
 						password.getText());
@@ -98,6 +98,10 @@ public class MainApp implements ItemListener {
         //Create the "cards" for the card layout
         JPanel customerCard = new CustomerPanel(this);
         JPanel home = new JPanel();
+        String iconPath = "images/logo.jpg";
+        Icon icon = new ImageIcon(getClass().getResource(iconPath));
+        JLabel label = new JLabel(icon);
+        home.add(label);
         JLabel welcomeMsg = new JLabel("Welcome to Order up! Choose if you are a customer or a restaurant rep!");
         home.add(welcomeMsg);
          
