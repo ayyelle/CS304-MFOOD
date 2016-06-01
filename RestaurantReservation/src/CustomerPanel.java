@@ -57,6 +57,7 @@ public class CustomerPanel extends JPanel {
 		customerWelcome = new JLabel("Welcome");
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton addReviewButton = new JButton("Add a Review");
+		JButton reserveTable = new JButton("Make a reservation");
 		//c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 0;
 		c.gridy = 0;
@@ -69,15 +70,23 @@ public class CustomerPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		toolbar.add(addReviewButton, c);
+		c.gridy = 3;
+		toolbar.add(reserveTable, c);
+		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
+		
+
+		
         
 		customerCards = new JPanel(new CardLayout());
 		add(customerCards, BorderLayout.CENTER);
 		JPanel card1 = new CustomerViewReviewsPanel(this);
 		JPanel card2 = new CustomerAddReviewPanel(this);
+		JPanel reservationCard = new CustomerReservationPanel(this);
 		customerCards.add(card1, "ViewReviews");
 		customerCards.add(card2, "AddReview");
+		customerCards.add(reservationCard, "makeReservation");
         seeReviewsButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -94,6 +103,16 @@ public class CustomerPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout)(customerCards.getLayout());
 		        cl.show(customerCards, "AddReview");
+				
+			}
+        	
+        });
+        reserveTable.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "makeReservation");
 				
 			}
         	
