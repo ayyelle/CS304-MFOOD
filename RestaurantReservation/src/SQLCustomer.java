@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 
 import javax.swing.JPasswordField;
@@ -57,6 +58,27 @@ public class SQLCustomer {
 		return result;
 		
 		
+		
+	}
+	
+	public String addUser(String username, String password, String firstName, String lastName, String phoneNum) {
+		ResultSet rs;
+		String result = "";
+		try {
+			String query = "insert into customer values ('" + username + "', '" + password +"', '" + firstName +"', '"+ lastName + "', '" + phoneNum + "')";
+			int resultInt = stmt.executeUpdate(query);
+			System.out.println(query);
+			result = "Success";
+			
+			
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			System.out.println(e.getErrorCode());
+			if (e.getErrorCode() == 1) {
+				result = "NotUnique";
+			}
+		}
+		return result;
 		
 	}
 
