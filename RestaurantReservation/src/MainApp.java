@@ -146,6 +146,7 @@ public class MainApp implements ItemListener {
 						customerId = userName.getText();
 						cl.show(cards, "Home");
 						cl.show(cards, "Customer");
+						JOptionPane.showMessageDialog(null, "Success!");
 					} else if (result.equals("NotUnique")) {
 						JOptionPane.showMessageDialog(null, "That Username is already in use! Please choose another.");
 					} else {
