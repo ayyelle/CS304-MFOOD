@@ -31,11 +31,13 @@ public class MainApp implements ItemListener {
 						new JLabel("Password"),
 						password
 				};
-				JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
 				System.out.println("You entered " +
 						restaurantID.getText() + ", " +
 						password.getText());
-				if (restaurantID.getText().equals("123")) {
+				SQLRestaurant sql = new SQLRestaurant();
+				boolean result = sql.getCredentials(restaurantID.getText(), password.getText());
+				if (result) {
 						CardLayout cl = (CardLayout)(cards.getLayout());
 						cl.show(cards, "Restaurant");
 				} else {
@@ -59,11 +61,13 @@ public class MainApp implements ItemListener {
 						new JLabel("Password"),
 						password
 				};
-				JOptionPane.showMessageDialog(null, inputs, "My custom dialog", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, inputs, "Customer Login", JOptionPane.PLAIN_MESSAGE);
 				System.out.println("You entered " +
 						userName.getText() + ", " +
 						password.getText());
-				if (!userName.getText().equals("123")) {
+				SQLCustomer sql = new SQLCustomer();
+				boolean result = sql.checkCredentials(userName.getText(), password.getText());
+				if (result) {
 					//Would query database to check entry exists
 						CardLayout cl = (CardLayout)(cards.getLayout());
 						customerId = userName.getText();
