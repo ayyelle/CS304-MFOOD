@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 public class SQLRestaurant {
 	Connection con;
@@ -52,6 +53,37 @@ public class SQLRestaurant {
 		}
 		return result;
 		
+	}
+	
+	public Vector<Vector> getReviews(String locationName) {
+		ResultSet rs;
+		//Location Name string in form: Name-Location
+		String name = locationName.substring(0, locationName.indexOf("-"));
+		String location = locationName.substring(locationName.indexOf("-") + 1);
+		System.out.println(name + " " + location);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select * from reviews where rid IN (select rid from restaurant where name='" + name + "'and location='" + location +"')";
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String username = rs.getString("userName");
+				String rating = String.valueOf(rs.getInt("rating"));
+				String comments = rs.getString("comments");
+				System.out.println(username + " " + rating + " " + comments);
+				//Object[] o = { username, rating, comments };
+				Vector<String> v = new Vector<String>();
+				v.add(username);
+				v.add(rating);
+				v.add(comments);
+				results.add(v);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 }

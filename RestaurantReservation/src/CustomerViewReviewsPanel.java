@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -59,12 +60,19 @@ public class CustomerViewReviewsPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			String restaurant = (String) restaurantComboBox.getSelectedItem();
 			System.out.println(restaurant);
-			String[] colNames = { "Test", "c2", "c3" };
-			Object[][] data = { 
-					{"Lauren", "Coombe", "4"},
-					{"Anna", "Leong", "<html>5dafakjsdhflaksjdhflakjsdhflakjsdhfla<br>kjsdhflaksjdhflaksjdhflaksjdhfasldkjfh</html>"}
-			};
+			Vector<String> colNames = new Vector<String>();
+			colNames.add("User");
+			colNames.add("Rating");
+			colNames.add("Comments");
+//			Object[][] data = { 
+//					{"Lauren", "Coombe", "4"},
+//					{"Anna", "Leong", "<html>5dafakjsdhflaksjdhflakjsdhflakjsdhfla<br>kjsdhflaksjdhflaksjdhflaksjdhfasldkjfh</html>"}
+//			};
+			SQLRestaurant s = new SQLRestaurant();
+			Vector<Vector> data = s.getReviews("Burgoo-Lonsdale");
 			displayResult = new JTable(data, colNames);
+			displayResult.getColumnModel().getColumn(0).setMaxWidth(200);
+			displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
 			
 			displayResult.setRowHeight(40);
 			displayResultPanel.getViewport().add(displayResult);
