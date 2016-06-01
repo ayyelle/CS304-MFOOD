@@ -58,6 +58,7 @@ public class SQLRestaurant {
 	public Vector<Vector> getReviews(String locationName) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
+		System.out.println(locationName);
 		String name = locationName.substring(0, locationName.indexOf("-"));
 		String location = locationName.substring(locationName.indexOf("-") + 1);
 		System.out.println(name + " " + location);
@@ -84,6 +85,25 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		return results;
+	}
+
+	public Vector<String> getRestaurants() {
+		ResultSet rs;
+		Vector<String> restaurants = new Vector<String>();
+		
+		String query = "Select name, location from restaurant";
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String location = rs.getString("location");
+				restaurants.add(name + "-" + location);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return restaurants;
 	}
 
 }

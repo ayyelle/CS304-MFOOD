@@ -27,11 +27,14 @@ public class CustomerViewReviewsPanel extends JPanel {
 	JLabel title;
 	JScrollPane displayResultPanel;
 	JTable displayResult;
+	SQLRestaurant s;
+
 	
 	public CustomerViewReviewsPanel(CustomerPanel parent) {
 		this.parent = parent;
+		s = new SQLRestaurant();
 		
-		String[] restaurantOptions = {"Burgoo", "SushiPlace", "TeryakiPlace-Robson" };
+		Vector<String> restaurantOptions = s.getRestaurants();
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints c = new GridBagConstraints();
 	title = new JLabel("View Reviews", JLabel.CENTER);
@@ -59,6 +62,7 @@ public class CustomerViewReviewsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String restaurant = (String) restaurantComboBox.getSelectedItem();
+
 			System.out.println(restaurant);
 			Vector<String> colNames = new Vector<String>();
 			colNames.add("User");
@@ -69,7 +73,7 @@ public class CustomerViewReviewsPanel extends JPanel {
 //					{"Anna", "Leong", "<html>5dafakjsdhflaksjdhflakjsdhflakjsdhfla<br>kjsdhflaksjdhflaksjdhflaksjdhfasldkjfh</html>"}
 //			};
 			SQLRestaurant s = new SQLRestaurant();
-			Vector<Vector> data = s.getReviews("Burgoo-Lonsdale");
+			Vector<Vector> data = s.getReviews(restaurant);
 			displayResult = new JTable(data, colNames);
 			displayResult.getColumnModel().getColumn(0).setMaxWidth(200);
 			displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
