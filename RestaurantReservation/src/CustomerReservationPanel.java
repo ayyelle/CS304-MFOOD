@@ -46,6 +46,9 @@ public class CustomerReservationPanel extends JPanel {
 	JComboBox timesComboBox;
 	Vector<String> timeOptions;
 	
+	JLabel partySizeLabel;
+	JComboBox partySizeComboBox;
+	
 	JLabel timeLabel;
 	
 	UtilDateModel model;
@@ -87,8 +90,15 @@ public class CustomerReservationPanel extends JPanel {
 		gc.gridx = 1;
 		formPanel.add(timesComboBox, gc);
 		
-		gc.gridx = 1;
+		gc.gridx = 0;
 		gc.gridy = 3;
+		formPanel.add(partySizeLabel, gc);
+
+		gc.gridx = 1;
+		formPanel.add(partySizeComboBox, gc);
+		
+		gc.gridx = 1;
+		gc.gridy = 4;
 		formPanel.add(submit, gc);
 		
 		//Getting the information after submit button pressed
@@ -96,16 +106,35 @@ public class CustomerReservationPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				Date today = new Date();
 				Date selectedDate = (Date) datePicker.getModel().getValue();
 				String selectedTime = (String) timesComboBox.getSelectedItem();
+				String selectedRestaurant = (String) restaurantComboBox.getSelectedItem();
+				String partySize = (String) partySizeComboBox.getSelectedItem();
+				
 				if (selectedDate == null) {
 					JOptionPane.showMessageDialog(null,"Please select a date!", "Date Missing", JOptionPane.PLAIN_MESSAGE);
 
-				} else {
-					System.out.println("Day: " + selectedDate.getDate());
-					System.out.println("Month: " + (selectedDate.getMonth()+1));
-					System.out.println("Year: " + (selectedDate.getYear()+1900));
-					System.out.println("Time: " + selectedTime);
+				} else if (selectedDate.before(today)) {
+					JOptionPane.showMessageDialog(null,"Oops! Selected day must be in the future. Please call the restaurant directly for same-day bookings.", "Date Missing", JOptionPane.PLAIN_MESSAGE);
+
+				}
+					else {
+						
+						boolean result = s.requestReservation(selectedDate, selectedTime, selectedRestaurant, partySize, customerId);
+						if (result) {
+							String success = "Success! You are confirmed at " + selectedRestaurant + " for " + selectedTime + " on " + formatDate(selectedDate) + ".";
+							JOptionPane.showMessageDialog(null,success, "Reservation successful!", JOptionPane.PLAIN_MESSAGE);
+
+						} else {
+							String fail = "Sorry, there are no reservations at " + selectedRestaurant + " at the selected day and time. Please try another combination!";
+							JOptionPane.showMessageDialog(null, fail, "Reservation unsuccessful", JOptionPane.PLAIN_MESSAGE);
+
+						}
+//					System.out.println("Day: " + selectedDate.getDate());
+//					System.out.println("Month: " + (selectedDate.getMonth()+1));
+//					System.out.println("Year: " + (selectedDate.getYear()+1900));
+//					System.out.println("Time: " + selectedTime);
 				}
 				
 			}
@@ -157,12 +186,29 @@ public class CustomerReservationPanel extends JPanel {
 		
 		timeLabel = new JLabel("Select a reservation time:");
 		timeOptions = new Vector<String>();
-		for (int i = 5; i <= 11; i++) {
-			String str = i + ":00 PM";
+		for (int i = 16; i <= 23; i++) {
+			String str = i + ":00";
 			timeOptions.add(str);
 		}
 		timesComboBox = new JComboBox(timeOptions);
 		
+		partySizeLabel = new JLabel("Party Size: ");
+		Vector<String> partySizeOptions = new Vector<String>();
+		for (int i = 1; i <= 8; i++) {
+			String str = String.valueOf(i);
+			partySizeOptions.add(str);
+		}
+		partySizeComboBox = new JComboBox(partySizeOptions);
+		
+		
+	}
+	
+	private String formatDate(Date date) {
+		int day = date.getDate();
+		int month = date.getMonth()+1;
+		int year = date.getYear()+1900;
+		String result = year + "/" + month + "/" + day;
+		return result;
 		
 	}
 
