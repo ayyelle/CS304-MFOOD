@@ -53,5 +53,17 @@ public class SQLRestaurant {
 		return result;
 		
 	}
+	private String getRestaurantFromString(String restaurantLocation) {
+		String name = restaurantLocation.substring(0, restaurantLocation.indexOf("-"));
+		return name;
+		
+	}
+	
+	private String getLocationFromString(String restaurantLocation) {
+		String location = restaurantLocation.substring(restaurantLocation.indexOf("-") + 1);
+		return location;
+
+		
+	}
 
 }

@@ -33,6 +33,8 @@ public class CustomerAddReviewPanel extends JPanel {
 	
 	String customerId;
 	CustomerPanel parent;
+	
+	SQLCustomer sqlCustomer;
 
 
 	public CustomerAddReviewPanel(CustomerPanel parent) {
@@ -41,7 +43,9 @@ public class CustomerAddReviewPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(5,5,5,5);
 		
-		String[] restaurantComboBoxOptions = { "Earls", "Burgoo", "Sushi California" };
+		//TODO
+		//need to fill with actual restaurants from database
+		String[] restaurantComboBoxOptions = { "Earls-Vancouver", "Burgoo-Vancouver", "Sushi California-Broadway" };
 		String[] ratingOptions = { "1", "2", "3", "4", "5" };
 
 		this.setLayout(new GridBagLayout());
@@ -98,6 +102,7 @@ public class CustomerAddReviewPanel extends JPanel {
 				System.out.println(selection);
 				
 				String ratingSelection = (String) ratings.getSelectedItem();
+				System.out.println(ratingSelection);
 				
 				comments.setText("");
 				if (comment.equals("")) {
@@ -107,6 +112,7 @@ public class CustomerAddReviewPanel extends JPanel {
 	
 				}
 				
+				addReview(selection,comment,ratingSelection);
 				
 			}
 			
@@ -120,6 +126,13 @@ public class CustomerAddReviewPanel extends JPanel {
 	    });
 		
 
+	}
+	
+	//add review via SQLCustomer method
+	
+	public void addReview(String restaurantName,String comment,String rating){
+		sqlCustomer.addReview(restaurantName, comment, rating);
+		
 	}
 	
 	
