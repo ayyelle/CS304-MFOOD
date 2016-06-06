@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -34,7 +38,8 @@ public class CustomerAddReviewPanel extends JPanel {
 	String customerId;
 	CustomerPanel parent;
 	
-	SQLCustomer sqlCustomer;
+	SQLCustomer sqlCustomer = new SQLCustomer();
+	SQLRestaurant sr = new SQLRestaurant();
 
 
 	public CustomerAddReviewPanel(CustomerPanel parent) {
@@ -43,9 +48,9 @@ public class CustomerAddReviewPanel extends JPanel {
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(5,5,5,5);
 		
-		//TODO
-		//need to fill with actual restaurants from database
-		String[] restaurantComboBoxOptions = { "Earls-Vancouver", "Burgoo-Vancouver", "Sushi California-Broadway" };
+		Vector<String> restaurantNames = sr.getRestaurants();
+		System.out.println(restaurantNames);
+		
 		String[] ratingOptions = { "1", "2", "3", "4", "5" };
 
 		this.setLayout(new GridBagLayout());
@@ -57,7 +62,7 @@ public class CustomerAddReviewPanel extends JPanel {
 		//comments.setPreferredSize(new Dimension(10, 40));
 		commentsLabel = new JLabel("Comments: ", JLabel.TRAILING);
 		submit = new JButton("Submit");
-		restaurantComboBox = new JComboBox(restaurantComboBoxOptions);
+		restaurantComboBox = new JComboBox(restaurantNames);
 		restaurantLabel = new JLabel("Select Restaurant: ", JLabel.TRAILING);
 		ratings = new JComboBox(ratingOptions);
 		ratingLabel = new JLabel("Select Rating: ", JLabel.TRAILING);
@@ -131,7 +136,7 @@ public class CustomerAddReviewPanel extends JPanel {
 	//add review via SQLCustomer method
 	
 	public void addReview(String restaurantName,String comment,String rating){
-		sqlCustomer.addReview(restaurantName, comment, rating);
+		sqlCustomer.addReview(restaurantName, comment, rating,customerId);
 		
 	}
 	
