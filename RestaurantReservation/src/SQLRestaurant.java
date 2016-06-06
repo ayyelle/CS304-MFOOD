@@ -19,7 +19,7 @@ public class SQLRestaurant {
 		}
 		try {
 			con = DriverManager.getConnection(
-					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
+					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
 			stmt = con.createStatement();		
 
 
@@ -160,13 +160,15 @@ public class SQLRestaurant {
 		return formatStr;
 	}
 	
-	private String getRestaurantFromString(String restaurantLocation) {
+
+	
+
+	String getRestaurantFromString(String restaurantLocation) {
 		String name = restaurantLocation.substring(0, restaurantLocation.indexOf("-"));
-		return name;
-		
+		return name;		
 	}
 	
-	private String getLocationFromString(String restaurantLocation) {
+	String getLocationFromString(String restaurantLocation) {
 		String location = restaurantLocation.substring(restaurantLocation.indexOf("-") + 1);
 		return location;
 
