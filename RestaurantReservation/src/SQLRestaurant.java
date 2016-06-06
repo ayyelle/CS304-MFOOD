@@ -72,6 +72,7 @@ public class SQLRestaurant {
 				String username = rs.getString("userName");
 				String rating = String.valueOf(rs.getInt("rating"));
 				String comments = rs.getString("comments");
+							
 				System.out.println(username + " " + rating + " " + comments);
 				//Object[] o = { username, rating, comments };
 				Vector<String> v = new Vector<String>();
