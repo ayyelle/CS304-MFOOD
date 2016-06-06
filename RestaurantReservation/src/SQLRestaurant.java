@@ -173,4 +173,43 @@ public class SQLRestaurant {
 		
 	}
 
+	public Vector<Vector> getFilteredReviews(String ratingSelection) {
+		ResultSet rs;
+		Vector<Vector> result = new Vector<Vector>();
+		String query = "select name, location, rating, comments, username" +
+					" from reviews r, restaurant t "+
+					"where r.rid = t.rid and "+ ratingSelection +" <= ALL (select rating " +
+					"from reviews r1 " +
+					"where r1.rid = r.rid)";
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String location = rs.getString("location");
+				String nameLocation = name + "-" + location;
+				
+				String rating = String.valueOf(rs.getInt("rating"));
+				String comments = rs.getString("comments");
+				String username = rs.getString("username");
+				
+				Vector<String> newStr = new Vector<String>();
+				newStr.add(nameLocation);
+				newStr.add(username);
+				newStr.add(rating);
+				newStr.add(comments);
+				System.out.println(comments);
+				result.add(newStr);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

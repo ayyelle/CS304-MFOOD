@@ -131,10 +131,7 @@ public class CustomerReservationPanel extends JPanel {
 							JOptionPane.showMessageDialog(null, fail, "Reservation unsuccessful", JOptionPane.PLAIN_MESSAGE);
 
 						}
-//					System.out.println("Day: " + selectedDate.getDate());
-//					System.out.println("Month: " + (selectedDate.getMonth()+1));
-//					System.out.println("Year: " + (selectedDate.getYear()+1900));
-//					System.out.println("Time: " + selectedTime);
+
 				}
 				
 			}

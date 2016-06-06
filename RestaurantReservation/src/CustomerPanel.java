@@ -42,8 +42,8 @@ public class CustomerPanel extends JPanel {
 		this.customerId = parent.getCustomerID();
 		customerWelcome.setText("Welcome " + customerId + "!");
         CardLayout cl = (CardLayout)(customerCards.getLayout());
-        cl.show(customerCards, "card2");
-        cl.show(customerCards, "card1");
+        cl.show(customerCards, "customerAddReview");
+        cl.show(customerCards, "viewReviews");
 	}
 	
 	public void setUpPanel() {
@@ -51,14 +51,13 @@ public class CustomerPanel extends JPanel {
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(3,3,3,3);
-		//c.anchor = GridBagConstraints.LINE_START;
-		//c.weighty = 1.0;
-		//c.weightx = 1.0;
+
 		customerWelcome = new JLabel("Welcome");
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton addReviewButton = new JButton("Add a Review");
 		JButton reserveTable = new JButton("Make a reservation");
-		//c.anchor = GridBagConstraints.LINE_START;
+		JButton filterReviewsButton = new JButton("Filter Reviews");
+
 		c.gridx = 0;
 		c.gridy = 0;
 		toolbar.add(customerWelcome, c);
@@ -73,20 +72,22 @@ public class CustomerPanel extends JPanel {
 		c.gridy = 3;
 		toolbar.add(reserveTable, c);
 		
+		c.gridy = 4;
+		toolbar.add(filterReviewsButton, c);
+		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
 		
-
-		
-        
 		customerCards = new JPanel(new CardLayout());
 		add(customerCards, BorderLayout.CENTER);
-		JPanel card1 = new ViewReviewsPanel(this);
-		JPanel card2 = new CustomerAddReviewPanel(this);
+		JPanel viewReviews = new ViewReviewsPanel(this);
+		JPanel customerAddReview = new CustomerAddReviewPanel(this);
 		JPanel reservationCard = new CustomerReservationPanel(this);
-		customerCards.add(card1, "ViewReviews");
-		customerCards.add(card2, "AddReview");
+		JPanel filterReviews = new CustomerFilterReviewsPanel(this);
+		customerCards.add(viewReviews, "ViewReviews");
+		customerCards.add(customerAddReview, "AddReview");
 		customerCards.add(reservationCard, "makeReservation");
+		customerCards.add(filterReviews, "filterReviews");
         seeReviewsButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -114,6 +115,16 @@ public class CustomerPanel extends JPanel {
 				CardLayout cl = (CardLayout)(customerCards.getLayout());
 		        cl.show(customerCards, "makeReservation");
 				
+			}
+        	
+        });
+        
+        filterReviewsButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "filterReviews");				
 			}
         	
         });
