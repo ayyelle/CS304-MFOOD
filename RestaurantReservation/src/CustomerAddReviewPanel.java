@@ -101,13 +101,13 @@ public class CustomerAddReviewPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//Get information from the fields
 				String comment = comments.getText();
-				System.out.println(comment);
+				//System.out.println(comment);
 				
 				String selection = (String) restaurantComboBox.getSelectedItem();
-				System.out.println(selection);
+				//System.out.println(selection);
 				
 				String ratingSelection = (String) ratings.getSelectedItem();
-				System.out.println(ratingSelection);
+				//System.out.println(ratingSelection);
 				
 				comments.setText("");
 				if (comment.equals("")) {

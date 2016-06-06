@@ -112,7 +112,7 @@ public class SQLCustomer {
 		System.out.println("username is now " + currentUsername);
 		
 		String query = "insert into reviews values ('" + comment + "', '" + rating +"', '" + restaurantID +"', '"+ currentUsername + "')";
-		System.out.println("my query is " + query);
+		//System.out.println("my query is " + query);
 		try {
 			//TODO make sure this actually works 
 			rs = stmt.executeUpdate(query);
