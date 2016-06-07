@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class MainApp implements ItemListener {
@@ -25,7 +27,7 @@ public class MainApp implements ItemListener {
 				JTextField lastName = new JTextField();
 				JPasswordField password = new JPasswordField();
 				final JComponent[] inputs = new JComponent[] {
-						new JLabel("RestaurantID:"),
+						new JLabel("Employee ID/OwnerID:"),
 						restaurantID,
 
 						new JLabel("Password"),
@@ -36,11 +38,22 @@ public class MainApp implements ItemListener {
 						restaurantID.getText() + ", " +
 						password.getText());
 				SQLRestaurant sql = new SQLRestaurant();
-				boolean result = sql.getCredentials(restaurantID.getText(), password.getText());
-				if (result) {
+				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), password.getText());
+				String userType = userInfo.get(0);
+				if (userType.equals("OWNER")) {
 					CardLayout cl = (CardLayout)(cards.getLayout());
-					cl.show(cards, "Restaurant");
-				} else {
+					cl.show(cards, "Home");
+					cl.show(cards, "RestaurantOwner");
+					restId = userInfo.get(1);
+					System.out.println(restId);
+				} else if (userType.equals("EMP")) {
+					CardLayout cl = (CardLayout)(cards.getLayout());
+					cl.show(cards, "Home");
+					cl.show(cards, "RestaurantEmployee");
+					restId = userInfo.get(1);		
+					System.out.println("HERE! RID: " + restId);
+				}
+				else {
 					JOptionPane.showMessageDialog(null, "Login failed! try again");
 				}
 
@@ -160,14 +173,15 @@ public class MainApp implements ItemListener {
 		});
 
 
-		JPanel restaurantCard = new JPanel();
-		restaurantCard.add(new JTextField("TextField", 20));
+		JPanel ownerCard = new OwnerPanel(this);
+		JPanel empCard = new EmployeePanel(this);
 
 		//Create the panel that contains the "cards".
 		cards = new JPanel(new CardLayout());
 		cards.add(home, "Home");
 		cards.add(customerCard, "Customer");
-		cards.add(restaurantCard, "Restaurant");
+		cards.add(ownerCard, "RestaurantOwner");
+		cards.add(empCard, "RestaurantEmployee");
 
 		pane.add(comboBoxPane, BorderLayout.PAGE_START);
 		pane.add(cards, BorderLayout.CENTER);
@@ -227,5 +241,9 @@ public class MainApp implements ItemListener {
 
 	public String getCustomerID() {
 		return this.customerId;
+	}
+	
+	public String getRestaurantID() {
+		return this.restId;
 	}
 }
