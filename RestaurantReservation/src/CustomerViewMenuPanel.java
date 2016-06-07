@@ -72,7 +72,7 @@ public class CustomerViewMenuPanel extends JPanel {
 			displayResult.setRowHeight(40);
 			displayResultPanel.getViewport().add(displayResult);
 			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "There are no food items to view!", "No Food Found", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
 			}
 			
 		}
