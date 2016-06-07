@@ -104,6 +104,39 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
+	
+	
+	public Vector<Vector> getMenuItems(String locationName) {
+		ResultSet rs;
+		//Location Name string in form: Name-Location
+		System.out.println(locationName);
+		String name = getRestaurantFromString(locationName);
+		//String name = locationName.substring(0, locationName.indexOf("-"));
+		String location = getLocationFromString(locationName);
+		//String location = locationName.substring(locationName.indexOf("-") + 1);
+		System.out.println(name + " " + location);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select * from MenuItem where rid IN (select rid from restaurant where name='" + name + "'and location='" + location +"')";
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String foodName = rs.getString("name");
+				String price = String.valueOf(rs.getInt("price"));
+							
+				System.out.println(foodName + " " + price);
+				Vector<String> v = new Vector<String>();
+				v.add(foodName);
+				v.add(price);
+				results.add(v);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
 
 	public Vector<String> getRestaurants() {
 		ResultSet rs;
@@ -123,6 +156,7 @@ public class SQLRestaurant {
 		}
 		return restaurants;
 	}
+	
 	
 	public boolean requestReservation(Date date, String time, String restaurantLocation, String partySize, String customerID) {
 		//time string format: HH:MM (24 hour hour)

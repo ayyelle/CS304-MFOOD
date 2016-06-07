@@ -57,6 +57,7 @@ public class CustomerPanel extends JPanel {
 		JButton addReviewButton = new JButton("Add a Review");
 		JButton reserveTable = new JButton("Make a reservation");
 		JButton filterReviewsButton = new JButton("Filter Reviews");
+		JButton seeMenuButton = new JButton("See Menu Items");
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -74,6 +75,8 @@ public class CustomerPanel extends JPanel {
 		
 		c.gridy = 4;
 		toolbar.add(filterReviewsButton, c);
+		c.gridy = 5;
+		toolbar.add(seeMenuButton, c);
 		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
@@ -84,10 +87,12 @@ public class CustomerPanel extends JPanel {
 		JPanel customerAddReview = new CustomerAddReviewPanel(this);
 		JPanel reservationCard = new CustomerReservationPanel(this);
 		JPanel filterReviews = new CustomerFilterReviewsPanel(this);
+		JPanel seeMenuItems = new CustomerViewMenuPanel(this);
 		customerCards.add(viewReviews, "ViewReviews");
 		customerCards.add(customerAddReview, "AddReview");
 		customerCards.add(reservationCard, "makeReservation");
 		customerCards.add(filterReviews, "filterReviews");
+		customerCards.add(seeMenuItems,"seeMenuItems");
         seeReviewsButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -125,6 +130,16 @@ public class CustomerPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)(customerCards.getLayout());
 		        cl.show(customerCards, "filterReviews");				
+			}
+        	
+        });
+        
+        seeMenuButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "seeMenuItems");				
 			}
         	
         });
