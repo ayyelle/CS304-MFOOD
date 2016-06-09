@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.Vector;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -122,6 +123,45 @@ public class SQLCustomer {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	
+	
+	public Vector<Vector> getReservations(String username) {
+		ResultSet rs;
+		//Location Name string in form: Name-Location
+		//System.out.println(locationName);
+		//String name = getRestaurantFromString(locationName);
+		//String name = locationName.substring(0, locationName.indexOf("-"));
+		//String location = getLocationFromString(locationName);
+		//String location = locationName.substring(locationName.indexOf("-") + 1);
+		//System.out.println(name + " " + location);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select * from TableBooking where UserName='" + username +"'";
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				//String startDayTime = rs.getString("StartDayTime");
+				String startDayTime = String.valueOf(rs.getTimestamp("StartDayTime"));
+				String partySize = String.valueOf(rs.getInt("PartySize"));
+				//String duration = String.valueOf(rs.getInt("Duration"));
+				String rid = String.valueOf(rs.getInt("RID"));
+							
+				System.out.println(startDayTime + " " + partySize + " "+ " " + rid );
+				Vector<String> v = new Vector<String>();
+				String restaurantName = sr.getRestaurantFromRID(rid);
+				v.add(restaurantName);
+				v.add(startDayTime);
+				v.add(partySize);
+				results.add(v);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
 	}
 	
 	public String addUser(String username, String password, String firstName, String lastName, String phoneNum) {

@@ -158,6 +158,26 @@ public class SQLRestaurant {
 	}
 	
 	
+	public String getRestaurantFromRID(String rid) {
+		ResultSet rs;
+		Vector<String> restaurants = new Vector<String>();
+		
+		String query = "Select name, location from restaurant where RID ='" + rid +"'";;
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String location = rs.getString("location");
+				restaurants.add(name + "-" + location);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return restaurants.get(0);
+	}
+	
+	
 	public boolean requestReservation(Date date, String time, String restaurantLocation, String partySize, String customerID) {
 		//time string format: HH:MM (24 hour hour)
 		boolean result = false;

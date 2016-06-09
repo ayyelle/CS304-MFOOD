@@ -56,8 +56,10 @@ public class CustomerPanel extends JPanel {
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton addReviewButton = new JButton("Add a Review");
 		JButton reserveTable = new JButton("Make a reservation");
+		JButton seeReservationsButton = new JButton ("See your reservations");
 		JButton filterReviewsButton = new JButton("Filter Reviews");
 		JButton seeMenuButton = new JButton("See Menu Items");
+		
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -72,10 +74,11 @@ public class CustomerPanel extends JPanel {
 		toolbar.add(addReviewButton, c);
 		c.gridy = 3;
 		toolbar.add(reserveTable, c);
-		
 		c.gridy = 4;
-		toolbar.add(filterReviewsButton, c);
+		toolbar.add(seeReservationsButton, c);
 		c.gridy = 5;
+		toolbar.add(filterReviewsButton, c);
+		c.gridy = 6;
 		toolbar.add(seeMenuButton, c);
 		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -86,11 +89,14 @@ public class CustomerPanel extends JPanel {
 		JPanel viewReviews = new ViewReviewsPanel(this);
 		JPanel customerAddReview = new CustomerAddReviewPanel(this);
 		JPanel reservationCard = new CustomerReservationPanel(this);
+		JPanel seeOwnReservations = new CustomerViewReservations(this);
 		JPanel filterReviews = new CustomerFilterReviewsPanel(this);
 		JPanel seeMenuItems = new CustomerViewMenuPanel(this);
+
 		customerCards.add(viewReviews, "ViewReviews");
 		customerCards.add(customerAddReview, "AddReview");
 		customerCards.add(reservationCard, "makeReservation");
+		customerCards.add(seeOwnReservations, "seeReservations");
 		customerCards.add(filterReviews, "filterReviews");
 		customerCards.add(seeMenuItems,"seeMenuItems");
         seeReviewsButton.addActionListener(new ActionListener() {
@@ -140,6 +146,16 @@ public class CustomerPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)(customerCards.getLayout());
 		        cl.show(customerCards, "seeMenuItems");				
+			}
+        	
+        });
+        
+        seeReservationsButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "seeReservations");				
 			}
         	
         });
