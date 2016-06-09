@@ -20,17 +20,14 @@ public class SQLRestaurant {
 		}
 		try {
 			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_x8b9", "a51845139");
-			stmt = con.createStatement();		
-
-
+			stmt = con.createStatement();	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public ArrayList<String> getCredentials(String rid, String password) {
+	public ArrayList<String> getCredentials(Integer rid, String password) {
 		ResultSet rs;
 		ArrayList<String> result = new ArrayList<String>();
 		//!!HACKY! FIX!
@@ -58,8 +55,6 @@ public class SQLRestaurant {
 				} else {
 					result.add("NONE");
 				}
-
-				
 			}
 
 
