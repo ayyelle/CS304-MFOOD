@@ -391,5 +391,25 @@ public class SQLRestaurant {
 		
 		return result;
 	}
+	
+	public boolean addEmployee(int eid, String name, String password, String rid) {
+		boolean result = false;
+		String 	insert = "INSERT INTO employeeworkat VALUES (";
+				insert += eid + ", ";
+				insert += "'" + name + "', ";
+				insert += "'" + password + "', ";
+				insert += rid + ")";
+		System.out.println("SQLResturant.java Name Update Query: " + insert);
+		try {
+		int rs = stmt.executeUpdate(insert);
+		result = rs==1? true: false;
+		
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }
