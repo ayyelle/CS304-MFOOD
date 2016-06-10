@@ -53,7 +53,6 @@ public class CustomerReservationPanel extends JPanel {
 	
 	UtilDateModel model;
 	Properties p;
-	
 
 	public CustomerReservationPanel(CustomerPanel parent) {
 		this.parent = parent;

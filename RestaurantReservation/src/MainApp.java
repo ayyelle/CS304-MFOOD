@@ -8,6 +8,7 @@ public class MainApp implements ItemListener {
 	JPanel cards; //a panel that uses CardLayout
 	String customerId;
 	String restId;
+	String ownerId;
 
 	public void addComponentToPane(Container pane) {
 		//Put the JComboBox in a JPanel to get a nicer look.
@@ -24,21 +25,26 @@ public class MainApp implements ItemListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField restaurantID = new JTextField();
+				JTextField empID = new JTextField();
 				JTextField lastName = new JTextField();
 				JPasswordField password = new JPasswordField();
 				final JComponent[] inputs = new JComponent[] {
-						new JLabel("Employee ID/OwnerID:"),
+						new JLabel("OwnerID/RestaurantID:"),
 						restaurantID,
-
+						
+						new JLabel ("Employee ID:"),
+						empID,
+						
 						new JLabel("Password"),
 						password
 				};
 				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
 				System.out.println("You entered " +
 						restaurantID.getText() + ", " +
+						empID.getText() + ", " +
 						password.getText());
 				SQLRestaurant sql = new SQLRestaurant();
-				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), password.getText());
+				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), empID.getText(), password.getText());
 				String userType = userInfo.get(0);
 				if (userType.equals("OWNER")) {
 					CardLayout cl = (CardLayout)(cards.getLayout());
