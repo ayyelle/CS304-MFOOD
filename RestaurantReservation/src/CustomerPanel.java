@@ -60,6 +60,8 @@ public class CustomerPanel extends JPanel {
 		JButton deleteReservationsButton = new JButton("Delete your reservations");
 		JButton filterReviewsButton = new JButton("Filter Reviews");
 		JButton seeMenuButton = new JButton("See Menu Items");
+		JButton seeMaxAverage = new JButton("See Highest or Average Ratings");
+		
 		
 
 		c.gridx = 0;
@@ -83,6 +85,8 @@ public class CustomerPanel extends JPanel {
 		toolbar.add(filterReviewsButton, c);
 		c.gridy = 7;
 		toolbar.add(seeMenuButton, c);
+		c.gridy = 8;
+		toolbar.add(seeMaxAverage, c);
 		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
@@ -96,6 +100,7 @@ public class CustomerPanel extends JPanel {
 		JPanel deleteReservations = new CustomerDeleteReservation(this);
 		JPanel filterReviews = new CustomerFilterReviewsPanel(this);
 		JPanel seeMenuItems = new CustomerViewMenuPanel(this);
+		JPanel seeMaxAverageItems = new CustomerCuisineMaxAverage(this);
 
 		customerCards.add(viewReviews, "ViewReviews");
 		customerCards.add(customerAddReview, "AddReview");
@@ -104,6 +109,7 @@ public class CustomerPanel extends JPanel {
 		customerCards.add(deleteReservations,"deleteReservation");
 		customerCards.add(filterReviews, "filterReviews");
 		customerCards.add(seeMenuItems,"seeMenuItems");
+		customerCards.add(seeMaxAverageItems,"seeMaxAverage");
         seeReviewsButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -164,12 +170,23 @@ public class CustomerPanel extends JPanel {
 			}
         	
         });
+
         deleteReservationsButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)(customerCards.getLayout());
-		        cl.show(customerCards, "deleteReservation");				
+		        cl.show(customerCards, "deleteReservation");	
+			}
+        });
+
+        
+        seeMaxAverage.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "seeMaxAverage");				
 			}
         	
         });

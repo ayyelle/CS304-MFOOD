@@ -160,7 +160,7 @@ public class CustomerDeleteReservation extends JPanel {
 
 		c.gridx = 1;
 		c.gridy = 4;
-		this.add(displayResultPanel, c);
+		//this.add(displayResultPanel, c);
 
 		addComponentListener(new ComponentAdapter() {
 			@Override
