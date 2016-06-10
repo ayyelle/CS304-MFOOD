@@ -23,6 +23,8 @@ public class RestaurantViewMenuPanel extends JPanel {
 	restaurantPanel parent;
 	String restaurantId;
 	JButton submit;
+	JButton delete;
+	JButton add;
 	JComboBox restaurantComboBox;
 	JLabel restaurantLabel;
 	JLabel title;
@@ -53,6 +55,8 @@ public class RestaurantViewMenuPanel extends JPanel {
 		displayResultPanel.setPreferredSize(new Dimension(300, 300));
 	
 		submit = new JButton("Show Menu");
+		add = new JButton("Add Item");
+		delete = new JButton("Delete Item");
 	
 		submit.addActionListener(new ActionListener() {
 
@@ -75,12 +79,25 @@ public class RestaurantViewMenuPanel extends JPanel {
 			displayResult.setRowHeight(40);
 			displayResultPanel.getViewport().add(displayResult);
 			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "You don't have any menu items! ", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "You don't have any menu items!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
 			}
 			
 		}
 		
 	});
+		
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = displayResult.getSelectedRow();
+				String foodName = (String) displayResult.getValueAt(row, 0);
+				System.out.println("Food name to be deleted: " + foodName);
+				System.out.println("Restaurant ID: " + restaurantId);
+				deleteFoodItem(restaurantId, foodName);
+			}
+			
+		});
 	
 	c.gridx = 0;
 	c.gridy = 0;
@@ -110,6 +127,13 @@ public class RestaurantViewMenuPanel extends JPanel {
 	c.gridx = 1;
 	c.gridy = 4;
 	this.add(displayResultPanel, c);
+	
+	c.gridx = 1;
+	c.gridy = 5;
+	this.add(add, c);
+	c.gridx = 4;
+	c.gridy = 6;
+	this.add(delete, c);
     
     addComponentListener(new ComponentAdapter() {
         @Override
@@ -124,6 +148,14 @@ public class RestaurantViewMenuPanel extends JPanel {
 		this.restaurantId = parent.getRestaurantID();
 		System.out.println("RESTAURANTVIEWMENUERID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
+	}
+	
+	private void addFoodItem(String restaurantName, String comment, String rating, String currentUsername) {
+		s.addFoodItem(restaurantName, comment, rating, currentUsername);
+	}
+	
+	private void deleteFoodItem(String restaurantID, String foodName) {
+		s.deleteFoodItem(restaurantID, foodName);
 	}
     
 }

@@ -41,12 +41,13 @@ public class SQLRestaurant {
 			//int ridInt = Integer.parseInt(rid);
 			String query = "Select * FROM restaurant WHERE oid = '" + rid + "' and ownerpassword = '" + password + "'";
 			rs = stmt.executeQuery(query);
-			
-			if(rs.next()) {
-			result.add("OWNER");
-			result.add(String.valueOf(rs.getInt("rid")));
-			System.out.println(query);
-			}
+				if(rs.next()) {
+					result.add("OWNER");
+					result.add(String.valueOf(rs.getInt("rid")));
+					System.out.println(query);
+				} else {
+					result.add("NONE");
+				}
 
 			} else {
 				ResultSet rsEmp;
@@ -311,6 +312,26 @@ public class SQLRestaurant {
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public boolean addFoodItem(String restaurantName,String comment,String rating,String currentUsername){
+		
+		return false;
+	}
+	
+	public boolean deleteFoodItem(String RID, String foodName){
+		boolean result = false;
+		String query = "DELETE FROM menuitem WHERE rid = " + RID + " and name = '" + foodName + "'";
+		try {
+		int rs = stmt.executeUpdate(query);
+		result = rs==1? true: false;
+		
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
