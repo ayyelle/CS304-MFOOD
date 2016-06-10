@@ -19,10 +19,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-public class RestaurantViewMenuPanel extends JPanel {
+public class OwnerViewMenuPanel extends JPanel {
 	restaurantPanel parent;
 	String restaurantId;
 	JButton submit;
+	JButton delete;
 	JComboBox restaurantComboBox;
 	JLabel restaurantLabel;
 	JLabel title;
@@ -32,7 +33,7 @@ public class RestaurantViewMenuPanel extends JPanel {
 	
 
 	
-	public RestaurantViewMenuPanel(restaurantPanel parent) {
+	public OwnerViewMenuPanel(restaurantPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
 		
@@ -50,7 +51,9 @@ public class RestaurantViewMenuPanel extends JPanel {
 		displayResultPanel = new JScrollPane();
 		displayResultPanel.setPreferredSize(new Dimension(300, 300));
 	
-		submit = new JButton("Show Menu");	
+		submit = new JButton("Show Menu");
+		delete = new JButton("Delete Item");
+	
 		submit.addActionListener(new ActionListener() {
 
 		@Override
@@ -77,6 +80,19 @@ public class RestaurantViewMenuPanel extends JPanel {
 		}
 		
 	});
+		
+		delete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = displayResult.getSelectedRow();
+				String foodName = (String) displayResult.getValueAt(row, 0);
+				System.out.println("Food name to be deleted: " + foodName);
+				System.out.println("Restaurant ID: " + restaurantId);
+				deleteFoodItem(restaurantId, foodName);
+			}
+			
+		});
 	
 	c.gridx = 0;
 	c.gridy = 0;
@@ -106,6 +122,10 @@ public class RestaurantViewMenuPanel extends JPanel {
 	c.gridx = 1;
 	c.gridy = 4;
 	this.add(displayResultPanel, c);
+	
+	c.gridx = 1;
+	c.gridy = 5;
+	this.add(delete, c);
     
     addComponentListener(new ComponentAdapter() {
         @Override
