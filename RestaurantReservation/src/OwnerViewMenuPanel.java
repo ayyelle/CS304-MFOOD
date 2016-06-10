@@ -30,8 +30,7 @@ public class OwnerViewMenuPanel extends JPanel {
 	JScrollPane displayResultPanel;
 	JTable displayResult;
 	SQLRestaurant s;
-	
-
+	String restaurantName;
 	
 	public OwnerViewMenuPanel(restaurantPanel parent) {
 		this.parent = parent;
@@ -40,11 +39,9 @@ public class OwnerViewMenuPanel extends JPanel {
 		Vector<String> restaurantOptions = s.getRestaurants();
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		//title = new JLabel("See Menu", JLabel.CENTER);
-		title = new JLabel("Menu", JLabel.CENTER);
+
+		title = new JLabel("Menu - ", JLabel.CENTER);
 		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
-		//restaurantComboBox = new JComboBox(restaurantOptions);
-		//restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
 	
 		displayResult = new JTable();
 		
@@ -58,24 +55,7 @@ public class OwnerViewMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//String restaurant = (String) restaurantComboBox.getSelectedItem();
-			//System.out.println("RestaurantViewMenuPanel.java: " + restaurant);
-			Vector<String> colNames = new Vector<String>();
-			colNames.add("Food Name");
-			colNames.add("Price");
-
-			SQLRestaurant s = new SQLRestaurant();
-			Vector<Vector> data = s.getRestaurantMenuItems(restaurantId);
-			displayResult = new JTable(data, colNames);
-
-			displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
-			displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
-			
-			displayResult.setRowHeight(40);
-			displayResultPanel.getViewport().add(displayResult);
-			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "You don't have any menu items!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
-			}
+			displayResult();
 			
 		}
 		
@@ -138,9 +118,11 @@ public class OwnerViewMenuPanel extends JPanel {
 	}
 	
 	public void start() {
+		s = new SQLRestaurant();
 		this.restaurantId = parent.getRestaurantID();
-		System.out.println("RESTAURANTVIEWMENUERID: " + restaurantId);
-		displayResultPanel.getViewport().remove(displayResult);
+		this.restaurantName = s.getRestaurantName(restaurantId);
+		title.setText("Menu: " + restaurantName);
+		displayResult();
 	}
 
 	
@@ -148,8 +130,28 @@ public class OwnerViewMenuPanel extends JPanel {
 		s.deleteFoodItem(restaurantID, foodName);
 	}
 	
+	private void displayResult(){
+		Vector<String> colNames = new Vector<String>();
+		colNames.add("Food Name");
+		colNames.add("Price");
+
+		SQLRestaurant s = new SQLRestaurant();
+		Vector<Vector> data = s.getRestaurantMenuItems(restaurantId);
+		displayResult = new JTable(data, colNames);
+
+		displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
+		displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
+		
+		displayResult.setRowHeight(40);
+		displayResultPanel.getViewport().add(displayResult);
+		if (data.size() == 0) {
+			JOptionPane.showMessageDialog(null, "You don't have any menu items!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
+		}
+	};
+	
 	private void update(){
 		displayResultPanel.getViewport().remove(displayResult);
+		displayResult();
 	}
     
 }
