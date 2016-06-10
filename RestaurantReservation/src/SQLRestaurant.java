@@ -31,25 +31,26 @@ public class SQLRestaurant {
 		
 	}
 	
-	public ArrayList<String> getCredentials(String rid, String password) {
+	public ArrayList<String> getCredentials(String rid, String eid, String password) {
 		ResultSet rs;
 		ArrayList<String> result = new ArrayList<String>();
 		//!!HACKY! FIX!
 		try {
 			
+			if (eid.isEmpty()) {
 			//int ridInt = Integer.parseInt(rid);
-			String query = "Select * FROM restaurant where oid = '" + rid + "' and ownerpassword = '" + password + "'";
+			String query = "Select * FROM restaurant WHERE oid = '" + rid + "' and ownerpassword = '" + password + "'";
 			rs = stmt.executeQuery(query);
 			
+			if(rs.next()) {
+			result.add("OWNER");
+			result.add(String.valueOf(rs.getInt("rid")));
 			System.out.println(query);
-			
-			if (rs.next()) {
-				result.add("OWNER");
-				result.add(String.valueOf(rs.getInt("rid")));
+			}
 
 			} else {
 				ResultSet rsEmp;
-				String queryEmp = "Select * FROM employeeworkat where eid = '" + rid + "' and password = '" + password + "'";
+				String queryEmp = "Select * FROM employeeworkat WHERE rid = '" + rid + "' and eid = '" + eid + "' and password = '" + password + "'";
 				rsEmp = stmt.executeQuery(queryEmp);
 				System.out.println(queryEmp);
 				

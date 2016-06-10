@@ -56,6 +56,7 @@ public class EmployeePanel extends JPanel implements restaurantPanel {
 		restaurantWelcome = new JLabel("Welcome");
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton seeReservationsButton = new JButton("See Reservations");
+		JButton seeMenuButton = new JButton("See Menu Items");
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -67,6 +68,9 @@ public class EmployeePanel extends JPanel implements restaurantPanel {
 
 		 c.gridy = 2;
 		 toolbar.add(seeReservationsButton, c);
+		 
+		 c.gridy = 3;
+		toolbar.add(seeMenuButton, c);
 		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);

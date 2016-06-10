@@ -21,7 +21,6 @@ import javax.swing.JTextArea;
 
 public class RestaurantViewMenuPanel extends JPanel {
 	OwnerPanel parent;
-	String ownerId;
 	String restaurantId;
 	JButton submit;
 	JComboBox restaurantComboBox;
