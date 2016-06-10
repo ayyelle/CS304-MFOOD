@@ -137,6 +137,83 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
+	
+	//TODO this algorithm currently only returns one result
+	
+	public Vector<Vector> getMaxCusine() {
+		ResultSet rs;
+		ResultSet rs2;
+
+		Vector<Vector> results = new Vector<Vector>();
+		//if only using this query, you get all cuisines with their max rating
+		String query = "Select r.cuisine, MAX(re.rating) AS maxrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine";
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				
+				String cuisine = rs.getString("cuisine");
+				String rating = String.valueOf(rs.getInt("maxrating"));
+							
+				System.out.println(cuisine + " " + rating);
+				//throwing in this query, you end up with only one result
+				String query2 = "Select r.name,r.location FROM restaurant r,reviews re where re.rid=r.rid and re.rating = '" + rating + "'";
+				rs2 = stmt.executeQuery(query2);
+				String nameLocation="";
+				while (rs2.next()){
+				String restaurantName = rs2.getString("name");
+				String restaurantLocation = rs2.getString("location");
+				nameLocation = restaurantName+"-"+restaurantLocation;
+				};
+				Vector<String> v = new Vector<String>();
+				v.add(cuisine);
+				//v.add(restaurantName);
+				v.add(nameLocation);
+				v.add(rating);
+				results.add(v);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	public Vector<Vector> getAverageCuisine() {
+		ResultSet rs;
+		//Location Name string in form: Name-Location
+		//System.out.println(locationName);
+		//String name = getRestaurantFromString(locationName);
+		//String name = locationName.substring(0, locationName.indexOf("-"));
+		//String location = getLocationFromString(locationName);
+		//String location = locationName.substring(locationName.indexOf("-") + 1);
+		//System.out.println(name + " " + location);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select r.cuisine, AVG(re.rating) AS avgrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine";
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				
+				String cuisine = rs.getString("cuisine");
+				String rating = String.valueOf(rs.getInt("avgrating"));
+							
+				System.out.println(cuisine + " " + rating);
+				Vector<String> v = new Vector<String>();
+				v.add(cuisine);
+				//v.add(restaurantName);
+				//v.add(nameLocation);
+				v.add(rating);
+				results.add(v);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
 
 	public Vector<String> getRestaurants() {
 		ResultSet rs;
