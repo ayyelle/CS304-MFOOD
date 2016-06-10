@@ -56,6 +56,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		c.insets = new Insets(3,3,3,3);
 
 		restaurantWelcome = new JLabel("Welcome");
+		JButton ownerPropertiesButton = new JButton("Manage Restaurant");
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton seeReservationsButton = new JButton("See Reservations");
 		JButton seeMenuButton = new JButton("See Menu Items");
@@ -67,15 +68,19 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		
 		c.gridx = 0;
 		c.gridy = 1;
+		toolbar.add(ownerPropertiesButton, c);
+		
+		c.gridx = 0;
+		c.gridy = 2;
 		toolbar.add(seeReviewsButton, c);
 
-		 c.gridy = 2;
+		 c.gridy = 3;
 		 toolbar.add(seeReservationsButton, c);
 		 
-		 c.gridy = 3;
+		 c.gridy = 4;
 		 toolbar.add(seeMenuButton, c);
 		 
-		 c.gridy = 4;
+		 c.gridy = 5;
 		 toolbar.add(addMenuButton, c);
 		 
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -83,6 +88,10 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		
 		restaurantCards = new JPanel(new CardLayout());
 		add(restaurantCards, BorderLayout.CENTER);
+		
+		JPanel ownerProperties = new OwnerRestaurantProperties(this);
+		restaurantCards.add(ownerProperties, "ownerProperties");
+		
 		JPanel viewReviews = new restaurantViewReviewsPanel(this);
 		restaurantCards.add(viewReviews, "ViewReviews");
 		//Just adding another button as a place-holder
@@ -94,6 +103,16 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		
 		JPanel addMenu = new OwnerAddMenuPanel(this);
 		restaurantCards.add(addMenu, "AddMenu");
+		
+		
+		
+		ownerPropertiesButton.addActionListener(new ActionListener(){
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		CardLayout cl = (CardLayout) (restaurantCards.getLayout());
+        		cl.show(restaurantCards, "ownerProperties");;
+        	}
+        });
 		
         seeReviewsButton.addActionListener(new ActionListener() {
 

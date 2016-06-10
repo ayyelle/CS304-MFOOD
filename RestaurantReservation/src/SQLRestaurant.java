@@ -372,5 +372,24 @@ public class SQLRestaurant {
 		
 		return result;
 	}
+	
+	public boolean updateRestaurantName(String rid, String name, String location) {
+		boolean result = false;
+		String 	update = "UPDATE restaurant ";
+				update += "SET location = '" + location + "', ";
+				update += "name = '" + name + "' ";
+				update += "WHERE rid = " + rid;
+		System.out.println("SQLResturant.java Name Update Query: " + update);
+		try {
+		int rs = stmt.executeUpdate(update);
+		result = rs==1? true: false;
+		
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }
