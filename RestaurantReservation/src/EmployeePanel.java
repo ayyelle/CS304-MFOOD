@@ -45,6 +45,8 @@ public class EmployeePanel extends JPanel implements restaurantPanel {
         CardLayout cl = (CardLayout)(restaurantCards.getLayout());
         cl.show(restaurantCards, "SeeReservations");
         cl.show(restaurantCards, "viewReviews");
+        cl.show(restaurantCards, "seeMenuItems");
+
 	}
 	
 	public void setUpPanel() {
@@ -82,6 +84,9 @@ public class EmployeePanel extends JPanel implements restaurantPanel {
 		//just adding another space for more functionality
 		JPanel seeReservations = new JPanel();
 		restaurantCards.add(seeReservations, "SeeReservations");
+		
+		JPanel seeMenu = new RestaurantViewMenuPanel(this);
+		restaurantCards.add(seeMenu, "SeeMenu");
 
         seeReviewsButton.addActionListener(new ActionListener() {
 
