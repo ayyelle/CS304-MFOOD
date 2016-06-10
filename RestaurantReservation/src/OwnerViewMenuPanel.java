@@ -90,6 +90,7 @@ public class OwnerViewMenuPanel extends JPanel {
 				System.out.println("Food name to be deleted: " + foodName);
 				System.out.println("Restaurant ID: " + restaurantId);
 				deleteFoodItem(restaurantId, foodName);
+				update();
 			}
 			
 		});
@@ -145,6 +146,10 @@ public class OwnerViewMenuPanel extends JPanel {
 	
 	private void deleteFoodItem(String restaurantID, String foodName) {
 		s.deleteFoodItem(restaurantID, foodName);
+	}
+	
+	private void update(){
+		displayResultPanel.getViewport().remove(displayResult);
 	}
     
 }
