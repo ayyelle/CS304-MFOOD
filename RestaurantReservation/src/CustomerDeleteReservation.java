@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -43,7 +46,7 @@ public class CustomerDeleteReservation extends JPanel {
 		tableBookings = sc.getReservationsAsString(customerId);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		title = new JLabel("See Menu", JLabel.CENTER);
+		title = new JLabel("Delete a Reservation", JLabel.CENTER);
 		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 		restaurantComboBox = new JComboBox();
 		restaurantLabel = new JLabel("Select a booking: ", JLabel.TRAILING);
@@ -60,22 +63,59 @@ public class CustomerDeleteReservation extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String booking = (String) restaurantComboBox.getSelectedItem();
-				String restaurantName = booking.substring(0, booking.indexOf("-") + 1);
-				System.out.println("restaurant name in delete " + restaurantName);
-				String startDayTime = booking.substring(booking.indexOf("-") + 1, booking.indexOf("-")+4);
-				System.out.println(startDayTime);
-				String partySize = booking.substring(booking.indexOf("-") + 5,booking.indexOf("-")+6);
-				System.out.println(partySize);
-				String tid = booking.substring(booking.indexOf("-") + 6);
-				System.out.println(tid);
+				//String restaurantName = booking.substring(0, booking.indexOf("-") + 1);
+				//System.out.println("restaurant name in delete " + restaurantName);
+				//String startDayTime = booking.substring(booking.indexOf("-") + 1, booking.indexOf("-")+4);
+				//System.out.println(startDayTime);
+				//String partySize = booking.substring(booking.indexOf("-") + 5,booking.indexOf("-")+6);
+				//System.out.println(partySize);
+				//String tid = booking.substring(booking.indexOf("-") + 6);
+				//System.out.println(tid);
+				
+				String[] b = booking.split("-"); 
+				String one = b[0];
+				System.out.println("split one " + one);
+				String two = b[1];
+				System.out.println("split two " + two);
+				String three = b[2];
+				System.out.println("split three " + three);
+				String four = b[3];
+				System.out.println("split four " + four);
+				String five = b[4];
+				System.out.println("split five " + five);
+				String six = b[5];
+				System.out.println("split six " + six);
+				String seven = b[6];
+				System.out.println("table id is " + seven);
+				String tid=seven;
+				
+				String locationConcat = one+"-"+two;
+				System.out.println("location concated is" + locationConcat);
+				String startDayTimeC = three+"-"+four+"-"+five;
+				System.out.println("startday time concat is " + startDayTimeC);
+				String[] splitfive = five.split(" ");
+				String dateC = three+":"+four+":"+splitfive[0];
 
 				System.out.println(booking);
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd");
+				Date date = new Date();
+				System.out.println(dateFormat.format(date));
+				if (dateC == dateFormat.format(date)){
+					JOptionPane.showMessageDialog(null, "Cannot cancel same day reservation", "Call Restaurant", JOptionPane.PLAIN_MESSAGE);
+					return;
+					
+				}
 				//Vector<String> colNames = new Vector<String>();
 				//colNames.add("Food Name");
 				//colNames.add("Price");
 
 				//SQLRestaurant s = new SQLRestaurant();
-				sc.deleteBooking(restaurantName,startDayTime,customerId,tid);
+				Boolean result = sc.deleteBooking(locationConcat,startDayTimeC,customerId,tid);
+				if (result){
+					JOptionPane.showMessageDialog(null, "Your selected reservation has been cancelled!", "Succesful", JOptionPane.PLAIN_MESSAGE);
+					start();
+				}
 				//Vector<Vector> data = s.getMenuItems(restaurant);
 				//displayResult = new JTable(data, colNames);
 

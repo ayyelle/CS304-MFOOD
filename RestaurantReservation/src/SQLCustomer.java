@@ -4,7 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JPasswordField;
@@ -239,7 +243,7 @@ public class SQLCustomer {
 		//String rName = "";
 		//String location = "";
 		ResultSet results;
-		String getRestaurantID = "Select RID FROM restaurant WHERE name = '" + rName + "' and UserName = '" + username + "'";
+		String getRestaurantID = "Select RID FROM restaurant WHERE name = '" + rName + "' and location = '" + location + "'";
 		//String getRestaurantID = "select r.rid FROM restaurant r "+
 		                         //"where r.name=" + rName + "and r.location=" +location;
 	
