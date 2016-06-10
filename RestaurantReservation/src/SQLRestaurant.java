@@ -171,7 +171,7 @@ public class SQLRestaurant {
 		return results;
 	}
 
-	public Vector<String> getRestaurants(String rid) {
+	/**public Vector<String> getRestaurants(String rid) {
 		ResultSet rs;
 		Vector<String> restaurants = new Vector<String>();
 		
@@ -189,6 +189,25 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		return restaurants;
+	}**/
+	
+	public String getRestaurantName(String rid) {
+		String result = "";
+		String query = "SELECT name, location FROM restaurant WHERE rid = '" + rid + "'";
+		System.out.println("getRestaurantName from SQLRestaurant.Java: " + query);
+		
+		try {
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String location = rs.getString("location");
+				result = name + " - " + location;
+				System.out.println(result);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	public Vector<String> getRestaurants() {
@@ -318,9 +337,25 @@ public class SQLRestaurant {
 		return result;
 	}
 	
-	public boolean addFoodItem(String restaurantName,String comment,String rating,String currentUsername){
+	public boolean addFoodItem(int fid, String name, String price, String rid){
+		boolean result = false;
 		
-		return false;
+		String query = "INSERT INTO menuitem VALUES(";
+				query += fid + ",";
+				query += "'" + name + "',";
+				query += price + ",";
+				query += rid + ")";
+		System.out.println("ADDING FOOD WITH QUERY :" + query);
+		try {
+		int rs = stmt.executeUpdate(query);
+		result = rs==1? true: false;
+		
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	public boolean deleteFoodItem(String RID, String foodName){

@@ -24,7 +24,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 	String restaurantId;
 	JButton submit;
 	JButton delete;
-	JButton add;
 	JComboBox restaurantComboBox;
 	JLabel restaurantLabel;
 	JLabel title;
@@ -35,8 +34,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 
 	
 	public RestaurantViewMenuPanel(restaurantPanel parent) {
-		this.restaurantId = parent.getRestaurantID();
-		System.out.println("blah blah blah: " + restaurantId);
 		this.parent = parent;
 		s = new SQLRestaurant();
 		
@@ -55,7 +52,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 		displayResultPanel.setPreferredSize(new Dimension(300, 300));
 	
 		submit = new JButton("Show Menu");
-		add = new JButton("Add Item");
 		delete = new JButton("Delete Item");
 	
 		submit.addActionListener(new ActionListener() {
@@ -63,7 +59,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			//String restaurant = (String) restaurantComboBox.getSelectedItem();
-
 			//System.out.println("RestaurantViewMenuPanel.java: " + restaurant);
 			Vector<String> colNames = new Vector<String>();
 			colNames.add("Food Name");
@@ -130,9 +125,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 	
 	c.gridx = 1;
 	c.gridy = 5;
-	this.add(add, c);
-	c.gridx = 4;
-	c.gridy = 6;
 	this.add(delete, c);
     
     addComponentListener(new ComponentAdapter() {
@@ -149,10 +141,7 @@ public class RestaurantViewMenuPanel extends JPanel {
 		System.out.println("RESTAURANTVIEWMENUERID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
 	}
-	
-	private void addFoodItem(String restaurantName, String comment, String rating, String currentUsername) {
-		s.addFoodItem(restaurantName, comment, rating, currentUsername);
-	}
+
 	
 	private void deleteFoodItem(String restaurantID, String foodName) {
 		s.deleteFoodItem(restaurantID, foodName);

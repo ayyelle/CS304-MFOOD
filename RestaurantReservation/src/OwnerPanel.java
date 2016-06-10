@@ -46,6 +46,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
         cl.show(restaurantCards, "SeeReservations");
         cl.show(restaurantCards, "viewReviews");
         cl.show(restaurantCards, "seeMenuItems");
+        cl.show(restaurantCards, "addMenuItems");
 	}
 	
 	public void setUpPanel() {
@@ -58,6 +59,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton seeReservationsButton = new JButton("See Reservations");
 		JButton seeMenuButton = new JButton("See Menu Items");
+		JButton addMenuButton = new JButton("Add Menu Items");
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -71,8 +73,11 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		 toolbar.add(seeReservationsButton, c);
 		 
 		 c.gridy = 3;
-		toolbar.add(seeMenuButton, c);
-		
+		 toolbar.add(seeMenuButton, c);
+		 
+		 c.gridy = 4;
+		 toolbar.add(addMenuButton, c);
+		 
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
 		
@@ -86,6 +91,9 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		
 		JPanel seeMenu = new RestaurantViewMenuPanel(this);
 		restaurantCards.add(seeMenu, "SeeMenu");
+		
+		JPanel addMenu = new OwnerAddMenuPanel(this);
+		restaurantCards.add(addMenu, "AddMenu");
 		
         seeReviewsButton.addActionListener(new ActionListener() {
 
@@ -104,9 +112,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout)(restaurantCards.getLayout());
 		        cl.show(restaurantCards, "SeeReservations");
-				
 			}
-        	
         });
         
         seeMenuButton.addActionListener(new ActionListener(){
@@ -114,6 +120,14 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
         	public void actionPerformed(ActionEvent e) {
         		CardLayout cl = (CardLayout) (restaurantCards.getLayout());
         		cl.show(restaurantCards, "SeeMenu");;
+        	}
+        });
+        
+        addMenuButton.addActionListener(new ActionListener(){
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		CardLayout cl = (CardLayout) (restaurantCards.getLayout());
+        		cl.show(restaurantCards, "AddMenu");;
         	}
         });
 
