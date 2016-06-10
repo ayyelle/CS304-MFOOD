@@ -138,5 +138,6 @@ public class OwnerAddMenuPanel extends JPanel {
 		s = new SQLRestaurant();
 		this.restaurantId = parent.getRestaurantID();
 		this.restaurantName = s.getRestaurantName(restaurantId);
+		restaurantLabel.setText("Add item for " + restaurantName);
 	}
 }
