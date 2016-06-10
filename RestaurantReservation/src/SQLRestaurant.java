@@ -146,25 +146,80 @@ public class SQLRestaurant {
 
 		Vector<Vector> results = new Vector<Vector>();
 		//if only using this query, you get all cuisines with their max rating
-		String query = "Select r.cuisine, MAX(re.rating) AS maxrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine";
+		//String query = "Select r.cuisine, MAX(re.rating) AS maxrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine";
+		//String query = "Create View CuisineMax AS Select r.cuisine, MAX(re.rating) AS maxrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine";
+		//System.out.println(query);
+		//String query2 = "Select r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re, WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating FROM CuisineMax m where m.cuisine = r.cuisine))";
+		String query2 = "Select r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating) FROM CuisineMax m where m.cuisine = r.cuisine)";
+		try {
+			//rs = stmt.executeQuery(query);
+			rs2 = stmt.executeQuery(query2);
+			while (rs2.next()) {
+				
+				//String cuisine = rs.getString("cuisine");
+				//String rating = String.valueOf(rs.getInt("maxrating"));
+							
+				//System.out.println(cuisine + " " + rating);
+				//throwing in this query, you end up with only one result
+				//String query2 = "Select r.name,r.location FROM restaurant r,reviews re where re.rid=r.rid and re.rating = '" + rating + "'and r.cuisine = '" + cuisine + "'";
+				//String query2 = "Select r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re, WHERE r.rid=re.rid and re.rating = (SELECT MAX(re2.rating FROM CuisineMax m where m.cuisine = r.cuisine)";
+				//rs2 = stmt.executeQuery(query2);
+				String cuisineType = "";
+				String ratingValue = "";
+				String nameLocation="";
+				
+				cuisineType = rs2.getString("cuisine");
+				String restaurantName = rs2.getString("name");
+				String restaurantLocation = rs2.getString("location");
+				ratingValue = rs2.getString("rating");
+				nameLocation = restaurantName+"-"+restaurantLocation;
+				
+				Vector<String> v = new Vector<String>();
+				v.add(cuisineType);
+				//v.add(restaurantName);
+				v.add(nameLocation);
+				v.add(ratingValue);
+				results.add(v);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
+	
+/*	//TODO this algorithm currently only returns one result
+	
+	public Vector<Vector> getMaxCusine() {
+		ResultSet rs;
+		ResultSet rs2;
+
+		Vector<Vector> results = new Vector<Vector>();
+		//if only using this query, you get all cuisines with their max rating
+		String query = "Select r.cuisine, r.name,r.location, MAX(re.rating) AS maxrating from restaurant r,reviews re where r.RID=re.RID";
 		System.out.println(query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				
 				String cuisine = rs.getString("cuisine");
+				String name = rs.getString("name");
+				String location = rs.getString("location");
 				String rating = String.valueOf(rs.getInt("maxrating"));
+				String nameLocation = name+"-"+location;
 							
 				System.out.println(cuisine + " " + rating);
 				//throwing in this query, you end up with only one result
-				String query2 = "Select r.name,r.location FROM restaurant r,reviews re where re.rid=r.rid and re.rating = '" + rating + "'";
-				rs2 = stmt.executeQuery(query2);
-				String nameLocation="";
-				while (rs2.next()){
-				String restaurantName = rs2.getString("name");
-				String restaurantLocation = rs2.getString("location");
-				nameLocation = restaurantName+"-"+restaurantLocation;
-				};
+				//String query2 = "Select r.name,r.location FROM restaurant r,reviews re where re.rid=r.rid and re.rating = '" + rating + "'";
+				//rs2 = stmt.executeQuery(query2);
+				//String nameLocation="";
+				//while (rs2.next()){
+				//String restaurantName = rs2.getString("name");
+				//String restaurantLocation = rs2.getString("location");
+				//nameLocation = restaurantName+"-"+restaurantLocation;
+				//};
 				Vector<String> v = new Vector<String>();
 				v.add(cuisine);
 				//v.add(restaurantName);
@@ -178,7 +233,7 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		return results;
-	}
+	}*/
 	
 	public Vector<Vector> getAverageCuisine() {
 		ResultSet rs;
