@@ -37,8 +37,9 @@ public class CustomerDeleteReservation extends JPanel {
 		this.parent = parent;
 		s = new SQLRestaurant();
 		sc= new SQLCustomer();
+		//this.customerId = parent.getCustomerID();
 		
-		Vector<String> tableBookings = sc.getReservationsAsString(customerId);
+	Vector<String> tableBookings = sc.getReservationsAsString(customerId);
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints c = new GridBagConstraints();
 	title = new JLabel("See Menu", JLabel.CENTER);
@@ -58,10 +59,14 @@ public class CustomerDeleteReservation extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			String booking = (String) restaurantComboBox.getSelectedItem();
-			String restaurantName = booking.substring(0, booking.indexOf("-"));
-			String startDayTime = booking.substring(booking.indexOf("-") + 1);
-			String partySize = booking.substring(booking.indexOf("-") + 2);
-			String tid = booking.substring(booking.indexOf("-") + 3);
+			String restaurantName = booking.substring(0, booking.indexOf("-") + 1);
+			System.out.println("restaurant name in delete " + restaurantName);
+			String startDayTime = booking.substring(booking.indexOf("-") + 1, booking.indexOf("-")+4);
+			System.out.println(startDayTime);
+			String partySize = booking.substring(booking.indexOf("-") + 5,booking.indexOf("-")+6);
+			System.out.println(partySize);
+			String tid = booking.substring(booking.indexOf("-") + 6);
+			System.out.println(tid);
 
 			System.out.println(booking);
 			//Vector<String> colNames = new Vector<String>();
@@ -129,6 +134,10 @@ public class CustomerDeleteReservation extends JPanel {
 		this.customerId = parent.getCustomerID();
 		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
+		Vector<String> tableBookings = sc.getReservationsAsString(customerId);
+		restaurantComboBox = new JComboBox(tableBookings);
+		//Vector<String> tableBookings = sc.getReservationsAsString(customerId);
+		//restaurantComboBox = new JComboBox(tableBookings);
 	}
     
 }

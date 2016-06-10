@@ -177,6 +177,7 @@ public class SQLCustomer {
 		//String location = getLocationFromString(locationName);
 		//String location = locationName.substring(locationName.indexOf("-") + 1);
 		//System.out.println(name + " " + location);
+		System.out.println("username is " + username);
 		Vector<String> results = new Vector<String>();
 		String query = "Select * from TableBooking where UserName='" + username +"'";
 		System.out.println(query);
@@ -193,12 +194,13 @@ public class SQLCustomer {
 				System.out.println(startDayTime + " " + partySize + " "+ " " + rid );
 				//Vector<String> v = new Vector<String>();
 				String restaurantName = sr.getRestaurantFromRID(rid);
-			results.add(restaurantName+" "+startDayTime+" "+partySize+" "+tid);	
+			results.add(restaurantName+"-"+startDayTime+"-"+partySize+"-"+tid);	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("stringed is " + results);
 		return results;
 	}
 	
