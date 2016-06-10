@@ -104,7 +104,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		JPanel seeReservations = new JPanel();
 		restaurantCards.add(seeReservations, "SeeReservations");
 		
-		JPanel seeMenu = new RestaurantViewMenuPanel(this);
+		JPanel seeMenu = new OwnerViewMenuPanel(this);
 		restaurantCards.add(seeMenu, "SeeMenu");
 		
 		JPanel addMenu = new OwnerAddMenuPanel(this);

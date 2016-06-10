@@ -109,6 +109,17 @@ public class EmployeePanel extends JPanel implements restaurantPanel {
 			}
         	
         });
+        
+        seeMenuButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)(restaurantCards.getLayout());
+		        cl.show(restaurantCards, "SeeMenu");
+				
+			}
+        	
+        });
 
 	}
 	
