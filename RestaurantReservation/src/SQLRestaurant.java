@@ -105,11 +105,40 @@ public class SQLRestaurant {
 		return results;
 	}
 	
+	public Vector<Vector> getMenuItems(String locationName, String rid) {
+		System.out.println(locationName);
+		System.out.println(rid);
+		
+		ResultSet rs;
+		
+		Vector<Vector> results = new Vector<Vector>();
+		
+		String query = "SELECT * FROM MenuItem WHERE rid='" + rid + "'";
+		
+		System.out.println(query);
+		
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String foodName = rs.getString("name");
+				String price = String.valueOf(rs.getInt("price"));
+				
+				System.out.println(foodName + " - " + price);
+				Vector<String> v = new Vector<String>();
+				v.add(foodName);
+				v.add(price);
+				results.add(v);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return results;
+	};
 	
 	public Vector<Vector> getMenuItems(String locationName) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
-		System.out.println(locationName);
+		System.out.println("MENU ITEMS FROM: " + locationName);
 		String name = getRestaurantFromString(locationName);
 		//String name = locationName.substring(0, locationName.indexOf("-"));
 		String location = getLocationFromString(locationName);
@@ -142,7 +171,8 @@ public class SQLRestaurant {
 		ResultSet rs;
 		Vector<String> restaurants = new Vector<String>();
 		
-		String query = "Select name, location from restaurant";
+		String query = "SELECT name, location FROM restaurant";
+		System.out.println(query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {

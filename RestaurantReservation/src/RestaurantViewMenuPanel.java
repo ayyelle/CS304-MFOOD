@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 public class RestaurantViewMenuPanel extends JPanel {
 	OwnerPanel parent;
 	String ownerId;
+	String restaurantId;
 	JButton submit;
 	JComboBox restaurantComboBox;
 	JLabel restaurantLabel;
@@ -63,7 +64,7 @@ public class RestaurantViewMenuPanel extends JPanel {
 			colNames.add("Price");
 
 			SQLRestaurant s = new SQLRestaurant();
-			Vector<Vector> data = s.getMenuItems(restaurant);
+			Vector<Vector> data = s.getMenuItems(restaurant, restaurantId);
 			displayResult = new JTable(data, colNames);
 
 			displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
@@ -72,7 +73,7 @@ public class RestaurantViewMenuPanel extends JPanel {
 			displayResult.setRowHeight(40);
 			displayResultPanel.getViewport().add(displayResult);
 			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "You don't have any menu items! ", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
 			}
 			
 		}
@@ -118,8 +119,8 @@ public class RestaurantViewMenuPanel extends JPanel {
 	}
 	
 	public void start() {
-		this.ownerId = parent.getRestaurantID();
-		System.out.println(ownerId);
+		this.restaurantId = parent.getRestaurantID();
+		System.out.println("RID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
 	}
     

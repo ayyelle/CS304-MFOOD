@@ -8,6 +8,7 @@ public class MainApp implements ItemListener {
 	JPanel cards; //a panel that uses CardLayout
 	String customerId;
 	String restId;
+	String ownerId;
 
 	public void addComponentToPane(Container pane) {
 		//Put the JComboBox in a JPanel to get a nicer look.
