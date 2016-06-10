@@ -34,37 +34,40 @@ public class RestaurantViewMenuPanel extends JPanel {
 
 	
 	public RestaurantViewMenuPanel(OwnerPanel parent) {
+		this.restaurantId = parent.getRestaurantID();
+		System.out.println("blah blah blah: " + restaurantId);
 		this.parent = parent;
 		s = new SQLRestaurant();
 		
 		Vector<String> restaurantOptions = s.getRestaurants();
-	this.setLayout(new GridBagLayout());
-	GridBagConstraints c = new GridBagConstraints();
-	title = new JLabel("See Menu", JLabel.CENTER);
-	title.setFont(new Font(title.getName(), Font.PLAIN, 20));
-	restaurantComboBox = new JComboBox(restaurantOptions);
-	restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
-
-	displayResult = new JTable();
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		//title = new JLabel("See Menu", JLabel.CENTER);
+		title = new JLabel("Menu", JLabel.CENTER);
+		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
+		//restaurantComboBox = new JComboBox(restaurantOptions);
+		//restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
 	
-	displayResultPanel = new JScrollPane();
-	displayResultPanel.setPreferredSize(new Dimension(300, 300));
-
-	submit = new JButton("Submit");
+		displayResult = new JTable();
+		
+		displayResultPanel = new JScrollPane();
+		displayResultPanel.setPreferredSize(new Dimension(300, 300));
 	
-	submit.addActionListener(new ActionListener() {
+		submit = new JButton("Show Menu");
+	
+		submit.addActionListener(new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String restaurant = (String) restaurantComboBox.getSelectedItem();
+			//String restaurant = (String) restaurantComboBox.getSelectedItem();
 
-			System.out.println(restaurant);
+			//System.out.println("RestaurantViewMenuPanel.java: " + restaurant);
 			Vector<String> colNames = new Vector<String>();
 			colNames.add("Food Name");
 			colNames.add("Price");
 
 			SQLRestaurant s = new SQLRestaurant();
-			Vector<Vector> data = s.getMenuItems(restaurant, restaurantId);
+			Vector<Vector> data = s.getRestaurantMenuItems(restaurantId);
 			displayResult = new JTable(data, colNames);
 
 			displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
@@ -92,12 +95,12 @@ public class RestaurantViewMenuPanel extends JPanel {
 	c.gridy = 1;
 	c.insets = new Insets(0, 0, 0, 0);
 	
-	this.add(restaurantLabel, c);
+	//this.add(restaurantLabel, c);
 	
 	c.gridx = 0;
 	c.gridy = 2;
 
-	this.add(restaurantComboBox, c);
+	//this.add(restaurantComboBox, c);
 	
 	c.insets = new Insets(10, 10, 10, 10);
 
@@ -120,7 +123,7 @@ public class RestaurantViewMenuPanel extends JPanel {
 	
 	public void start() {
 		this.restaurantId = parent.getRestaurantID();
-		System.out.println("RID: " + restaurantId);
+		System.out.println("RESTAURANTVIEWMENUERID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
 	}
     
