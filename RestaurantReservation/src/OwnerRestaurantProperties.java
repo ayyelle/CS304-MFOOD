@@ -120,5 +120,6 @@ public class OwnerRestaurantProperties extends JPanel {
 		s = new SQLRestaurant();
 		this.restaurantId = parent.getRestaurantID();
 		this.restaurantName = s.getRestaurantName(restaurantId);
+		restaurantLabel.setText("Manage " + restaurantName);
 	}
 }
