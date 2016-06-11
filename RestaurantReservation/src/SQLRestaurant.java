@@ -21,7 +21,7 @@ public class SQLRestaurant {
 		try {
 
 			con = DriverManager.getConnection(
-					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
+					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_x8b9", "a51845139");
 			stmt = con.createStatement();		
 
 
@@ -477,6 +477,31 @@ public class SQLRestaurant {
 				newStr.add(rid);
 				newStr.add(customerName);
 				//System.out.println(comments);
+				result.add(newStr);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	//get List of tables for specific restaurant
+	public Vector<Vector> getTablesForRestaurant(String resID){
+		System.out.println("In getTablesForRestaurant resID: " + resID);
+		ResultSet rs;
+		Vector<Vector> result = new Vector<Vector>();
+		String query = "select tid "+
+						"from tablebooking "+
+						"where rid="+resID;
+		
+		try{
+			rs = stmt.executeQuery(query);
+			System.out.println(query);
+			while(rs.next()){
+				String tid = String.valueOf(rs.getInt("tid"));
+				
+				Vector<String> newStr = new Vector<String>();
+				newStr.add(tid);
 				result.add(newStr);
 			}
 		}catch(Exception e){

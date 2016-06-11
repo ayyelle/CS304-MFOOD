@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class ReservationsPanel extends JPanel{
 	
@@ -29,6 +31,9 @@ public class ReservationsPanel extends JPanel{
 	JScrollPane displayResultPanel;
 	JTable displayResult;
 	SQLRestaurant s;
+	
+	//new reservation variables
+	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
 	public ReservationsPanel(restaurantPanel parent) {
 		this.parent = parent;
@@ -119,11 +124,17 @@ public class ReservationsPanel extends JPanel{
 
 		Vector<Vector> data = s.getReservations(resID);
 		displayResult = new JTable(data, colNames);
-
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		displayResult.getColumnModel().getColumn(0).setMinWidth(200);
+		displayResult.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 		displayResult.getColumnModel().getColumn(1).setMaxWidth(80);
+		displayResult.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 		displayResult.getColumnModel().getColumn(2).setMaxWidth(80);
+		displayResult.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 		displayResult.getColumnModel().getColumn(3).setMaxWidth(80);
+		displayResult.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 		displayResult.getColumnModel().getColumn(4).setMaxWidth(80);
 
 		displayResult.setRowHeight(40);

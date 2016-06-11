@@ -63,6 +63,7 @@
 /OwnerViewMenuPanel$3.class
 /OwnerViewMenuPanel.class
 /ReservationsPanel$1.class
+/ReservationsPanel$2.class
 /ReservationsPanel.class
 /RestaurantViewMenuPanel$1.class
 /RestaurantViewMenuPanel$2.class
@@ -78,4 +79,6 @@
 /restaurantViewReviewsPanel$1.class
 /restaurantViewReviewsPanel$2.class
 /restaurantViewReviewsPanel.class
-/ReservationsPanel$2.class
+/TablesPanel$1.class
+/TablesPanel$2.class
+/OwnerPanel$8.class
