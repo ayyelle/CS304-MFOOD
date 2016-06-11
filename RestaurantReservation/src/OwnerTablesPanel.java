@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class TablesPanel extends JPanel{
+public class OwnerTablesPanel extends JPanel{
 
 	restaurantPanel parent;
 	String resID;
@@ -37,7 +37,7 @@ public class TablesPanel extends JPanel{
 //	new reservation variables
 //	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
-	public TablesPanel(restaurantPanel parent) {
+	public OwnerTablesPanel(restaurantPanel parent) {
 		this.parent = parent;
 		this.resID = parent.getRestaurantID();
 		System.out.println("In TablesPanel resID: " + resID);

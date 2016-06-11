@@ -475,9 +475,9 @@ public class SQLRestaurant {
 		System.out.println("In getReservations resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
-		String query = "select startdaytime, partysize, duration, tid, rid, firstname, lastname "
+		String query = "select startdaytime, duration, partysize, tid, rid, firstname, lastname "
 				+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID;
-
+		System.out.println("getReservations: " + query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {

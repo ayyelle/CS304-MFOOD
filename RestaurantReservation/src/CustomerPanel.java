@@ -94,7 +94,7 @@ public class CustomerPanel extends JPanel {
 		
 		customerCards = new JPanel(new CardLayout());
 		add(customerCards, BorderLayout.CENTER);
-		JPanel viewReviews = new ViewReviewsPanel(this);
+		JPanel viewReviews = new OwnerViewReviewsPanel(this);
 		JPanel customerAddReview = new CustomerAddReviewPanel(this);
 		JPanel reservationCard = new CustomerReservationPanel(this);
 		JPanel seeOwnReservations = new CustomerViewReservations(this);

@@ -1,3 +1,4 @@
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -21,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class ReservationsPanel extends JPanel{
+public class OwnerReservationsPanel extends JPanel{
 	
 	restaurantPanel parent;
 	String resID;
@@ -31,12 +32,15 @@ public class ReservationsPanel extends JPanel{
 	JScrollPane displayResultPanel;
 	JTable displayResult;
 	SQLRestaurant s;
+	JPanel restaurantCards;
 	
 	//new reservation variables
 	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
-	public ReservationsPanel(restaurantPanel parent) {
+	public OwnerReservationsPanel(restaurantPanel parent, JPanel restaurantCards) {
+
 		this.parent = parent;
+		this.restaurantCards = restaurantCards;
 		s = new SQLRestaurant();
 
 		this.setLayout(new GridBagLayout());
@@ -50,9 +54,16 @@ public class ReservationsPanel extends JPanel{
 
 		addReservation = new JButton("Add Reservation");
 		addReservation.addActionListener(new ActionListener() {
-
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (restaurantCards.getLayout());
+				cl.show(restaurantCards, "createReservation");
+			}
+		});
+			
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
 //				String restaurant = (String) restaurantComboBox.getSelectedItem();
 //
 //				System.out.println(restaurant);
@@ -78,10 +89,10 @@ public class ReservationsPanel extends JPanel{
 //					JOptionPane.showMessageDialog(null, "There are no reviews for this restaurant yet!",
 //							"No Reviews Found", JOptionPane.PLAIN_MESSAGE);
 //				}
-
-			}
-
-		});
+//
+//			}
+//
+//		});
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -97,6 +108,9 @@ public class ReservationsPanel extends JPanel{
 		c.gridx = 1;
 		c.gridy = 4;
 		this.add(displayResultPanel, c);
+		
+		JPanel createReservation = new OwnerAddReservation(this, resID);
+		restaurantCards.add(createReservation, "createReservation");
 
 		addComponentListener(new ComponentAdapter() {
 			@Override

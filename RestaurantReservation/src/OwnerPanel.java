@@ -27,6 +27,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 	JLabel userName;
 	JPanel restaurantCards;
 	String userNameString;
+	CardLayout cl;
 
 	public OwnerPanel(MainApp parent) {
 		this.parent = parent;
@@ -114,10 +115,10 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		JPanel viewReviews = new OwnerReviews(this);
 		restaurantCards.add(viewReviews, "ViewReviews");
 
-		JPanel seeReservations = new ReservationsPanel(this);
+		JPanel seeReservations = new OwnerReservationsPanel(this, restaurantCards);
 		restaurantCards.add(seeReservations, "SeeReservations");
 
-		JPanel seeTables = new TablesPanel(this);
+		JPanel seeTables = new OwnerTablesPanel(this);
 		restaurantCards.add(seeTables, "seeTables");
 
 		JPanel seeMenu = new OwnerViewMenuPanel(this);
@@ -198,7 +199,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		restaurantName.setText(r.getRestaurantName(restaurantId));
 		userNameString = r.getOwnerFromRID(restaurantId);
 		restaurantWelcome.setText("Welcome " + userNameString + "!");
-		CardLayout cl = (CardLayout) (restaurantCards.getLayout());
+		cl = (CardLayout) (restaurantCards.getLayout());
 		cl.show(restaurantCards, "ownerProperties");
 		cl.show(restaurantCards, "SeeReservations");
 		cl.show(restaurantCards, "viewReviews");

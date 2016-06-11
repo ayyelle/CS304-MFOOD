@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-public class ViewReviewsPanel extends JPanel {
+public class OwnerViewReviewsPanel extends JPanel {
 	CustomerPanel parent;
 	String customerId;
 	JButton submit;
@@ -34,7 +34,7 @@ public class ViewReviewsPanel extends JPanel {
 	String ownerID;
 	String empID;
 
-	public ViewReviewsPanel(CustomerPanel parent) {
+	public OwnerViewReviewsPanel(CustomerPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
 
