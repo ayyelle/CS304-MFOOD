@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class EmployeePanel extends JPanel implements restaurantPanel {
+public class EmployeePanel extends JPanel implements RestaurantPanel {
 	String restaurantId;
 	MainApp parent;
 	JPanel toolbar;
@@ -79,7 +79,7 @@ public class EmployeePanel extends JPanel implements restaurantPanel {
 		
 		restaurantCards = new JPanel(new CardLayout());
 		add(restaurantCards, BorderLayout.CENTER);
-		JPanel viewReviews = new restaurantViewReviewsPanel(this);
+		JPanel viewReviews = new RestaurantViewReviewsPanel(this);
 		restaurantCards.add(viewReviews, "ViewReviews");
 		//just adding another space for more functionality
 		JPanel seeReservations = new JPanel();

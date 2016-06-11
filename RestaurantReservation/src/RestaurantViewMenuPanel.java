@@ -20,7 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 public class RestaurantViewMenuPanel extends JPanel {
-	restaurantPanel parent;
+	RestaurantPanel parent;
 	String restaurantId;
 	JButton submit;
 	JComboBox restaurantComboBox;
@@ -32,7 +32,7 @@ public class RestaurantViewMenuPanel extends JPanel {
 	
 
 	
-	public RestaurantViewMenuPanel(restaurantPanel parent) {
+	public RestaurantViewMenuPanel(RestaurantPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
 		

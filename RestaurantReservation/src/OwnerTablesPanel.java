@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class OwnerTablesPanel extends JPanel{
 
-	restaurantPanel parent;
+	RestaurantPanel parent;
 	String resID;
 	JButton addTable;
 	JButton deleteTable;
@@ -37,7 +37,7 @@ public class OwnerTablesPanel extends JPanel{
 //	new reservation variables
 //	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
-	public OwnerTablesPanel(restaurantPanel parent) {
+	public OwnerTablesPanel(RestaurantPanel parent) {
 		this.parent = parent;
 		this.resID = parent.getRestaurantID();
 		System.out.println("In TablesPanel resID: " + resID);

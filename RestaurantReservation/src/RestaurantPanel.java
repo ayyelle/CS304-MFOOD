@@ -1,4 +1,4 @@
 
-public interface restaurantPanel {
+public interface RestaurantPanel {
 	public String getRestaurantID();
 }

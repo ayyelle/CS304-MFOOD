@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class OwnerRestaurantProperties extends JPanel {
-	restaurantPanel parent;
+	RestaurantPanel parent;
 	String restaurantId;
 	JButton updateName;
 	JComboBox restaurantComboBox;
@@ -36,7 +36,7 @@ public class OwnerRestaurantProperties extends JPanel {
 	SQLRestaurant s;
 	String restaurantName;
 	
-	public OwnerRestaurantProperties (restaurantPanel parent) {
+	public OwnerRestaurantProperties (RestaurantPanel parent) {
 		this.parent = parent;
 		
 		addComponentListener(new ComponentAdapter() {

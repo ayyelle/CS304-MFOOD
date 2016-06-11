@@ -19,8 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 
-public class restaurantViewReviewsPanel extends JPanel {
-	restaurantPanel parent;
+public class RestaurantViewReviewsPanel extends JPanel {
+	RestaurantPanel parent;
 	String restaurantId;
 	JButton submit;
 	JComboBox restaurantComboBox;
@@ -30,7 +30,7 @@ public class restaurantViewReviewsPanel extends JPanel {
 	JTable displayResult;
 	SQLRestaurant s;
 
-	public restaurantViewReviewsPanel(restaurantPanel parent) {
+	public RestaurantViewReviewsPanel(RestaurantPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
 

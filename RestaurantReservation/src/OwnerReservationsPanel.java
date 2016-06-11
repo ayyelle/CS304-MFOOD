@@ -24,7 +24,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class OwnerReservationsPanel extends JPanel{
 	
-	restaurantPanel parent;
+	RestaurantPanel parent;
 	String resID;
 	JButton addReservation;
 	JLabel restaurantLabel;
@@ -37,7 +37,7 @@ public class OwnerReservationsPanel extends JPanel{
 	//new reservation variables
 	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
-	public OwnerReservationsPanel(restaurantPanel parent, JPanel restaurantCards) {
+	public OwnerReservationsPanel(RestaurantPanel parent, JPanel restaurantCards) {
 
 		this.parent = parent;
 		this.restaurantCards = restaurantCards;
@@ -61,39 +61,6 @@ public class OwnerReservationsPanel extends JPanel{
 			}
 		});
 			
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				String restaurant = (String) restaurantComboBox.getSelectedItem();
-//
-//				System.out.println(restaurant);
-//				Vector<String> colNames = new Vector<String>();
-//				colNames.add("User");
-//				colNames.add("Rating");
-//				colNames.add("Comments");
-//
-//				SQLRestaurant s = new SQLRestaurant();
-//
-//				// only get reviews for restaurant owner
-//				// if from restaurant side
-//
-//				Vector<Vector> data = s.getReviews(restaurant);
-//				displayResult = new JTable(data, colNames);
-//
-//				displayResult.getColumnModel().getColumn(0).setMaxWidth(200);
-//				displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
-//
-//				displayResult.setRowHeight(40);
-//				displayResultPanel.getViewport().add(displayResult);
-//				if (data.size() == 0) {
-//					JOptionPane.showMessageDialog(null, "There are no reviews for this restaurant yet!",
-//							"No Reviews Found", JOptionPane.PLAIN_MESSAGE);
-//				}
-//
-//			}
-//
-//		});
-		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = c.REMAINDER;
@@ -109,6 +76,7 @@ public class OwnerReservationsPanel extends JPanel{
 		c.gridy = 4;
 		this.add(displayResultPanel, c);
 		
+		this.resID = parent.getRestaurantID();
 		JPanel createReservation = new OwnerAddReservation(this, resID);
 		restaurantCards.add(createReservation, "createReservation");
 
@@ -118,6 +86,9 @@ public class OwnerReservationsPanel extends JPanel{
 				start();
 			}
 		});
+	}
+	String getRestuarantID(){
+		return parent.getRestaurantID();
 	}
 
 	public void start() {

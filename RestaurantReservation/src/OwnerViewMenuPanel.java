@@ -20,7 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 public class OwnerViewMenuPanel extends JPanel {
-	restaurantPanel parent;
+	RestaurantPanel parent;
 	String restaurantId;
 	JButton submit;
 	JButton delete;
@@ -32,7 +32,7 @@ public class OwnerViewMenuPanel extends JPanel {
 	SQLRestaurant s;
 	String restaurantName;
 
-	public OwnerViewMenuPanel(restaurantPanel parent) {
+	public OwnerViewMenuPanel(RestaurantPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
 

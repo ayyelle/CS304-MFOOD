@@ -447,6 +447,44 @@ public class SQLRestaurant {
 
 		return result;
 	}
+	
+	public boolean requestReservationByOwner(Date date, String time, String rid, String partySize, String customerID) {
+		// time string format: HH:MM (24 hour hour)
+		boolean result = false;
+		String requestTime = toTimestampFormat(date, time);
+		System.out.println(requestTime);
+		String query = "select r.rid, t.tid from restaurant r, hastable t " + "where r.rid = t.rid and r.rid = '"+ rid 
+				+ "' and t.tablesize >=" + partySize + " " + "MINUS "
+				+ "(select t.rid, t.tid " + "from tablebooking tb, hastable t, restaurant r "
+				+ "where t.tid = tb.tid and t.rid = tb.rid and r.rid = '" + rid
+				+ "' " + "and ((to_timestamp('" + requestTime
+				+ "', 'yyyy:mm:dd hh24:mi')) < (tb.startDaytime + interval'2' hour))" + "and ((to_timestamp('"
+				+ requestTime + "', 'yyyy:mm:dd hh24:mi')) + interval '2' hour) > (tb.startDayTime))";
+		System.out.println("requestRevervationByOwner query: "+query);
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery(query);
+			if (!rs.isBeforeFirst()) {
+				result = false;
+			} else {
+				result = true;
+				rs.next();
+				// take first
+				int tid = rs.getInt("tid");
+				String insertQuery = "insert into tablebooking values (TO_TIMESTAMP('" + requestTime
+						+ "', 'yyyy-mm-dd hh24:mi:ss')," + partySize + ", 2, " + tid + ", " + rid + ", '" + customerID
+						+ "')";
+				System.out.println("RID: " + rid + " TID: " + tid);
+				System.out.println(insertQuery);
+				int rows = stmt.executeUpdate(insertQuery);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 
 	private String toTimestampFormat(Date date, String time) {
 		int day = date.getDate();
@@ -556,6 +594,24 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	public Vector<String> getCustomerUsernames(){
+		ResultSet rs;
+		Vector<String> results = new Vector<String>();
+		String query = "select username from customer";
+		System.out.println(query);
+		String username;
+		try{
+			rs = stmt.executeQuery(query);
+			while(rs.next()){
+				username = rs.getString("username");
+				results.add(username);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return results;
+				
 	}
 
 	public Vector<Vector> getFilteredReviews(String ratingSelection) {

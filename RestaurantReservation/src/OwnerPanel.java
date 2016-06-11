@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class OwnerPanel extends JPanel implements restaurantPanel {
+public class OwnerPanel extends JPanel implements RestaurantPanel {
 	String restaurantId;
 	MainApp parent;
 	SQLRestaurant r;
