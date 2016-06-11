@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -130,7 +131,6 @@ public class TablesPanel extends JPanel{
 
 		Vector<Vector> data = s.getTablesForRestaurant(resID);
 		displayResult = new JTable(data, colNames);
-		//center align
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);

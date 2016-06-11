@@ -509,6 +509,20 @@ public class SQLRestaurant {
 		}
 		return result;
 	}
+	public String getOwnerFromRID(String resID){
+		String query = "select ownername from restaurant where rid = " + resID;
+		String result = "";
+		ResultSet rs;
+		try{
+			rs = stmt.executeQuery(query);
+			while(rs.next()){ //just runs once
+				result = rs.getString("ownername");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	public Vector<Vector> getFilteredReviews(String ratingSelection) {
 		ResultSet rs;

@@ -20,9 +20,13 @@ import javax.swing.border.Border;
 public class OwnerPanel extends JPanel implements restaurantPanel {
 	String restaurantId;
 	MainApp parent;
+	SQLRestaurant r;
 	JPanel toolbar;
 	JLabel restaurantWelcome;
+	JLabel restaurantName;
+	JLabel userName;
 	JPanel restaurantCards;
+	String userNameString;
 
 	public OwnerPanel(MainApp parent) {
 		this.parent = parent;
@@ -40,18 +44,6 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		setUpPanel();
 	}
 
-	public void start() {
-		this.restaurantId = parent.getRestaurantID();
-		restaurantWelcome.setText("Welcome Owner of restaurant: RID" + restaurantId + "!");
-		CardLayout cl = (CardLayout) (restaurantCards.getLayout());
-		cl.show(restaurantCards, "ownerProperties");
-		cl.show(restaurantCards, "SeeReservations");
-		cl.show(restaurantCards, "viewReviews");
-		cl.show(restaurantCards, "seeMenuItems");
-		cl.show(restaurantCards, "addMenuItems");
-		cl.show(restaurantCards, "addEmployee");
-	}
-
 	public void setUpPanel() {
 		// this.restaurantId = parent.getRestaurantID();
 		System.out.println("OWNERPANEL.JAVA: " + restaurantId);
@@ -59,6 +51,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		c.insets = new Insets(3, 3, 3, 3);
 
 		restaurantWelcome = new JLabel("Welcome");
+		restaurantName = new JLabel("Restaurant Name");
 		JButton ownerPropertiesButton = new JButton("Manage Restaurant");
 		JButton seeReviewsButton = new JButton("Reviews");
 		JButton seeReservationsButton = new JButton("Reservations");
@@ -80,28 +73,32 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.CENTER;
 		toolbar.add(restaurantWelcome, c);
-
+		
 		c.gridx = 0;
 		c.gridy = 1;
+		toolbar.add(restaurantName, c);
+
+		c.gridx = 0;
+		c.gridy = 3;
 		toolbar.add(ownerPropertiesButton, c);
 
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 4;
 		toolbar.add(seeReviewsButton, c);
 
-		c.gridy = 3;
+		c.gridy = 5;
 		toolbar.add(seeReservationsButton, c);
 
-		c.gridy = 4;
+		c.gridy = 6;
 		toolbar.add(seeTablesButton, c);
 
-		c.gridy = 5;
+		c.gridy = 7;
 		toolbar.add(seeMenuButton, c);
 
-		c.gridy = 6;
+		c.gridy = 8;
 		toolbar.add(addMenuButton, c);
 
-		c.gridy = 7;
+		c.gridy = 9;
 		toolbar.add(addEmployeeButton, c);
 
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -195,6 +192,22 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		});
 
 	}
+	public void start() {
+		this.restaurantId = parent.getRestaurantID();
+		r = new SQLRestaurant();
+		restaurantName.setText(r.getRestaurantName(restaurantId));
+		userNameString = r.getOwnerFromRID(restaurantId);
+		restaurantWelcome.setText("Welcome " + userNameString + "!");
+		CardLayout cl = (CardLayout) (restaurantCards.getLayout());
+		cl.show(restaurantCards, "ownerProperties");
+		cl.show(restaurantCards, "SeeReservations");
+		cl.show(restaurantCards, "viewReviews");
+		cl.show(restaurantCards, "seeMenuItems");
+		cl.show(restaurantCards, "addMenuItems");
+		cl.show(restaurantCards, "addEmployee");
+	}
+
+	
 	//
 	// public void start() {
 	// this.restaurantId = parent.getRestaurantID();
