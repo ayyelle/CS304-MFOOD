@@ -52,7 +52,7 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 	}
 	
 	public void setUpPanel() {
-		this.restaurantId = parent.getRestaurantID();
+		//this.restaurantId = parent.getRestaurantID();
 		System.out.println("OWNERPANEL.JAVA: " + restaurantId);
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(3,3,3,3);
@@ -107,7 +107,6 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		//TODO: reservations and tables view
 		JPanel seeReservations = new ReservationsPanel(this);
 		restaurantCards.add(seeReservations, "SeeReservations");
-
 		
 		JPanel seeMenu = new OwnerViewMenuPanel(this);
 		restaurantCards.add(seeMenu, "SeeMenu");

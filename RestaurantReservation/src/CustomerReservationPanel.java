@@ -212,7 +212,7 @@ public class CustomerReservationPanel extends JPanel {
 
 	public void start() {
 		this.customerId = parent.getCustomerID();
-		System.out.println(customerId);
+		System.out.println("In CustomerReservationPanel customerId: " + customerId);
 	}
 
 

@@ -301,7 +301,7 @@ public class SQLRestaurant {
 		return results;
 	}
 
-	/**public Vector<String> getRestaurants(String rid) {
+	public Vector<String> getRestaurantsByID(String rid) {
 		ResultSet rs;
 		Vector<String> restaurants = new Vector<String>();
 		
@@ -319,7 +319,7 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		return restaurants;
-	}**/
+	}
 	
 	public String getRestaurantName(String rid) {
 		String result = "";
@@ -448,12 +448,14 @@ public class SQLRestaurant {
 		
 	}
 
-	public Vector<Vector> getReservations(){
+	//For the Reservations Panel when viewed by owner
+	public Vector<Vector> getReservations(String resID){
+		System.out.println("In getReservations resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
 		String query = "select startdaytime, partysize, duration, tid, rid, firstname, lastname "+
 						"from customer c, tablebooking t "+
-						"where c.username=t.username";
+						"where c.username=t.username AND t.rid="+resID;
 		
 		try{
 			rs = stmt.executeQuery(query);
