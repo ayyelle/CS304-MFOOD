@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public class CustomerPanel extends JPanel {
+	
+	
 	String customerId;
 	MainApp parent;
 	JPanel toolbar;
@@ -60,7 +62,6 @@ public class CustomerPanel extends JPanel {
 		JButton filterReviewsButton = new JButton("Filter Reviews");
 		JButton seeMenuButton = new JButton("See Menu Items");
 		
-
 		c.gridx = 0;
 		c.gridy = 0;
 		toolbar.add(customerWelcome, c);

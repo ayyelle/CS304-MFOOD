@@ -239,6 +239,41 @@ public class SQLRestaurant {
 		
 	}
 
+	public Vector<Vector> getReservations(){
+		ResultSet rs;
+		Vector<Vector> result = new Vector<Vector>();
+		String query = "select startdaytime, partysize, duration, tid, rid, firstname, lastname "+
+						"from customer c, tablebooking t "+
+						"where c.username=t.username";
+		
+		try{
+			rs = stmt.executeQuery(query);
+			while(rs.next()){
+				String starttime = rs.getString("startdaytime");
+				String partysize = String.valueOf(rs.getInt("partysize"));
+				String duration = rs.getString("duration");
+				String tid = String.valueOf(rs.getInt("tid"));
+				String rid = String.valueOf(rs.getInt("rid"));
+				String customerFirstName = rs.getString("firstname");
+				String customerLastName = rs.getString("lastname");
+				String customerName = customerFirstName + " " + customerLastName;
+				
+				Vector<String> newStr = new Vector<String>();
+				newStr.add(starttime);
+				newStr.add(duration);
+				newStr.add(partysize);
+				newStr.add(tid);
+				newStr.add(rid);
+				newStr.add(customerName);
+				//System.out.println(comments);
+				result.add(newStr);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	public Vector<Vector> getFilteredReviews(String ratingSelection) {
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();

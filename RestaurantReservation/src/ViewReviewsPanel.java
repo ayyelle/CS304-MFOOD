@@ -30,98 +30,103 @@ public class ViewReviewsPanel extends JPanel {
 	JTable displayResult;
 	SQLRestaurant s;
 
-	
+	// Restaurant Side
+	String ownerID;
+	String empID;
+
 	public ViewReviewsPanel(CustomerPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
-		
+
 		Vector<String> restaurantOptions = s.getRestaurants();
-	this.setLayout(new GridBagLayout());
-	GridBagConstraints c = new GridBagConstraints();
-	title = new JLabel("View Reviews", JLabel.CENTER);
-	title.setFont(new Font(title.getName(), Font.PLAIN, 20));
-	restaurantComboBox = new JComboBox(restaurantOptions);
-	restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		title = new JLabel("View Reviews", JLabel.CENTER);
+		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
+		restaurantComboBox = new JComboBox(restaurantOptions);
+		restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
 
-	displayResult = new JTable();
-	
-	displayResultPanel = new JScrollPane();
-	displayResultPanel.setPreferredSize(new Dimension(900, 400));
+		displayResult = new JTable();
 
-	submit = new JButton("Submit");
-	
-	submit.addActionListener(new ActionListener() {
+		displayResultPanel = new JScrollPane();
+		displayResultPanel.setPreferredSize(new Dimension(900, 400));
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String restaurant = (String) restaurantComboBox.getSelectedItem();
+		submit = new JButton("Submit");
 
-			System.out.println(restaurant);
-			Vector<String> colNames = new Vector<String>();
-			colNames.add("User");
-			colNames.add("Rating");
-			colNames.add("Comments");
+		submit.addActionListener(new ActionListener() {
 
-			SQLRestaurant s = new SQLRestaurant();
-			Vector<Vector> data = s.getReviews(restaurant);
-			displayResult = new JTable(data, colNames);
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String restaurant = (String) restaurantComboBox.getSelectedItem();
 
-			displayResult.getColumnModel().getColumn(0).setMaxWidth(200);
-			displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
-			
-			displayResult.setRowHeight(40);
-			displayResultPanel.getViewport().add(displayResult);
-			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "There are no reviews for this restaurant yet!", "No Reviews Found", JOptionPane.PLAIN_MESSAGE);
+				System.out.println(restaurant);
+				Vector<String> colNames = new Vector<String>();
+				colNames.add("User");
+				colNames.add("Rating");
+				colNames.add("Comments");
+
+				SQLRestaurant s = new SQLRestaurant();
+
+				// only get reviews for restaurant owner
+				// if from restaurant side
+
+				Vector<Vector> data = s.getReviews(restaurant);
+				displayResult = new JTable(data, colNames);
+
+				displayResult.getColumnModel().getColumn(0).setMaxWidth(200);
+				displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
+
+				displayResult.setRowHeight(40);
+				displayResultPanel.getViewport().add(displayResult);
+				if (data.size() == 0) {
+					JOptionPane.showMessageDialog(null, "There are no reviews for this restaurant yet!",
+							"No Reviews Found", JOptionPane.PLAIN_MESSAGE);
+				}
+
 			}
-			
-		}
-		
-	});
-	
-	c.gridx = 0;
-	c.gridy = 0;
-	c.gridwidth = c.REMAINDER;
-	c.anchor = c.PAGE_START;
-	c.insets = new Insets(30, 5, 5, 5);
-	this.add(title, c);
-	
-	
-	c.gridx = 0;
-	c.gridy = 1;
-	c.insets = new Insets(0, 0, 0, 0);
-	
-	this.add(restaurantLabel, c);
-	
-	c.gridx = 0;
-	c.gridy = 2;
 
-	this.add(restaurantComboBox, c);
-	
-	c.insets = new Insets(10, 10, 10, 10);
+		});
 
-	c.gridx = 1;
-	c.gridy = 3;
-	this.add(submit, c);
-	
-	c.gridx = 1;
-	c.gridy = 4;
-	this.add(displayResultPanel, c);
-    
-    addComponentListener(new ComponentAdapter() {
-        @Override
-        public void componentShown(ComponentEvent evt) {
-            start();
-        }
-    });
-    
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = c.REMAINDER;
+		c.anchor = c.PAGE_START;
+		c.insets = new Insets(30, 5, 5, 5);
+		this.add(title, c);
+
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 0, 0);
+
+		this.add(restaurantLabel, c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+
+		this.add(restaurantComboBox, c);
+
+		c.insets = new Insets(10, 10, 10, 10);
+
+		c.gridx = 1;
+		c.gridy = 3;
+		this.add(submit, c);
+
+		c.gridx = 1;
+		c.gridy = 4;
+		this.add(displayResultPanel, c);
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent evt) {
+				start();
+			}
+		});
 	}
-	
+
 	public void start() {
 		this.customerId = parent.getCustomerID();
 		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
 	}
-    
-}
 
+}

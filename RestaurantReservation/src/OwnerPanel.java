@@ -39,14 +39,6 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		setUpPanel();	
 	}
 	
-	public void start() {
-		this.restaurantId = parent.getRestaurantID();
-		restaurantWelcome.setText("Welcome Owner of restaurant: RID" + restaurantId + "!");
-        CardLayout cl = (CardLayout)(restaurantCards.getLayout());
-        cl.show(restaurantCards, "SeeReservations");
-        cl.show(restaurantCards, "viewReviews");
-	}
-	
 	public void setUpPanel() {
 		this.restaurantId = parent.getRestaurantID();
 		
@@ -56,7 +48,8 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		restaurantWelcome = new JLabel("Welcome");
 		JButton seeReviewsButton = new JButton("See Reviews");
 		JButton seeReservationsButton = new JButton("See Reservations");
-
+		JButton seeTablesButton = new JButton("See Tables");
+		
 		c.gridx = 0;
 		c.gridy = 0;
 		toolbar.add(restaurantWelcome, c);
@@ -65,29 +58,34 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		c.gridy = 1;
 		toolbar.add(seeReviewsButton, c);
 
-		 c.gridy = 2;
-		 toolbar.add(seeReservationsButton, c);
+		c.gridy = 2;
+		toolbar.add(seeReservationsButton, c);
+		 
+		c.gridy = 3;
+		toolbar.add(seeTablesButton, c);
 		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
 		
+		//Panels
 		restaurantCards = new JPanel(new CardLayout());
 		add(restaurantCards, BorderLayout.CENTER);
 		JPanel viewReviews = new restaurantViewReviewsPanel(this);
 		restaurantCards.add(viewReviews, "ViewReviews");
-		//Just adding another button as a place-holder
-		JPanel seeReservations = new JPanel();
+		
+		//TODO: reservations and tables view
+		JPanel seeReservations = new ReservationsPanel(this);
 		restaurantCards.add(seeReservations, "SeeReservations");
 
+		JPanel seeTables = new TablesPanel();
+		restaurantCards.add(seeTables, "SeeTables");
+		
         seeReviewsButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout)(restaurantCards.getLayout());
 		        cl.show(restaurantCards, "ViewReviews");
-				
 			}
-        	
         });
         
         seeReservationsButton.addActionListener(new ActionListener() {
@@ -98,9 +96,23 @@ public class OwnerPanel extends JPanel implements restaurantPanel {
 		        cl.show(restaurantCards, "SeeReservations");
 				
 			}
-        	
+        });
+        
+        seeTablesButton.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e){
+        		CardLayout cl = (CardLayout)(restaurantCards.getLayout());
+		        cl.show(restaurantCards, "SeeTables");
+        	}
         });
 
+	}
+	
+	public void start() {
+		this.restaurantId = parent.getRestaurantID();
+		restaurantWelcome.setText("Welcome Owner of restaurant: RID" + restaurantId + "!");
+        CardLayout cl = (CardLayout)(restaurantCards.getLayout());
+        cl.show(restaurantCards, "Reservations");
 	}
 	
 	public String getRestaurantID() {
