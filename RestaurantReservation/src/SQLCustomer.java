@@ -28,7 +28,7 @@ public class SQLCustomer {
 			e.printStackTrace();
 		}
 		try {
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_x8b9", "a51845139");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM restaurant");
 			rs.next();
@@ -256,7 +256,7 @@ public class SQLCustomer {
 		}
 		
 		String query = "delete from TableBooking WHERE StartDayTime = '" + startDayTime + "' and rid = '" + restaurantID + "' and tid = '" + tid + "' and rid = '" + restaurantID + "'";
-		//System.out.println("my query is " + query);
+		System.out.println("my query is " + query);
 		try {
 			//TODO make sure this actually works 
 			rs = stmt.executeUpdate(query);
