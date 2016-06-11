@@ -105,6 +105,34 @@ public class SQLRestaurant {
 		return results;
 	}
 	
+	public Vector<Vector> getReviewsByRID(String rid) {
+		ResultSet rs;
+		//Location Name string in form: Name-Location
+		System.out.println("getReviewsByRID rid: " + rid);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select * from reviews where rid =" + rid;
+		System.out.println(query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String username = rs.getString("userName");
+				String rating = String.valueOf(rs.getInt("rating"));
+				String comments = rs.getString("comments");
+							
+				System.out.println(username + " " + rating + " " + comments);
+				Vector<String> v = new Vector<String>();
+				v.add(username);
+				v.add(rating);
+				v.add(comments);
+				results.add(v);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+	
 	public Vector<Vector> getMenuItems(String locationName) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location

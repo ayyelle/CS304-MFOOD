@@ -65,8 +65,6 @@ public class ViewReviewsPanel extends JPanel {
 				colNames.add("Rating");
 				colNames.add("Comments");
 
-				SQLRestaurant s = new SQLRestaurant();
-
 				// only get reviews for restaurant owner
 				// if from restaurant side
 
