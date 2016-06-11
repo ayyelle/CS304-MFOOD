@@ -59,8 +59,11 @@ public class CustomerPanel extends JPanel {
 		JButton addReviewButton = new JButton("Add a Review");
 		JButton reserveTable = new JButton("Make a reservation");
 		JButton seeReservationsButton = new JButton ("See your reservations");
+		JButton deleteReservationsButton = new JButton("Delete your reservations");
 		JButton filterReviewsButton = new JButton("Filter Reviews");
 		JButton seeMenuButton = new JButton("See Menu Items");
+		JButton seeMaxAverage = new JButton("See Highest or Average Ratings");
+		
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -78,9 +81,13 @@ public class CustomerPanel extends JPanel {
 		c.gridy = 4;
 		toolbar.add(seeReservationsButton, c);
 		c.gridy = 5;
-		toolbar.add(filterReviewsButton, c);
+		toolbar.add(deleteReservationsButton, c);
 		c.gridy = 6;
+		toolbar.add(filterReviewsButton, c);
+		c.gridy = 7;
 		toolbar.add(seeMenuButton, c);
+		c.gridy = 8;
+		toolbar.add(seeMaxAverage, c);
 		
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
@@ -91,15 +98,19 @@ public class CustomerPanel extends JPanel {
 		JPanel customerAddReview = new CustomerAddReviewPanel(this);
 		JPanel reservationCard = new CustomerReservationPanel(this);
 		JPanel seeOwnReservations = new CustomerViewReservations(this);
+		JPanel deleteReservations = new CustomerDeleteReservation(this);
 		JPanel filterReviews = new CustomerFilterReviewsPanel(this);
 		JPanel seeMenuItems = new CustomerViewMenuPanel(this);
+		JPanel seeMaxAverageItems = new CustomerCuisineMaxAverage(this);
 
 		customerCards.add(viewReviews, "ViewReviews");
 		customerCards.add(customerAddReview, "AddReview");
 		customerCards.add(reservationCard, "makeReservation");
 		customerCards.add(seeOwnReservations, "seeReservations");
+		customerCards.add(deleteReservations,"deleteReservation");
 		customerCards.add(filterReviews, "filterReviews");
 		customerCards.add(seeMenuItems,"seeMenuItems");
+		customerCards.add(seeMaxAverageItems,"seeMaxAverage");
         seeReviewsButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -157,6 +168,26 @@ public class CustomerPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)(customerCards.getLayout());
 		        cl.show(customerCards, "seeReservations");				
+			}
+        	
+        });
+
+        deleteReservationsButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "deleteReservation");	
+			}
+        });
+
+        
+        seeMaxAverage.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)(customerCards.getLayout());
+		        cl.show(customerCards, "seeMaxAverage");				
 			}
         	
         });

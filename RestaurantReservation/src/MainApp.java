@@ -9,7 +9,8 @@ public class MainApp implements ItemListener {
 	String customerId;
 	String restId;
 	String userType;
-
+	String ownerId;
+	
 	public void addComponentToPane(Container pane) {
 		//Put the JComboBox in a JPanel to get a nicer look.
 		//Panel to add the upper navigation buttons to
@@ -25,43 +26,41 @@ public class MainApp implements ItemListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField restaurantID = new JTextField();
+				JTextField empID = new JTextField();
 				JTextField lastName = new JTextField();
 				JPasswordField password = new JPasswordField();
 				final JComponent[] inputs = new JComponent[] {
-						new JLabel("Employee ID/OwnerID:"),
+						new JLabel("OwnerID/RestaurantID:"),
 						restaurantID,
-
+						
+						new JLabel ("Employee ID:"),
+						empID,
+						
 						new JLabel("Password"),
 						password
 				};
 				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
-				System.out.println("You entered " + restaurantID.getText() + ", " + password.getText());
+				System.out.println("You entered " +
+						restaurantID.getText() + ", " +
+						empID.getText() + ", " +
+						password.getText());
 				SQLRestaurant sql = new SQLRestaurant();
-								
-				try{
-					//sanitize restaurantID
-					Integer resID_int = Integer.valueOf(restaurantID.getText());
-					System.out.println(resID_int);
-					
-					//post login
-					ArrayList<String> userInfo = sql.getCredentials(resID_int, password.getText());
-					userType = userInfo.get(0);
-					if (userType.equals("OWNER")) {
-						CardLayout cl = (CardLayout)(cards.getLayout());
-						cl.show(cards, "Home");
-						cl.show(cards, "RestaurantOwner");
-						restId = userInfo.get(1);
-						System.out.println(restId);
-					} else if (userType.equals("EMP")) {
-						CardLayout cl = (CardLayout)(cards.getLayout());
-						cl.show(cards, "Home");
-						cl.show(cards, "RestaurantEmployee");
-						restId = userInfo.get(1);		
-						System.out.println("HERE! RID: " + restId);
-					}
-				}catch(NumberFormatException ex) {
-					JOptionPane.showMessageDialog(null, "Login failed! try again");
-				}catch(Exception ex){
+				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), empID.getText(), password.getText());
+				String userType = userInfo.get(0);
+				if (userType.equals("OWNER")) {
+					CardLayout cl = (CardLayout)(cards.getLayout());
+					cl.show(cards, "Home");
+					cl.show(cards, "RestaurantOwner");
+					restId = userInfo.get(1);
+					System.out.println(restId);
+				} else if (userType.equals("EMP")) {
+					CardLayout cl = (CardLayout)(cards.getLayout());
+					cl.show(cards, "Home");
+					cl.show(cards, "RestaurantEmployee");
+					restId = userInfo.get(1);		
+					System.out.println("HERE! RID: " + restId);
+				}
+				else {
 					JOptionPane.showMessageDialog(null, "Login failed! try again");
 				}
 			}
