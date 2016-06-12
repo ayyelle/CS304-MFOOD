@@ -38,13 +38,10 @@ public class CustomerViewReservations extends JPanel {
 		s = new SQLRestaurant();
 		sc = new SQLCustomer();
 		
-		//Vector<String> restaurantOptions = s.getRestaurants();
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints c = new GridBagConstraints();
 	title = new JLabel("Your Reservations", JLabel.CENTER);
 	title.setFont(new Font(title.getName(), Font.PLAIN, 20));
-	//restaurantComboBox = new JComboBox(restaurantOptions);
-	//restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
 
 	displayResult = new JTable();
 	
@@ -57,14 +54,11 @@ public class CustomerViewReservations extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//String restaurant = (String) restaurantComboBox.getSelectedItem();
 
-			//System.out.println(restaurant);
 			Vector<String> colNames = new Vector<String>();
 			colNames.add("Restaurant");
 			colNames.add("Booking Date & Time");
 			colNames.add("Party Size");
-			//colNames.add("Table ID");
 
 			SQLRestaurant s = new SQLRestaurant();
 			Vector<Vector> data = sc.getReservations(customerId);
