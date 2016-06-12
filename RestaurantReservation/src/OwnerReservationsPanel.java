@@ -27,6 +27,7 @@ public class OwnerReservationsPanel extends JPanel{
 	RestaurantPanel parent;
 	String resID;
 	JButton addReservation;
+	JButton deleteReservation;
 	JLabel restaurantLabel;
 	JLabel title;
 	JScrollPane displayResultPanel;
@@ -60,6 +61,20 @@ public class OwnerReservationsPanel extends JPanel{
 				cl.show(restaurantCards, "createReservation");
 			}
 		});
+		
+		//TODO: delete reservation
+		deleteReservation = new JButton("Delete Selected Reservation");
+		deleteReservation.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				int row = displayResult.getSelectedRow();
+//				String resID = (String) displayResult.getValueAt(row, 0);
+//				System.out.println("Table To Be Deleted: " + tid);
+//				System.out.println("Restaurant ID: " + resID);
+//				s.deleteTable(resID, tid);
+//				update();
+			}
+		});
 			
 		c.gridx = 0;
 		c.gridy = 0;
@@ -68,9 +83,16 @@ public class OwnerReservationsPanel extends JPanel{
 		c.insets = new Insets(30, 5, 5, 5);
 		this.add(title, c);
 		
-		c.gridx = 1;
-		c.gridy = 3;
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 1;
 		this.add(addReservation, c);
+		
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 0, 10);
+		this.add(deleteReservation, c);
 
 		c.gridx = 1;
 		c.gridy = 4;

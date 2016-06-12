@@ -549,7 +549,7 @@ public class SQLRestaurant {
 		System.out.println("In getTablesForRestaurant resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
-		String query = "select tid " + "from tablebooking " + "where rid=" + resID;
+		String query = "select distinct tid " + "from tablebooking " + "where rid=" + resID;
 
 		try {
 			rs = stmt.executeQuery(query);
