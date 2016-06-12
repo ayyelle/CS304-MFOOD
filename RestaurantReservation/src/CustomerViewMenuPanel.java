@@ -10,6 +10,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Vector;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,7 +31,7 @@ public class CustomerViewMenuPanel extends JPanel {
 	JScrollPane displayResultPanel;
 	JTable displayResult;
 	SQLRestaurant s;
-	
+	JLabel label;
 
 	
 	public CustomerViewMenuPanel(CustomerPanel parent) {
@@ -48,6 +50,7 @@ public class CustomerViewMenuPanel extends JPanel {
 	
 	displayResultPanel = new JScrollPane();
 	displayResultPanel.setPreferredSize(new Dimension(300, 300));
+	displayResultPanel.setMinimumSize(new Dimension(300, 300));
 
 	submit = new JButton("Submit");
 	
@@ -74,6 +77,9 @@ public class CustomerViewMenuPanel extends JPanel {
 			if (data.size() == 0) {
 				JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
 			}
+			String iconPath = s.getImage(restaurant);
+			Icon icon = new ImageIcon(getClass().getResource(iconPath));
+			label.setIcon(icon);
 			
 		}
 		
@@ -103,10 +109,16 @@ public class CustomerViewMenuPanel extends JPanel {
 	c.gridx = 1;
 	c.gridy = 3;
 	this.add(submit, c);
+	c.gridwidth = c.NONE;
 	
-	c.gridx = 1;
+	c.gridx = 0;
 	c.gridy = 4;
 	this.add(displayResultPanel, c);
+	
+	c.gridx = 0;
+	c.gridy = 5;
+	label = new JLabel();
+	this.add(label, c);
     
     addComponentListener(new ComponentAdapter() {
         @Override

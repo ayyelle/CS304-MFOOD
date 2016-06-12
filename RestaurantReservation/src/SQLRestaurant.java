@@ -657,5 +657,28 @@ public class SQLRestaurant {
 
 		return result;
 	}
+	
+	public String getImage(String locationName) {
+		String name = getRestaurantFromString(locationName);
+		String location = getLocationFromString(locationName);
+		System.out.println(name + " " + location);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select * from Restaurant where rid IN (select rid from restaurant where name='" + name
+				+ "'and location='" + location + "')";
+		String result = "";
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				result = rs.getString("img");
+			}
+			
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 
 }

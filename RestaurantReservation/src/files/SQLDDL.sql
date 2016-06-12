@@ -16,6 +16,7 @@ create table restaurant (
   OID int NOT NULL,
   ownerName varchar(50),
   ownerPassword varchar(50) NOT NULL,
+  img varchar(100),
   unique(name, location)
   );
 
@@ -28,7 +29,8 @@ insert into restaurant values(
   'Canadian',
   1000,
   'Joey Tomato',
-  'joeys1'
+  'joeys1',
+  'images/joey-burrard.jpg'
   );
 
 insert into restaurant values(
@@ -40,7 +42,8 @@ insert into restaurant values(
   'Sushi',
   2000,
  'Yoshi Nintendo',
- 'tomokazu2'
+ 'tomokazu2',
+ '!!.jpg'
   );
 
 insert into restaurant values(
@@ -52,7 +55,8 @@ insert into restaurant values(
   'Mexican',
   3000,
   'Diego Gonzalez',
-  'lasmargaritas3'
+  'lasmargaritas3',
+  '!!.jpg'
   );
 
 insert into restaurant values(
@@ -64,7 +68,8 @@ insert into restaurant values(
   'Comfort food',
   4000,
   'Jill Hipstar',
-  'jhip'
+  'jhip',
+  '!!.jpg'
   );
 
 insert into restaurant values(
@@ -76,7 +81,8 @@ insert into restaurant values(
   'Canadian',
   5000,
  'Mario Joey',
- 'marioj'
+ 'marioj',
+ '!!.jpg'
   );
 
 insert into restaurant values(
@@ -88,7 +94,8 @@ insert into restaurant values(
   'European',
   6000,
  'Robbie Kane',
- 'rkane'
+ 'rkane',
+ 'images/cafe-medina.gif'
   );
 
 insert into restaurant values(
@@ -100,7 +107,8 @@ insert into restaurant values(
   'Greek',
   7000,
  'Steph Vardalos',
- 'svard'
+ 'svard', 
+ '!!.png'
   );
 
 insert into restaurant values(
@@ -112,7 +120,8 @@ insert into restaurant values(
   'European',
   8000,
  'Nico Schuermans',
- 'nicocham'
+ 'nicocham',
+ '!!.png'
   );
 
 insert into restaurant values(
@@ -124,7 +133,8 @@ insert into restaurant values(
   'Canadian',
   9000,
  'Trevor Bird',
- 'birdy'
+ 'birdy',
+ 'fable-kitchen.png'
   );
 
 insert into restaurant values(
@@ -136,7 +146,8 @@ insert into restaurant values(
   'Diner',
   1000,
  'Emily-Jane Stuart',
- 'ejGrub'
+ 'ejGrub', 
+ '!!.png'
   );
 
 
