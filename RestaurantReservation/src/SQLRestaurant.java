@@ -20,7 +20,7 @@ public class SQLRestaurant {
 		}
 		try {
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_x8b9", "a51845139");
 			stmt = con.createStatement();
 
 
@@ -443,7 +443,7 @@ public class SQLRestaurant {
 		System.out.println("In getReservations resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
-		String query = "select startdaytime, duration, partysize, tid, rid, firstname, lastname "
+		String query = "select startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "
 				+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID;
 		try {
 			rs = stmt.executeQuery(query);
@@ -455,6 +455,7 @@ public class SQLRestaurant {
 				String rid = String.valueOf(rs.getInt("rid"));
 				String customerFirstName = rs.getString("firstname");
 				String customerLastName = rs.getString("lastname");
+				String username = rs.getString("username");
 				String customerName = customerFirstName + " " + customerLastName;
 
 				Vector<String> newStr = new Vector<String>();
@@ -464,6 +465,7 @@ public class SQLRestaurant {
 				newStr.add(tid);
 				newStr.add(rid);
 				newStr.add(customerName);
+				newStr.add(username);
 				// System.out.println(comments);
 				result.add(newStr);
 			}
@@ -541,6 +543,21 @@ public class SQLRestaurant {
 		}
 		return results;
 				
+	}
+	
+	public boolean ownerDeleteBooking(String rid, String startDayTime, String username, String tid) {
+		Boolean result = false;
+		
+		//String query = "delete from TableBooking WHERE StartDayTime = '" + startDayTime + "' and rid = '" + restaurantID + "' and tid = '" + tid + "' and rid = '" + restaurantID + "'";
+		//System.out.println("my query is " + query);
+		String query = "delete from TABLEBOOKING WHERE STARTDAYTIME = to_timestamp('" + startDayTime + "', 'YYYY-MM-DD HH24-mi-ss.FF') and rid = '" + rid + "' and tid = '" + tid + "' and username = '" + username + "'";
+		try {
+			stmt.executeUpdate(query);
+			result = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 

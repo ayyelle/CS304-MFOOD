@@ -43,7 +43,7 @@ public class OwnerReservationsPanel extends JPanel{
 		this.parent = parent;
 		this.restaurantCards = restaurantCards;
 		s = new SQLRestaurant();
-
+		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		title = new JLabel("View Reservations", JLabel.CENTER);
@@ -62,17 +62,21 @@ public class OwnerReservationsPanel extends JPanel{
 			}
 		});
 		
+		
 		//TODO: delete reservation
 		deleteReservation = new JButton("Delete Selected Reservation");
 		deleteReservation.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				int row = displayResult.getSelectedRow();
-//				String resID = (String) displayResult.getValueAt(row, 0);
-//				System.out.println("Table To Be Deleted: " + tid);
-//				System.out.println("Restaurant ID: " + resID);
-//				s.deleteTable(resID, tid);
-//				update();
+				int row = displayResult.getSelectedRow();
+				String startdaytime_del = (String) displayResult.getValueAt(row, 0);
+				String tid_del = (String) displayResult.getValueAt(row, 3);
+				String rid_del = (String) displayResult.getValueAt(row, 4);
+				String username_del = (String) displayResult.getValueAt(row, 6);
+				System.out.println("Reservation to be deleted: " + startdaytime_del + 
+						" " + tid_del + " " + rid_del + " " + username_del);
+				s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
+				update();
 			}
 		});
 			
@@ -112,6 +116,10 @@ public class OwnerReservationsPanel extends JPanel{
 	String getRestuarantID(){
 		return parent.getRestaurantID();
 	}
+	private void update() {
+		displayResultPanel.getViewport().remove(displayResult);
+		start();
+	}
 
 	public void start() {
 		this.resID = parent.getRestaurantID();
@@ -126,6 +134,7 @@ public class OwnerReservationsPanel extends JPanel{
 		colNames.add("TID");
 		colNames.add("RID");
 		colNames.add("Customer Name");
+		colNames.add("Customer Username");
 
 		SQLRestaurant s = new SQLRestaurant();
 

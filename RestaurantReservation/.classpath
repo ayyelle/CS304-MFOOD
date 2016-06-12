@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/laurencoombe/Downloads/jdatepicker-1.3.4.jar"/>
-	<classpathentry kind="lib" path="/Users/laurencoombe/Documents/UBC-Bachelor-of-Computer-Science/Courses/Summer 2016/CPSC304/Oracle-Drivers/classes12.zip"/>
+	<classpathentry exported="true" kind="lib" path="/Users/liutenghou/Dropbox/1_2016_S1/CPSC304/Project/CS304-MFOOD/Drivers/classes12.zip"/>
+	<classpathentry exported="true" kind="lib" path="/Users/liutenghou/Dropbox/1_2016_S1/CPSC304/Project/CS304-MFOOD/Drivers/jdatepicker-1.3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
