@@ -10,7 +10,7 @@ import java.util.Vector;
 public class SQLRestaurant {
 	Connection con;
 	Statement stmt;
-	
+
 	public SQLRestaurant() {
 		try {
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -21,7 +21,7 @@ public class SQLRestaurant {
 		try {
 
 			con = DriverManager.getConnection(
-					  "jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
+					"jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
 			stmt = con.createStatement();		
 
 
@@ -30,48 +30,46 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<String> getCredentials(String rid, String eid, String password) {
 		ResultSet rs;
 		ArrayList<String> result = new ArrayList<String>();
 		//!!HACKY! FIX!
 		try {
-			
-			if (eid.isEmpty()) {
-			//int ridInt = Integer.parseInt(rid);
-			String query = "Select * FROM restaurant WHERE oid = '" + rid + "' and ownerpassword = '" + password + "'";
-			rs = stmt.executeQuery(query);
-				if(rs.next()) {
-					result.add("OWNER");
-					result.add(String.valueOf(rs.getInt("rid")));
-					System.out.println(query);
-				} else {
-					result.add("NONE");
-				}
 
+			//Check if owner first
+			//int ridInt = Integer.parseInt(rid);
+			String query = "Select * FROM restaurant WHERE oid = '" + eid + "' and ownerpassword = '" + password + "' and rid = '" + rid + "'";
+			System.out.println(query);
+			rs = stmt.executeQuery(query);
+			if(rs.next()) {
+				result.add("OWNER");
+				result.add(String.valueOf(rs.getInt("rid")));
+				System.out.println(query);
 			} else {
+				//Now, check if employee.
 				ResultSet rsEmp;
 				String queryEmp = "Select * FROM employeeworkat WHERE rid = '" + rid + "' and eid = '" + eid + "' and password = '" + password + "'";
 				rsEmp = stmt.executeQuery(queryEmp);
 				System.out.println(queryEmp);
-				
+
 				if (rsEmp.next()) {
 					result.add("EMP");
 					result.add(String.valueOf(rsEmp.getInt("rid")));
 				} else {
 					result.add("NONE");
 				}
-			}
 
+			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		return result;
-		
+
 	}
-	
+
 	public Vector<Vector> getReviews(String locationName) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
@@ -88,7 +86,7 @@ public class SQLRestaurant {
 				String username = rs.getString("userName");
 				String rating = String.valueOf(rs.getInt("rating"));
 				String comments = rs.getString("comments");
-							
+
 				System.out.println(username + " " + rating + " " + comments);
 				//Object[] o = { username, rating, comments };
 				Vector<String> v = new Vector<String>();
@@ -96,7 +94,7 @@ public class SQLRestaurant {
 				v.add(rating);
 				v.add(comments);
 				results.add(v);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -104,7 +102,7 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
-	
+
 	public Vector<Vector> getMenuItems(String locationName) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
@@ -122,13 +120,13 @@ public class SQLRestaurant {
 			while (rs.next()) {
 				String foodName = rs.getString("name");
 				String price = String.valueOf(rs.getInt("price"));
-							
+
 				System.out.println(foodName + " " + price);
 				Vector<String> v = new Vector<String>();
 				v.add(foodName);
 				v.add(price);
 				results.add(v);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -136,7 +134,7 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
-	
+
 
 	public Vector<Vector> getRestaurantMenuItems(String rid) {
 		ResultSet rs;
@@ -155,13 +153,13 @@ public class SQLRestaurant {
 			while (rs.next()) {
 				String foodName = rs.getString("name");
 				String price = String.valueOf(rs.getInt("price"));
-							
+
 				System.out.println(foodName + " " + price);
 				Vector<String> v = new Vector<String>();
 				v.add(foodName);
 				v.add(price);
 				results.add(v);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -170,7 +168,7 @@ public class SQLRestaurant {
 		return results;
 	}
 	//TODO this algorithm currently only returns one result
-	
+
 	public Vector<Vector> getMaxCusine() {
 		ResultSet rs;
 		ResultSet rs2;
@@ -186,10 +184,10 @@ public class SQLRestaurant {
 			//rs = stmt.executeQuery(query);
 			rs2 = stmt.executeQuery(query2);
 			while (rs2.next()) {
-				
+
 				//String cuisine = rs.getString("cuisine");
 				//String rating = String.valueOf(rs.getInt("maxrating"));
-							
+
 				//System.out.println(cuisine + " " + rating);
 				//throwing in this query, you end up with only one result
 				//String query2 = "Select r.name,r.location FROM restaurant r,reviews re where re.rid=r.rid and re.rating = '" + rating + "'and r.cuisine = '" + cuisine + "'";
@@ -198,20 +196,20 @@ public class SQLRestaurant {
 				String cuisineType = "";
 				String ratingValue = "";
 				String nameLocation="";
-				
+
 				cuisineType = rs2.getString("cuisine");
 				String restaurantName = rs2.getString("name");
 				String restaurantLocation = rs2.getString("location");
 				ratingValue = rs2.getString("rating");
 				nameLocation = restaurantName+"-"+restaurantLocation;
-				
+
 				Vector<String> v = new Vector<String>();
 				v.add(cuisineType);
 				//v.add(restaurantName);
 				v.add(nameLocation);
 				v.add(ratingValue);
 				results.add(v);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -219,10 +217,10 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
-	
-	
-/*	//TODO this algorithm currently only returns one result
-	
+
+
+	/*	//TODO this algorithm currently only returns one result
+
 	public Vector<Vector> getMaxCusine() {
 		ResultSet rs;
 		ResultSet rs2;
@@ -234,13 +232,13 @@ public class SQLRestaurant {
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				
+
 				String cuisine = rs.getString("cuisine");
 				String name = rs.getString("name");
 				String location = rs.getString("location");
 				String rating = String.valueOf(rs.getInt("maxrating"));
 				String nameLocation = name+"-"+location;
-							
+
 				System.out.println(cuisine + " " + rating);
 				//throwing in this query, you end up with only one result
 				//String query2 = "Select r.name,r.location FROM restaurant r,reviews re where re.rid=r.rid and re.rating = '" + rating + "'";
@@ -257,7 +255,7 @@ public class SQLRestaurant {
 				v.add(nameLocation);
 				v.add(rating);
 				results.add(v);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -265,7 +263,7 @@ public class SQLRestaurant {
 		}
 		return results;
 	}*/
-	
+
 	public Vector<Vector> getAverageCuisine() {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
@@ -281,10 +279,10 @@ public class SQLRestaurant {
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				
+
 				String cuisine = rs.getString("cuisine");
 				String rating = String.valueOf(rs.getInt("avgrating"));
-							
+
 				System.out.println(cuisine + " " + rating);
 				Vector<String> v = new Vector<String>();
 				v.add(cuisine);
@@ -292,7 +290,7 @@ public class SQLRestaurant {
 				//v.add(nameLocation);
 				v.add(rating);
 				results.add(v);
-				
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -304,7 +302,7 @@ public class SQLRestaurant {
 	public Vector<String> getRestaurantsByID(String rid) {
 		ResultSet rs;
 		Vector<String> restaurants = new Vector<String>();
-		
+
 		String query = "SELECT name, location FROM restaurant WHERE rid="+rid;
 		System.out.println("SQLResturant.java getRestaurants query: " + query);
 		try {
@@ -313,19 +311,19 @@ public class SQLRestaurant {
 				String name = rs.getString("name");
 				String location = rs.getString("location");
 				restaurants.add(name + "-" + location);
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return restaurants;
 	}
-	
+
 	public String getRestaurantName(String rid) {
 		String result = "";
 		String query = "SELECT name, location FROM restaurant WHERE rid = '" + rid + "'";
 		System.out.println("getRestaurantName from SQLRestaurant.Java: " + query);
-		
+
 		try {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -339,11 +337,11 @@ public class SQLRestaurant {
 		}
 		return result;
 	}
-	
+
 	public Vector<String> getRestaurants() {
 		ResultSet rs;
 		Vector<String> restaurants = new Vector<String>();
-		
+
 		String query = "SELECT name, location FROM restaurant";
 		System.out.println(query);
 		try {
@@ -352,19 +350,19 @@ public class SQLRestaurant {
 				String name = rs.getString("name");
 				String location = rs.getString("location");
 				restaurants.add(name + "-" + location);
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return restaurants;
 	}
-	
-	
+
+
 	public String getRestaurantFromRID(String rid) {
 		ResultSet rs;
 		Vector<String> restaurants = new Vector<String>();
-		
+
 		String query = "Select name, location from restaurant where RID ='" + rid +"'";;
 		try {
 			rs = stmt.executeQuery(query);
@@ -372,15 +370,15 @@ public class SQLRestaurant {
 				String name = rs.getString("name");
 				String location = rs.getString("location");
 				restaurants.add(name + "-" + location);
-				
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return restaurants.get(0);
 	}
-	
-	
+
+
 	public boolean requestReservation(Date date, String time, String restaurantLocation, String partySize, String customerID) {
 		//time string format: HH:MM (24 hour hour)
 		boolean result = false;
@@ -389,13 +387,13 @@ public class SQLRestaurant {
 		String name = getRestaurantFromString(restaurantLocation);
 		String location = getLocationFromString(restaurantLocation);
 		String query = "select r.rid, t.tid from restaurant r, hastable t " + 
-					"where r.rid = t.rid and r.name = '" + name + "' and r.location = '" + location + "' and t.tablesize >=" + partySize + " "+
-					"MINUS " + 
-    				"(select t.rid, t.tid " +
-    				"from tablebooking tb, hastable t, restaurant r " +
-    				"where t.tid = tb.tid and t.rid = tb.rid and r.name = '" + name + "' and r.location = '" + location + "' " +
-    				"and ((to_timestamp('"+ requestTime +"', 'yyyy:mm:dd hh24:mi')) < (tb.startDaytime + interval'2' hour))" +
-    				"and ((to_timestamp('" + requestTime +"', 'yyyy:mm:dd hh24:mi')) + interval '2' hour) > (tb.startDayTime))";
+				"where r.rid = t.rid and r.name = '" + name + "' and r.location = '" + location + "' and t.tablesize >=" + partySize + " "+
+				"MINUS " + 
+				"(select t.rid, t.tid " +
+				"from tablebooking tb, hastable t, restaurant r " +
+				"where t.tid = tb.tid and t.rid = tb.rid and r.name = '" + name + "' and r.location = '" + location + "' " +
+				"and ((to_timestamp('"+ requestTime +"', 'yyyy:mm:dd hh24:mi')) < (tb.startDaytime + interval'2' hour))" +
+				"and ((to_timestamp('" + requestTime +"', 'yyyy:mm:dd hh24:mi')) + interval '2' hour) > (tb.startDayTime))";
 		System.out.println(query);
 		ResultSet rs;
 		try {
@@ -412,40 +410,40 @@ public class SQLRestaurant {
 				System.out.println("RID: " + rid + " TID: " + tid);
 				System.out.println(insertQuery);
 				int rows = stmt.executeUpdate(insertQuery);
-				
-			
+
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	private String toTimestampFormat(Date date, String time) {
 		int day = date.getDate();
 		String dayStr = String.format("%02d", day);
 		int month = date.getMonth()+1;
 		String monthStr = String.format("%02d", month);
 		int year = date.getYear()+1900;
-		
+
 		String formatStr = year + ":" + monthStr + ":" + dayStr + " " + time;
 		return formatStr;
 	}
-	
 
-	
+
+
 
 	String getRestaurantFromString(String restaurantLocation) {
 		String name = restaurantLocation.substring(0, restaurantLocation.indexOf("-"));
 		return name;		
 	}
-	
+
 	String getLocationFromString(String restaurantLocation) {
 		String location = restaurantLocation.substring(restaurantLocation.indexOf("-") + 1);
 		return location;
 
-		
+
 	}
 
 	//For the Reservations Panel when viewed by owner
@@ -454,9 +452,9 @@ public class SQLRestaurant {
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
 		String query = "select startdaytime, partysize, duration, tid, rid, firstname, lastname "+
-						"from customer c, tablebooking t "+
-						"where c.username=t.username AND t.rid="+resID;
-		
+				"from customer c, tablebooking t "+
+				"where c.username=t.username AND t.rid="+resID;
+
 		try{
 			rs = stmt.executeQuery(query);
 			while(rs.next()){
@@ -468,7 +466,7 @@ public class SQLRestaurant {
 				String customerFirstName = rs.getString("firstname");
 				String customerLastName = rs.getString("lastname");
 				String customerName = customerFirstName + " " + customerLastName;
-				
+
 				Vector<String> newStr = new Vector<String>();
 				newStr.add(starttime);
 				newStr.add(duration);
@@ -484,15 +482,15 @@ public class SQLRestaurant {
 		}
 		return result;
 	}
-	
+
 	public Vector<Vector> getFilteredReviews(String ratingSelection) {
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
 		String query = "select name, location, rating, comments, username" +
-					" from reviews r, restaurant t "+
-					"where r.rid = t.rid and "+ ratingSelection +" <= ALL (select rating " +
-					"from reviews r1 " +
-					"where r1.rid = r.rid)";
+				" from reviews r, restaurant t "+
+				"where r.rid = t.rid and "+ ratingSelection +" <= ALL (select rating " +
+				"from reviews r1 " +
+				"where r1.rid = r.rid)";
 		System.out.println(query);
 		try {
 			rs = stmt.executeQuery(query);
@@ -500,11 +498,11 @@ public class SQLRestaurant {
 				String name = rs.getString("name");
 				String location = rs.getString("location");
 				String nameLocation = name + "-" + location;
-				
+
 				String rating = String.valueOf(rs.getInt("rating"));
 				String comments = rs.getString("comments");
 				String username = rs.getString("username");
-				
+
 				Vector<String> newStr = new Vector<String>();
 				newStr.add(nameLocation);
 				newStr.add(username);
@@ -512,90 +510,90 @@ public class SQLRestaurant {
 				newStr.add(comments);
 				System.out.println(comments);
 				result.add(newStr);
-				
+
 			}
-			
-			
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	public boolean addFoodItem(int fid, String name, String price, String rid){
 		boolean result = false;
-		
+
 		String query = "INSERT INTO menuitem VALUES(";
-				query += fid + ",";
-				query += "'" + name + "',";
-				query += price + ",";
-				query += rid + ")";
+		query += fid + ",";
+		query += "'" + name + "',";
+		query += price + ",";
+		query += rid + ")";
 		System.out.println("ADDING FOOD WITH QUERY :" + query);
 		try {
-		int rs = stmt.executeUpdate(query);
-		result = rs==1? true: false;
-		
+			int rs = stmt.executeUpdate(query);
+			result = rs==1? true: false;
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	public boolean deleteFoodItem(String RID, String foodName){
 		boolean result = false;
 		String query = "DELETE FROM menuitem WHERE rid = " + RID + " and name = '" + foodName + "'";
 		try {
-		int rs = stmt.executeUpdate(query);
-		result = rs==1? true: false;
-		
+			int rs = stmt.executeUpdate(query);
+			result = rs==1? true: false;
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	public boolean updateRestaurantName(String rid, String name, String location) {
 		boolean result = false;
 		String 	update = "UPDATE restaurant ";
-				update += "SET location = '" + location + "', ";
-				update += "name = '" + name + "' ";
-				update += "WHERE rid = " + rid;
+		update += "SET location = '" + location + "', ";
+		update += "name = '" + name + "' ";
+		update += "WHERE rid = " + rid;
 		System.out.println("SQLResturant.java Name Update Query: " + update);
 		try {
-		int rs = stmt.executeUpdate(update);
-		result = rs==1? true: false;
-		
+			int rs = stmt.executeUpdate(update);
+			result = rs==1? true: false;
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
-	
+
 	public boolean addEmployee(int eid, String name, String password, String rid) {
 		boolean result = false;
 		String 	insert = "INSERT INTO employeeworkat VALUES (";
-				insert += eid + ", ";
-				insert += "'" + name + "', ";
-				insert += "'" + password + "', ";
-				insert += rid + ")";
+		insert += eid + ", ";
+		insert += "'" + name + "', ";
+		insert += "'" + password + "', ";
+		insert += rid + ")";
 		System.out.println("SQLResturant.java Name Update Query: " + insert);
 		try {
-		int rs = stmt.executeUpdate(insert);
-		result = rs==1? true: false;
-		
+			int rs = stmt.executeUpdate(insert);
+			result = rs==1? true: false;
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
 	}
 

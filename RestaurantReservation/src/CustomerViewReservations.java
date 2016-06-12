@@ -49,7 +49,7 @@ public class CustomerViewReservations extends JPanel {
 	displayResult = new JTable();
 	
 	displayResultPanel = new JScrollPane();
-	displayResultPanel.setPreferredSize(new Dimension(500, 300));
+	displayResultPanel.setPreferredSize(new Dimension(600, 400));
 
 	submit = new JButton("Get Your Reservations");
 	
@@ -70,8 +70,8 @@ public class CustomerViewReservations extends JPanel {
 			Vector<Vector> data = sc.getReservations(customerId);
 			displayResult = new JTable(data, colNames);
 
-			displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
-			displayResult.getColumnModel().getColumn(1).setMaxWidth(150);
+			displayResult.getColumnModel().getColumn(0).setMaxWidth(275);
+			displayResult.getColumnModel().getColumn(1).setMaxWidth(250);
 			displayResult.getColumnModel().getColumn(2).setMaxWidth(100);
 			//displayResult.getColumnModel().getColumn(3).setMaxWidth(0);
 			

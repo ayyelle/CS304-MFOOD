@@ -28,7 +28,7 @@ public class SQLCustomer {
 			e.printStackTrace();
 		}
 		try {
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM restaurant");
 			rs.next();

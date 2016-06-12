@@ -144,6 +144,13 @@ public class CustomerAddReviewPanel extends JPanel {
 	public void start() {
 		this.customerId = parent.getCustomerID();
 		System.out.println(customerId);
+		Vector<String> restaurants = sr.getRestaurants();
+		
+		restaurantComboBox.removeAllItems();
+		for (int i = 0; i<restaurants.size(); i++) {
+			restaurantComboBox.addItem(restaurants.get(i));
+
+		}
 	}
 	
 

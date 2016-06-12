@@ -26,15 +26,15 @@ public class MainApp implements ItemListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField restaurantID = new JTextField();
-				JTextField empID = new JTextField();
+				JTextField workerID = new JTextField();
 				JTextField lastName = new JTextField();
 				JPasswordField password = new JPasswordField();
 				final JComponent[] inputs = new JComponent[] {
-						new JLabel("OwnerID/RestaurantID:"),
+						new JLabel("RestaurantID:"),
 						restaurantID,
 						
-						new JLabel ("Employee ID:"),
-						empID,
+						new JLabel ("Employee ID/OwnerID:"),
+						workerID,
 						
 						new JLabel("Password"),
 						password
@@ -42,10 +42,10 @@ public class MainApp implements ItemListener {
 				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
 				System.out.println("You entered " +
 						restaurantID.getText() + ", " +
-						empID.getText() + ", " +
+						workerID.getText() + ", " +
 						password.getText());
 				SQLRestaurant sql = new SQLRestaurant();
-				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), empID.getText(), password.getText());
+				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), workerID.getText(), password.getText());
 				String userType = userInfo.get(0);
 				if (userType.equals("OWNER")) {
 					CardLayout cl = (CardLayout)(cards.getLayout());

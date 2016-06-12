@@ -121,6 +121,14 @@ public class CustomerViewMenuPanel extends JPanel {
 		this.customerId = parent.getCustomerID();
 		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
+		
+		Vector<String> restaurants = s.getRestaurants();
+		
+		restaurantComboBox.removeAllItems();
+		for (int i = 0; i<restaurants.size(); i++) {
+			restaurantComboBox.addItem(restaurants.get(i));
+
+		}
 	}
     
 }
