@@ -79,6 +79,67 @@ insert into restaurant values(
  'marioj'
   );
 
+insert into restaurant values(
+  6,
+  'Cafe Medina',
+  '780 Richards Street',
+  'Vancouver',
+  'Downtown',
+  'European',
+  6000,
+ 'Robbie Kane',
+ 'rkane'
+  );
+
+insert into restaurant values(
+  7,
+  'Stephos Souvlaki Greek Taverna',
+  '1124 Davie Street',
+  'Vancouver',
+  'West End',
+  'Greek',
+  7000,
+ 'Steph Vardalos',
+ 'svard'
+  );
+
+insert into restaurant values(
+  8,
+  'Chambar',
+  '568 Beatty Street',
+  'Vancouver',
+  'Downtown',
+  'European',
+  8000,
+ 'Nico Schuermans',
+ 'nicocham'
+  );
+
+insert into restaurant values(
+  9,
+  'Fable Kitchen',
+  '1944 W 4th Avenue',
+  'Vancouver',
+  'Kitsilano',
+  'Canadian',
+  9000,
+ 'Trevor Bird',
+ 'birdy'
+  );
+
+insert into restaurant values(
+  10,
+  'Jethros Fine Grub',
+  '3420 Dunbar Street',
+  'Vancouver',
+  'Dunbar',
+  'Diner',
+  1000,
+ 'Emily-Jane Stuart',
+ 'ejGrub'
+  );
+
+
 create table customer(
   UserName varchar(50) primary key,
   password varchar(50) NOT NULL,
@@ -186,7 +247,17 @@ Insert into employeeworkat values (300,'Larry Jones','ljones',3);
 Insert into employeeworkat values (400,'Chris Young','cyoung',4);
 Insert into employeeworkat values (500,'Lily White','lwhite',5);
 
+Insert into employeeworkat values (600,'Anna OConnel','aoconn',6);
+Insert into employeeworkat values (601,'Patrick OConnel','poconn',6);
 
+Insert into employeeworkat values (700,'Stuart Bonbon','sbon',7);
+
+Insert into employeeworkat values (800,'Trevor Eagle','theEagle',8);
+
+Insert into employeeworkat values (900,'Sarah Smith','ssmith',9);
+Insert into employeeworkat values (901,'Joe Fresh','jfresh',9);
+
+Insert into employeeworkat values (1000,'Harry Jones','jonesy',10);
 
 
 
