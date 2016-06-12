@@ -20,7 +20,7 @@ public class SQLRestaurant {
 		}
 		try {
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_d1v8", "a71528095");
 			stmt = con.createStatement();
 
 
@@ -626,6 +626,7 @@ public class SQLRestaurant {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			result = false;
 		}
 
 		return result;

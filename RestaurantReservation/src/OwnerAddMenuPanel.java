@@ -118,19 +118,20 @@ public class OwnerAddMenuPanel extends JPanel {
 				if (name.equals("")||price.equals("")||fid.equals("")) {
 					JOptionPane.showMessageDialog(null,"Please fill in all textfields!", "Add Menu Item", JOptionPane.PLAIN_MESSAGE);
 				} else {
+					if (addFoodItem(fidInt, name, price, restaurantId)) {
 					JOptionPane.showMessageDialog(null,"Added!", "Add Menu Item", JOptionPane.PLAIN_MESSAGE);
-	
+					} else {
+					JOptionPane.showMessageDialog(null, "Please use a different ID!", "Add Menu Item", JOptionPane.PLAIN_MESSAGE);
 				}
-				
-				addFoodItem(fidInt, name, price, restaurantId);
-				
+				}
+								
 			}
 			
 		});
 	}
 	
-	private void addFoodItem(int fid, String name, String price, String rid) {
-		s.addFoodItem(fid, name, price, rid);
+	private Boolean addFoodItem(int fid, String name, String price, String rid) {
+		return s.addFoodItem(fid, name, price, rid);
 	}
 	
 	private void start() {
