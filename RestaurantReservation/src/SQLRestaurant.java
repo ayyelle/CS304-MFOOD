@@ -591,7 +591,11 @@ public class SQLRestaurant {
 
 		}
 		catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			if (e.getErrorCode() == 1) {
+				//Integrity constraint violated -- not unique employee id
+				result = false;
+			}
 		}
 
 		return result;
