@@ -199,31 +199,65 @@ create table HasTable(
   TID int,
   tablesize int,
   RID int,
+  numBooked int,
  PRIMARY KEY(TID, RID),
   foreign key (RID) references restaurant
   );
 
-insert into HasTable values (1, 2, 1);
-insert into HasTable values (2, 2, 1);
-insert into HasTable values (3, 4, 1);
+insert into HasTable values (1, 2, 1, 0);
+insert into HasTable values (2, 2, 1, 0);
+insert into HasTable values (3, 4, 1, 0);
 
-insert into HasTable values (1, 2, 2);
-insert into HasTable values (2, 2, 2);
-insert into HasTable values (3, 4, 2);
-insert into HasTable values (4, 6, 2);
+insert into HasTable values (1, 2, 2, 0);
+insert into HasTable values (2, 2, 2, 0);
+insert into HasTable values (3, 4, 2, 0);
+insert into HasTable values (4, 6, 2, 0);
 
-insert into HasTable values (1, 2, 3);
-insert into HasTable values (2, 2, 3);
-insert into HasTable values (3, 4, 3);
-insert into HasTable values (4, 8, 3);
+insert into HasTable values (1, 2, 3, 0);
+insert into HasTable values (2, 2, 3, 0);
+insert into HasTable values (3, 4, 3, 0);
+insert into HasTable values (4, 8, 3, 0);
 
-insert into HasTable values (1, 2, 4);
-insert into HasTable values (2, 4, 4);
+insert into HasTable values (1, 2, 4, 0);
+insert into HasTable values (2, 4, 4, 0);
 
-insert into HasTable values (1, 2, 5);
-insert into HasTable values (2, 4, 5);
-insert into HasTable values (3, 5, 5);
-insert into HasTable values (4, 6, 5);
+insert into HasTable values (1, 2, 5, 0);
+insert into HasTable values (2, 4, 5, 0);
+insert into HasTable values (3, 5, 5, 0);
+insert into HasTable values (4, 6, 5, 0);
+
+insert into HasTable values (1, 2, 6, 0);
+ insert into HasTable values (2, 4, 6, 0);
+ insert into HasTable values (3, 5, 6, 0);
+ insert into HasTable values (4, 6, 6, 0);
+ 
+ insert into HasTable values (1, 2, 7, 0);
+ insert into HasTable values (2, 4, 7, 0);
+ insert into HasTable values (3, 5, 7, 0);
+ insert into HasTable values (4, 6, 7, 0);
+ insert into HasTable values (5, 2, 7, 0);
+ insert into HasTable values (6, 2, 7, 0);
+ 
+ insert into HasTable values (1, 2, 8, 0);
+ insert into HasTable values (2, 4, 8, 0);
+ insert into HasTable values (3, 5, 8, 0);
+insert into HasTable values (4, 6, 8, 0);
+insert into HasTable values (5, 2, 8, 0);
+insert into HasTable values (6, 2, 8, 0);
+
+insert into HasTable values (1, 2, 9, 0);
+insert into HasTable values (2, 4, 9, 0);
+insert into HasTable values (3, 5, 9, 0);
+insert into HasTable values (4, 6, 9, 0);
+insert into HasTable values (5, 4, 9, 0);
+insert into HasTable values (6, 10, 9, 0);
+
+insert into HasTable values (1, 2, 10, 0);
+insert into HasTable values (2, 4, 10, 0);
+insert into HasTable values (3, 2, 10, 0);
+insert into HasTable values (4, 6, 10, 0);
+insert into HasTable values (5, 4, 10, 0);
+insert into HasTable values (6, 10, 10, 0);
 
 create table TableBooking(
   StartDayTime timestamp,
@@ -236,6 +270,17 @@ create table TableBooking(
   foreign key (TID, RID) references HasTable on delete cascade,
   foreign key (UserName) references customer on delete cascade
   );
+
+ CREATE OR REPLACE TRIGGER tableBookUpdate
+ AFTER INSERT ON TableBooking
+ REFERENCING NEW AS n
+ FOR EACH ROW
+ BEGIN
+         update hastable h
+         set h.numBooked = h.numBooked + 1
+        where h.TID = :n.TID and h.RID = :n.RID;
+END;
+/
 
 insert into tablebooking values (TO_TIMESTAMP('2016-05-16 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 2, 1, 'aleong');
 insert into tablebooking values (TO_TIMESTAMP('2016-05-20 17:00:00', 'yyyy-mm-dd hh24:mi:ss'), 4, 2, 3, 2, 'lcoombe');
