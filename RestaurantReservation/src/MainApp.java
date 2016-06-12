@@ -10,10 +10,10 @@ public class MainApp implements ItemListener {
 	String restId;
 	String userType;
 	String ownerId;
-	
+
 	//variables to help identify employee
 	String empID;
-	
+
 	public void addComponentToPane(Container pane) {
 		//Put the JComboBox in a JPanel to get a nicer look.
 		//Panel to add the upper navigation buttons to
@@ -36,40 +36,37 @@ public class MainApp implements ItemListener {
 				final JComponent[] inputs = new JComponent[] {
 						new JLabel("RestaurantID:"),
 						restaurantID,
-						
+
 						new JLabel ("Employee ID/OwnerID:"),
 						workerID,
-						
+
 						new JLabel("Password"),
 						password
 				};
 				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
-				
-				System.out.println("You entered " +
-						restaurantID.getText() + ", " +
-						workerID.getText() + ", " +
-						password.getText());
-				
-				
-				SQLRestaurant sql = new SQLRestaurant();
-				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), workerID.getText(), password.getText());
-				String userType = userInfo.get(0);
-				if (userType.equals("OWNER")) {
-					CardLayout cl = (CardLayout)(cards.getLayout());
-					cl.show(cards, "Home");
-					cl.show(cards, "RestaurantOwner");
-					restId = userInfo.get(1);
-					System.out.println(restId);
-				} else if (userType.equals("EMP")) {
-					CardLayout cl = (CardLayout)(cards.getLayout());
-					cl.show(cards, "Home");
-					cl.show(cards, "RestaurantEmployee");
-					restId = userInfo.get(1);	
-					empID = workerID.getText();
-					System.out.println("MainApp Emp RID: " + restId + " empID: "+ empID);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Login failed! try again");
+				if (restaurantID.getText().equals("") || password.getText().equals("") || workerID.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Please fill out all the fields!");
+				} else {
+					SQLRestaurant sql = new SQLRestaurant();
+					ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), workerID.getText(), password.getText());
+					String userType = userInfo.get(0);
+					if (userType.equals("OWNER")) {
+						CardLayout cl = (CardLayout)(cards.getLayout());
+						cl.show(cards, "Home");
+						cl.show(cards, "RestaurantOwner");
+						restId = userInfo.get(1);
+						System.out.println(restId);
+					} else if (userType.equals("EMP")) {
+						CardLayout cl = (CardLayout)(cards.getLayout());
+						cl.show(cards, "Home");
+						cl.show(cards, "RestaurantEmployee");
+						restId = userInfo.get(1);	
+						empID = workerID.getText();
+						System.out.println("MainApp Emp RID: " + restId + " empID: "+ empID);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Login failed! try again");
+					}
 				}
 			}
 
@@ -89,19 +86,20 @@ public class MainApp implements ItemListener {
 						password
 				};
 				JOptionPane.showMessageDialog(null, inputs, "Customer Login", JOptionPane.PLAIN_MESSAGE);
-				System.out.println("You entered " +
-						userName.getText() + ", " +
-						password.getText());
 				SQLCustomer sql = new SQLCustomer();
-				boolean result = sql.checkCredentials(userName.getText(), password.getText());
-				if (result) {
-					//Would query database to check entry exists
-					CardLayout cl = (CardLayout)(cards.getLayout());
-					customerId = userName.getText();
-					cl.show(cards, "Home");
-					cl.show(cards, "Customer");
+				if (userName.getText().equals("") || password.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Please fill out all the fields!");
 				} else {
-					JOptionPane.showMessageDialog(null, "Login failed! try again");
+					boolean result = sql.checkCredentials(userName.getText(), password.getText());
+					if (result) {
+						//Would query database to check entry exists
+						CardLayout cl = (CardLayout)(cards.getLayout());
+						customerId = userName.getText();
+						cl.show(cards, "Home");
+						cl.show(cards, "Customer");
+					} else {
+						JOptionPane.showMessageDialog(null, "Login failed! try again");
+					}
 				}
 
 			}
@@ -251,7 +249,7 @@ public class MainApp implements ItemListener {
 			}
 		});
 	}
-	
+
 	public String getEID(){
 		return empID;
 	}
@@ -259,7 +257,7 @@ public class MainApp implements ItemListener {
 	public String getCustomerID() {
 		return this.customerId;
 	}
-	
+
 	public String getRestaurantID() {
 		return this.restId;
 	}
