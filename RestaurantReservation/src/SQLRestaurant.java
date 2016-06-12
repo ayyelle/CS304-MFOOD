@@ -20,7 +20,7 @@ public class SQLRestaurant {
 		}
 		try {
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_d1v8", "a71528095");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
 			stmt = con.createStatement();
 
 

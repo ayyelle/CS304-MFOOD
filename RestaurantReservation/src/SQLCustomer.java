@@ -28,7 +28,7 @@ public class SQLCustomer {
 			e.printStackTrace();
 		}
 		try {
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_d1v8", "a71528095");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM restaurant");
 			rs.next();
@@ -140,15 +140,26 @@ public class SQLCustomer {
 		Vector<Vector> results = new Vector<Vector>();
 		String query = "Select * from TableBooking where UserName='" + username +"'";
 		System.out.println(query);
+		//DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		//java.util.Date date= new java.util.Date();
+		Timestamp ts_now = new Timestamp(today.getTime());
+		System.out.println("today's date is " + ts_now);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				//String startDayTime = rs.getString("StartDayTime");
+				Timestamp sqlTime = rs.getTimestamp("StartDayTime");
+				//do not include old reservations
+				if (sqlTime.before(ts_now)){
+					continue;
+				}
 				String startDayTime = String.valueOf(rs.getTimestamp("StartDayTime"));
 				String partySize = String.valueOf(rs.getInt("PartySize"));
 				//String duration = String.valueOf(rs.getInt("Duration"));
 				String rid = String.valueOf(rs.getInt("RID"));
 				String tid = String.valueOf(rs.getInt("TID"));
+				System.out.println("start day time from sql is " + startDayTime);
+				
 							
 				System.out.println(startDayTime + " " + partySize + " "+ " " + rid );
 				Vector<String> v = new Vector<String>();
@@ -181,10 +192,16 @@ public class SQLCustomer {
 		Vector<String> results = new Vector<String>();
 		String query = "Select * from TableBooking where UserName='" + username +"'";
 		System.out.println(query);
+		Date today = new Date();
+		//java.util.Date date= new java.util.Date();
+		Timestamp ts_now = new Timestamp(today.getTime());
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				//String startDayTime = rs.getString("StartDayTime");
+				Timestamp sqlTime = rs.getTimestamp("StartDayTime");
+				if (sqlTime.before(ts_now)){
+					continue;
+				}
 				String startDayTime = String.valueOf(rs.getTimestamp("StartDayTime"));
 				String partySize = String.valueOf(rs.getInt("PartySize"));
 				//String duration = String.valueOf(rs.getInt("Duration"));

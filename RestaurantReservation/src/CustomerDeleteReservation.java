@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -104,11 +105,11 @@ public class CustomerDeleteReservation extends JPanel {
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd");
 				Date date = new Date();
+				System.out.println("date is " + dateC);
 				System.out.println(dateFormat.format(date));
 				if (dateC == dateFormat.format(date)){
 					JOptionPane.showMessageDialog(null, "Cannot cancel same day reservation", "Call Restaurant", JOptionPane.PLAIN_MESSAGE);
-					return;
-					
+					return;	
 				}
 				//Vector<String> colNames = new Vector<String>();
 				//colNames.add("Food Name");
