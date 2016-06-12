@@ -71,6 +71,10 @@ public class CustomerDeleteReservation extends JPanel {
 				//System.out.println(partySize);
 				//String tid = booking.substring(booking.indexOf("-") + 6);
 				//System.out.println(tid);
+				if (booking == null){
+					JOptionPane.showMessageDialog(null, "You have no reservations to cancel!", "No Reservations", JOptionPane.PLAIN_MESSAGE);
+					return;
+				}
 				
 				String[] b = booking.split("-"); 
 				String one = b[0];
@@ -113,7 +117,7 @@ public class CustomerDeleteReservation extends JPanel {
 				//SQLRestaurant s = new SQLRestaurant();
 				Boolean result = sc.deleteBooking(locationConcat,startDayTimeC,customerId,tid);
 				if (result){
-					JOptionPane.showMessageDialog(null, "Your selected reservation has been cancelled!", "Succesful", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Your selected reservation has been cancelled!", "Successful", JOptionPane.PLAIN_MESSAGE);
 					start();
 				}
 				//Vector<Vector> data = s.getMenuItems(restaurant);

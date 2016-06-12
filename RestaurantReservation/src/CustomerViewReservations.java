@@ -78,7 +78,7 @@ public class CustomerViewReservations extends JPanel {
 			displayResult.setRowHeight(40);
 			displayResultPanel.getViewport().add(displayResult);
 			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "You have no made any reservations!", "No Upcoming Reservation", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "You have not made any reservations!", "No Upcoming Reservation", JOptionPane.PLAIN_MESSAGE);
 			}
 			
 		}
