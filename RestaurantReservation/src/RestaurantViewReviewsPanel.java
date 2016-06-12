@@ -120,6 +120,13 @@ public class RestaurantViewReviewsPanel extends JPanel {
 		this.restaurantId = parent.getRestaurantID();
 		System.out.println("RID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
+		Vector<String> restaurants = s.getRestaurants();
+		
+		restaurantComboBox.removeAllItems();
+		for (int i = 0; i<restaurants.size(); i++) {
+			restaurantComboBox.addItem(restaurants.get(i));
+
+		}
 	}
 
 }

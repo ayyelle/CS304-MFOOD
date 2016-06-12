@@ -118,19 +118,25 @@ public class OwnerAddEmployeePanel extends JPanel {
 				if (name.equals("")||password.equals("")||eid.equals("")) {
 					JOptionPane.showMessageDialog(null,"Please fill in all textfields!", "Add Employee", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null,"New employee added!", "Add Employee", JOptionPane.PLAIN_MESSAGE);
-	
+					boolean result = addEmployee(eidInt, name, password, restaurantId);
+					if (result) {
+						JOptionPane.showMessageDialog(null,"New employee added!", "Add Employee", JOptionPane.PLAIN_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null,"There was an error in adding the employee. Please pick a unique employee ID", "Add Employee", JOptionPane.PLAIN_MESSAGE);
+
+					}
 				}
 				
-				addEmployee(eidInt, name, password, restaurantId);
+				
 				
 			}
 			
 		});
 	}
 	
-	private void addEmployee(int eid, String name, String password, String rid) {
-		s.addEmployee(eid, name, password, rid);
+	private boolean addEmployee(int eid, String name, String password, String rid) {
+		boolean result = s.addEmployee(eid, name, password, rid);
+		return result;
 	}
 	
 	private void start() {
