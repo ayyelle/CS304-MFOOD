@@ -40,7 +40,7 @@ public class CustomerViewReservations extends JPanel {
 		
 	this.setLayout(new GridBagLayout());
 	GridBagConstraints c = new GridBagConstraints();
-	title = new JLabel("Your Reservations", JLabel.CENTER);
+	title = new JLabel("Your Upcoming Reservations", JLabel.CENTER);
 	title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 
 	displayResult = new JTable();
@@ -48,7 +48,7 @@ public class CustomerViewReservations extends JPanel {
 	displayResultPanel = new JScrollPane();
 	displayResultPanel.setPreferredSize(new Dimension(600, 400));
 
-	submit = new JButton("Get Your Reservations");
+	submit = new JButton("Get Your Upcoming Reservations");
 	
 	submit.addActionListener(new ActionListener() {
 
