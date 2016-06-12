@@ -28,6 +28,7 @@ public class EmployeePanel extends JPanel implements RestaurantPanel {
 	JPanel restaurantCards;
 	String userNameString;
 	CardLayout cl;
+	String empID;
 
 	public EmployeePanel(MainApp parent) {
 		this.parent = parent;
@@ -131,9 +132,10 @@ public class EmployeePanel extends JPanel implements RestaurantPanel {
 	}
 	public void start() {
 		this.restaurantId = parent.getRestaurantID();
+		this.empID = parent.getEID();
 		r = new SQLRestaurant();
 		restaurantName.setText(r.getRestaurantName(restaurantId));
-		userNameString = r.getOwnerFromRID(restaurantId);
+		userNameString = r.getEmployeeName(restaurantId, empID);
 		restaurantWelcome.setText("Welcome " + userNameString + "!");
 		cl = (CardLayout) (restaurantCards.getLayout());
 		cl.show(restaurantCards, "SeeReservations");
