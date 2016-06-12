@@ -31,11 +31,17 @@ public class OwnerViewMenuPanel extends JPanel {
 	JTable displayResult;
 	SQLRestaurant s;
 	String restaurantName;
+	Boolean isOwner;
 
-	public OwnerViewMenuPanel(RestaurantPanel parent) {
+	public OwnerViewMenuPanel(RestaurantPanel parent, String who) {
 		this.parent = parent;
 		s = new SQLRestaurant();
-
+		if(who.equals("emp")){
+			isOwner=false;
+		}else{
+			isOwner=true;
+		}
+			
 		Vector<String> restaurantOptions = s.getRestaurants();
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -49,7 +55,7 @@ public class OwnerViewMenuPanel extends JPanel {
 		displayResultPanel.setPreferredSize(new Dimension(300, 300));
 
 		submit = new JButton("Show Menu");
-		delete = new JButton("Delete Item");
+		
 
 		submit.addActionListener(new ActionListener() {
 
@@ -61,19 +67,7 @@ public class OwnerViewMenuPanel extends JPanel {
 
 		});
 
-		delete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int row = displayResult.getSelectedRow();
-				String foodName = (String) displayResult.getValueAt(row, 0);
-				System.out.println("Food name to be deleted: " + foodName);
-				System.out.println("Restaurant ID: " + restaurantId);
-				deleteFoodItem(restaurantId, foodName);
-				update();
-			}
-
-		});
+		
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -103,9 +97,27 @@ public class OwnerViewMenuPanel extends JPanel {
 		c.gridy = 4;
 		this.add(displayResultPanel, c);
 
-		c.gridx = 1;
-		c.gridy = 5;
-		this.add(delete, c);
+
+		if(isOwner){
+			delete = new JButton("Delete Item");
+			delete.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					int row = displayResult.getSelectedRow();
+					String foodName = (String) displayResult.getValueAt(row, 0);
+					System.out.println("Food name to be deleted: " + foodName);
+					System.out.println("Restaurant ID: " + restaurantId);
+					deleteFoodItem(restaurantId, foodName);
+					update();
+				}
+
+			});
+			c.gridx = 1;
+			c.gridy = 5;
+			this.add(delete, c);
+		}
+		
 
 		addComponentListener(new ComponentAdapter() {
 			@Override

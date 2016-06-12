@@ -121,7 +121,7 @@ public class OwnerPanel extends JPanel implements RestaurantPanel {
 		JPanel seeTables = new OwnerTablesPanel(this);
 		restaurantCards.add(seeTables, "seeTables");
 
-		JPanel seeMenu = new OwnerViewMenuPanel(this);
+		JPanel seeMenu = new OwnerViewMenuPanel(this, "owner");
 		restaurantCards.add(seeMenu, "SeeMenu");
 
 		JPanel addMenu = new OwnerAddMenuPanel(this);
@@ -200,23 +200,8 @@ public class OwnerPanel extends JPanel implements RestaurantPanel {
 		userNameString = r.getOwnerFromRID(restaurantId);
 		restaurantWelcome.setText("Welcome " + userNameString + "!");
 		cl = (CardLayout) (restaurantCards.getLayout());
-		cl.show(restaurantCards, "ownerProperties");
 		cl.show(restaurantCards, "SeeReservations");
-		cl.show(restaurantCards, "viewReviews");
-		cl.show(restaurantCards, "seeMenuItems");
-		cl.show(restaurantCards, "addMenuItems");
-		cl.show(restaurantCards, "addEmployee");
 	}
-
-	
-	//
-	// public void start() {
-	// this.restaurantId = parent.getRestaurantID();
-	// restaurantWelcome.setText("Welcome Owner of restaurant: RID" +
-	// restaurantId + "!");
-	// CardLayout cl = (CardLayout)(restaurantCards.getLayout());
-	// cl.show(restaurantCards, "Reservations");
-	// }
 
 	public String getRestaurantID() {
 		return this.restaurantId;
