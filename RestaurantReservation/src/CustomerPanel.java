@@ -45,7 +45,7 @@ public class CustomerPanel extends JPanel {
 		customerWelcome.setText("Welcome " + customerId + "!");
         CardLayout cl = (CardLayout)(customerCards.getLayout());
         cl.show(customerCards, "customerAddReview");
-        cl.show(customerCards, "viewReviews");
+        cl.show(customerCards, "seeReservations");
 	}
 	
 	public void setUpPanel() {

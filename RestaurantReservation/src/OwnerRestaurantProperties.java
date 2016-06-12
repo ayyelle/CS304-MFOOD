@@ -101,19 +101,26 @@ public class OwnerRestaurantProperties extends JPanel {
 				if (name.equals("")||location.equals("")) {
 					JOptionPane.showMessageDialog(null,"Please fill in all textfields!", "Update Name", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null,"Restaurant Name Updated!", "Update Name", JOptionPane.PLAIN_MESSAGE);
+					boolean result = updateRestaurantName(restaurantId, name, location);
+					if (result) {
+						JOptionPane.showMessageDialog(null,"Restaurant Name Updated!", "Update Name", JOptionPane.PLAIN_MESSAGE);
+						parent.start();
+					} else {
+						JOptionPane.showMessageDialog(null,"The name/location combination specified is already in use. Please choose another combination!", "Update Name", JOptionPane.PLAIN_MESSAGE);
+
+					}
 	
 				}
 				
-				updateRestaurantName(restaurantId, name, location);
 				
 			}
 			
 		});
 	}
 	
-	private void updateRestaurantName(String rid, String name, String location) {
-		s.updateRestaurantName(rid, name, location);
+	private boolean updateRestaurantName(String rid, String name, String location) {
+		boolean result = s.updateRestaurantName(rid, name, location);
+		return result;
 	}
 	
 	private void start() {

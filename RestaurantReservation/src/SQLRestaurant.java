@@ -644,7 +644,10 @@ public class SQLRestaurant {
 			result = rs == 1 ? true : false;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (e.getErrorCode() == 1) {
+				// Primary key constraint violation
+				result = false;
+			}
 		}
 
 		return result;
