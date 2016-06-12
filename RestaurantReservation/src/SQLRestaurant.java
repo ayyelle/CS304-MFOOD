@@ -130,7 +130,21 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
-
+	
+	public String getEmployeeName(String rid, String eid){
+		ResultSet rs;
+		String employeename = "";
+		String query = "Select name from employeeworkat where eid="+eid+" AND rid="+rid;
+		try{
+			rs = stmt.executeQuery(query);
+			while(rs.next()){
+				employeename=rs.getString("name");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return employeename;
+	}
 
 	public Vector<Vector> getMenuItems(String locationName) {
 		ResultSet rs;
@@ -165,8 +179,7 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
-
-
+	
 	public Vector<Vector> getRestaurantMenuItems(String rid) {
 		ResultSet rs;
 		Vector<Vector> results = new Vector<Vector>();

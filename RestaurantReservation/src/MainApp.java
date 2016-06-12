@@ -11,6 +11,9 @@ public class MainApp implements ItemListener {
 	String userType;
 	String ownerId;
 	
+	//variables to help identify employee
+	String empID;
+	
 	public void addComponentToPane(Container pane) {
 		//Put the JComboBox in a JPanel to get a nicer look.
 		//Panel to add the upper navigation buttons to
@@ -23,6 +26,7 @@ public class MainApp implements ItemListener {
 		//Adding actions to the main navigation buttons
 		restButton.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField restaurantID = new JTextField();
@@ -40,10 +44,13 @@ public class MainApp implements ItemListener {
 						password
 				};
 				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
+				
 				System.out.println("You entered " +
 						restaurantID.getText() + ", " +
 						workerID.getText() + ", " +
 						password.getText());
+				
+				
 				SQLRestaurant sql = new SQLRestaurant();
 				ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), workerID.getText(), password.getText());
 				String userType = userInfo.get(0);
@@ -57,8 +64,9 @@ public class MainApp implements ItemListener {
 					CardLayout cl = (CardLayout)(cards.getLayout());
 					cl.show(cards, "Home");
 					cl.show(cards, "RestaurantEmployee");
-					restId = userInfo.get(1);		
-					System.out.println("HERE! RID: " + restId);
+					restId = userInfo.get(1);	
+					empID = workerID.getText();
+					System.out.println("MainApp Emp RID: " + restId + " empID: "+ empID);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Login failed! try again");
@@ -242,6 +250,10 @@ public class MainApp implements ItemListener {
 				createAndShowGUI();
 			}
 		});
+	}
+	
+	public String getEID(){
+		return empID;
 	}
 
 	public String getCustomerID() {
