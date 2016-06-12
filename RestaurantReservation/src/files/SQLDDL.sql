@@ -79,6 +79,66 @@ insert into restaurant values(
  'marioj'
   );
 
+insert into restaurant values(
+  6,
+  'Cafe Medina',
+  '780 Richards Street',
+  'Vancouver',
+  'Downtown',
+  'European',
+  6000,
+ 'Robbie Kane',
+ 'rkane'
+  );
+
+insert into restaurant values(
+  7,
+  'Stephos Souvlaki Greek Taverna',
+  '1124 Davie Street',
+  'Vancouver',
+  'West End',
+  'Greek',
+  7000,
+ 'Steph Vardalos',
+ 'svard'
+  );
+
+insert into restaurant values(
+  8,
+  'Chambar',
+  '568 Beatty Street',
+  'Vancouver',
+  'Downtown',
+  'European',
+  8000,
+ 'Nico Schuermans',
+ 'nicocham'
+  );
+
+insert into restaurant values(
+  9,
+  'Fable Kitchen',
+  '1944 W 4th Avenue',
+  'Vancouver',
+  'Kitsilano',
+  'Canadian',
+  9000,
+ 'Trevor Bird',
+ 'birdy'
+  );
+
+insert into restaurant values(
+  10,
+  'Jethros Fine Grub',
+  '3420 Dunbar Street',
+  'Vancouver',
+  'Dunbar',
+  'Diner',
+  1000,
+ 'Emily-Jane Stuart',
+ 'ejGrub'
+  );
+
 create table customer(
   UserName varchar(50) primary key,
   password varchar(50) NOT NULL,
@@ -123,6 +183,40 @@ insert into MenuItem values (4, 'Lobster Grilled Cheese', 15.00, 1);
 insert into MenuItem values (5, 'Chicken Teriyaki', 7.50, 2);
 insert into MenuItem values (6, 'Tacos', 10.00, 3);
 
+insert into MenuItem values (7, 'Tagine', 16.00, 6);
+insert into MenuItem values (8, 'Wolves Breakfast', 16.00, 6);
+insert into MenuItem values (9, 'Cassoulet', 17.00, 6);
+insert into MenuItem values (10, 'La Sante', 13.00, 6);
+insert into MenuItem values (11, 'Granola', 8.00, 6);
+
+insert into MenuItem values (12, 'Lamb Souvlaki', 13.95, 7); 
+insert into MenuItem values (13, 'Pork Pita Souvlaki', 8.95, 7);
+insert into MenuItem values (14, 'Steamed Clams', 10.95, 7);
+insert into MenuItem values (15, 'Spanakopita', 7.95, 7);
+insert into MenuItem values (16, 'Greek Salad', 7.95, 7);
+insert into MenuItem values (17, 'Marinated Artichokes', 6.95, 7);
+
+insert into MenuItem values (18, 'Pastilla', 21.00, 8);
+insert into MenuItem values (19, 'Salade du Printemps', 13.00, 8);
+insert into MenuItem values (20, 'Fruits de Mer', 18.00, 8);
+insert into MenuItem values (21, 'Coquotte', 29.00, 8);
+insert into MenuItem values (22, 'Canard et Gnocchi', 34.00, 8);
+insert into MenuItem values (23, 'Pastilla', 21.00, 8);
+
+insert into MenuItem values (24, 'Wild BC Salmon', 26.00, 9);
+insert into MenuItem values (25, 'Halibut', 21.00, 9);
+insert into MenuItem values (26, 'Onion Gnocchi', 21.00, 9);
+insert into MenuItem values (27, 'Smoked Duck Breast', 27.00, 9);
+insert into MenuItem values (28, 'Moroccan Lamb', 28.00, 9);
+insert into MenuItem values (29, 'Zucchini Tagliatelle', 19.00, 9);
+
+insert into MenuItem values (30, 'Spicy California Roll', 12.95, 10);
+insert into MenuItem values (31, 'Avocado Roll', 3.50, 10);
+insert into MenuItem values (32, 'Salmon Roll', 2.50, 10);
+insert into MenuItem values (33, 'Spicy Tuna Roll', 3.95, 10);
+insert into MenuItem values (34, 'Chicken Teriyaki Don', 10.95, 10);
+insert into MenuItem values (35, 'Tuna Don', 12.95, 10);
+
 create table HasTable(
   TID int,
   tablesize int,
@@ -152,6 +246,39 @@ insert into HasTable values (1, 2, 5);
 insert into HasTable values (2, 4, 5);
 insert into HasTable values (3, 5, 5);
 insert into HasTable values (4, 6, 5);
+
+insert into HasTable values (1, 2, 6);
+insert into HasTable values (2, 4, 6);
+insert into HasTable values (3, 5, 6);
+insert into HasTable values (4, 6, 6);
+
+insert into HasTable values (1, 2, 7);
+insert into HasTable values (2, 4, 7);
+insert into HasTable values (3, 5, 7);
+insert into HasTable values (4, 6, 7);
+insert into HasTable values (5, 2, 7);
+insert into HasTable values (6, 2, 7);
+
+insert into HasTable values (1, 2, 8);
+insert into HasTable values (2, 4, 8);
+insert into HasTable values (3, 5, 8);
+insert into HasTable values (4, 6, 8);
+insert into HasTable values (5, 2, 8);
+insert into HasTable values (6, 2, 8);
+
+insert into HasTable values (1, 2, 9);
+insert into HasTable values (2, 4, 9);
+insert into HasTable values (3, 5, 9);
+insert into HasTable values (4, 6, 9);
+insert into HasTable values (5, 4, 9);
+insert into HasTable values (6, 10, 9);
+
+insert into HasTable values (1, 2, 10);
+insert into HasTable values (2, 4, 10);
+insert into HasTable values (3, 2, 10);
+insert into HasTable values (4, 6, 10);
+insert into HasTable values (5, 4, 10);
+insert into HasTable values (6, 10, 10);
 
 create table TableBooking(
   StartDayTime timestamp,
@@ -187,7 +314,17 @@ Insert into employeeworkat values (400,'Chris Young','cyoung',4);
 Insert into employeeworkat values (500,'Lily White','lwhite',5);
 
 
+Insert into employeeworkat values (600,'Anna OConnel','aoconn',6);
+Insert into employeeworkat values (601,'Patrick OConnel','poconn',6);
 
+Insert into employeeworkat values (700,'Stuart Bonbon','sbon',7);
+
+Insert into employeeworkat values (800,'Trevor Eagle','theEagle',8);
+
+Insert into employeeworkat values (900,'Sarah Smith','ssmith',9);
+Insert into employeeworkat values (901,'Joe Fresh','jfresh',9);
+
+Insert into employeeworkat values (1000,'Harry Jones','jonesy',10);
 
 
 
