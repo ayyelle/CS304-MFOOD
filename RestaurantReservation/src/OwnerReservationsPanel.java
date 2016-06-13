@@ -123,7 +123,7 @@ public class OwnerReservationsPanel extends JPanel{
 
 	public void start() {
 		this.resID = parent.getRestaurantID();
-		System.out.println("In ReservationsPanel resID: " + resID);
+		//System.out.println("In ReservationsPanel resID: " + resID);
 		displayResultPanel.getViewport().remove(displayResult);
 		
 		//show all the things immediately
