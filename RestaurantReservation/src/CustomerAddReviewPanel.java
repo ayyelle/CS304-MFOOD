@@ -49,7 +49,7 @@ public class CustomerAddReviewPanel extends JPanel {
 		c.insets = new Insets(5,5,5,5);
 		
 		Vector<String> restaurantNames = sr.getRestaurants();
-		System.out.println(restaurantNames);
+		//System.out.println(restaurantNames);
 		
 		String[] ratingOptions = { "1", "2", "3", "4", "5" };
 

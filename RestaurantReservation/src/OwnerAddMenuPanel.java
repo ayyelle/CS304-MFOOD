@@ -112,9 +112,7 @@ public class OwnerAddMenuPanel extends JPanel {
 				String price = inputPrice.getText();
 				String fid = inputFid.getText();
 				int fidInt = Integer.parseInt(fid);
-				
-				System.out.println(fid);
-				
+								
 				if (name.equals("")||price.equals("")||fid.equals("")) {
 					JOptionPane.showMessageDialog(null,"Please fill in all textfields!", "Add Menu Item", JOptionPane.PLAIN_MESSAGE);
 				} else {

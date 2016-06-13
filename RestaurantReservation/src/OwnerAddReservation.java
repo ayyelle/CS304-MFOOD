@@ -61,7 +61,6 @@ public class OwnerAddReservation extends JPanel {
 	public OwnerAddReservation(Object parent, String rid) {
 		this.restID = rid;
 		this.parent = (OwnerReservationsPanel)parent;
-		System.out.println("In OwnerAddReservation rid: "+restID);
 		this.setLayout(new BorderLayout());
 		initializeElements();
 		
@@ -215,7 +214,6 @@ public class OwnerAddReservation extends JPanel {
 
 	public void start() {
 		restID = parent.getRestuarantID();
-		System.out.println("In OwnerAddReservation restaurantID: " + restID);
 	}
 
 

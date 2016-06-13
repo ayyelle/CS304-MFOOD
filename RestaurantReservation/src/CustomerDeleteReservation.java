@@ -79,29 +79,29 @@ public class CustomerDeleteReservation extends JPanel {
 				
 				String[] b = booking.split("-"); 
 				String one = b[0];
-				System.out.println("split one " + one);
+				//System.out.println("split one " + one);
 				String two = b[1];
-				System.out.println("split two " + two);
+				//System.out.println("split two " + two);
 				String three = b[2];
-				System.out.println("split three " + three);
+				//System.out.println("split three " + three);
 				String four = b[3];
-				System.out.println("split four " + four);
+				//System.out.println("split four " + four);
 				String five = b[4];
-				System.out.println("split five " + five);
+				//System.out.println("split five " + five);
 				String six = b[5];
-				System.out.println("split six " + six);
+				//System.out.println("split six " + six);
 				String seven = b[6];
-				System.out.println("table id is " + seven);
+				//System.out.println("table id is " + seven);
 				String tid=seven;
 				
 				String locationConcat = one+"-"+two;
-				System.out.println("location concated is" + locationConcat);
+				//System.out.println("location concated is" + locationConcat);
 				String startDayTimeC = three+"-"+four+"-"+five;
-				System.out.println("startday time concat is " + startDayTimeC);
+				//System.out.println("startday time concat is " + startDayTimeC);
 				String[] splitfive = five.split(" ");
 				String dateC = three+":"+four+":"+splitfive[0];
 
-				System.out.println(booking);
+				//System.out.println(booking);
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd");
 				Date date = new Date();
