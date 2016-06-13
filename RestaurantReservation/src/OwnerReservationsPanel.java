@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.Date;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -22,8 +24,13 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class OwnerReservationsPanel extends JPanel{
-	
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+public class OwnerReservationsPanel extends JPanel {
+
 	RestaurantPanel parent;
 	String resID;
 	JButton addReservation;
@@ -34,8 +41,12 @@ public class OwnerReservationsPanel extends JPanel{
 	JTable displayResult;
 	SQLRestaurant s;
 	JPanel restaurantCards;
-	
-	//new reservation variables
+
+	// pick date
+	UtilDateModel model;
+	Properties p;
+
+	// new reservation variables
 	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
 	public OwnerReservationsPanel(RestaurantPanel parent, JPanel restaurantCards) {
@@ -43,7 +54,13 @@ public class OwnerReservationsPanel extends JPanel{
 		this.parent = parent;
 		this.restaurantCards = restaurantCards;
 		s = new SQLRestaurant();
-		
+		p = new Properties();
+		model = new UtilDateModel();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		title = new JLabel("View Reservations", JLabel.CENTER);
@@ -53,6 +70,40 @@ public class OwnerReservationsPanel extends JPanel{
 		displayResultPanel = new JScrollPane();
 		displayResultPanel.setPreferredSize(new Dimension(900, 400));
 
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+
+		datePicker.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Date today = new Date();
+				Date selectedDate = (Date) datePicker.getModel().getValue();
+				if (selectedDate.before(today)) {
+					JOptionPane.showMessageDialog(null, "Oops! Selected day must be in the future.", "Date Missing",
+							JOptionPane.PLAIN_MESSAGE);
+
+				} else {
+					System.out.println("Date Selected: "+selectedDate);
+					//do stuff
+//					boolean result = s.getReservationsByDate(selectedDate);
+//					if (result) {
+//						String success = "Success! Customer confirmed for " + selectedTime + " on "
+//								+ formatDate(selectedDate) + ".";
+//						JOptionPane.showMessageDialog(null, success, "Reservation successful!",
+//								JOptionPane.PLAIN_MESSAGE);
+//
+//					} else {
+//						String fail = "Sorry, there are no reservations at the selected day and time. Please try another combination!";
+//						JOptionPane.showMessageDialog(null, fail, "Reservation unsuccessful",
+//								JOptionPane.PLAIN_MESSAGE);
+//					}
+				}
+
+			}
+
+		});
+
 		addReservation = new JButton("Add Reservation");
 		addReservation.addActionListener(new ActionListener() {
 			@Override
@@ -61,11 +112,9 @@ public class OwnerReservationsPanel extends JPanel{
 				cl.show(restaurantCards, "createReservation");
 			}
 		});
-		
-		
-		//TODO: delete reservation
+
 		deleteReservation = new JButton("Delete Selected Reservation");
-		deleteReservation.addActionListener(new ActionListener(){
+		deleteReservation.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row = displayResult.getSelectedRow();
@@ -73,35 +122,40 @@ public class OwnerReservationsPanel extends JPanel{
 				String tid_del = (String) displayResult.getValueAt(row, 3);
 				String rid_del = (String) displayResult.getValueAt(row, 4);
 				String username_del = (String) displayResult.getValueAt(row, 6);
-				System.out.println("Reservation to be deleted: " + startdaytime_del + 
-						" " + tid_del + " " + rid_del + " " + username_del);
+				System.out.println("Reservation to be deleted: " + startdaytime_del + " " + tid_del + " " + rid_del
+						+ " " + username_del);
 				s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
 				update();
 			}
 		});
-			
+
+		// TODO: select reservations by date
+
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = c.REMAINDER;
 		c.anchor = c.PAGE_START;
 		c.insets = new Insets(30, 5, 5, 5);
 		this.add(title, c);
-		
+
 		c.weightx = 0.5;
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(addReservation, c);
-		
+
 		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 1;
+		c.gridx = 0;
+		c.gridy = 2;
 		c.insets = new Insets(0, 0, 0, 10);
 		this.add(deleteReservation, c);
 
-		c.gridx = 1;
+		c.gridy = 3;
+		c.insets = new Insets(6, 3, 9, 3);
+		this.add(datePicker, c);
+
 		c.gridy = 4;
 		this.add(displayResultPanel, c);
-		
+
 		this.resID = parent.getRestaurantID();
 		JPanel createReservation = new OwnerAddReservation(this, resID);
 		restaurantCards.add(createReservation, "createReservation");
@@ -113,9 +167,11 @@ public class OwnerReservationsPanel extends JPanel{
 			}
 		});
 	}
-	String getRestuarantID(){
+
+	String getRestuarantID() {
 		return parent.getRestaurantID();
 	}
+
 	private void update() {
 		displayResultPanel.getViewport().remove(displayResult);
 		start();
@@ -125,8 +181,16 @@ public class OwnerReservationsPanel extends JPanel{
 		this.resID = parent.getRestaurantID();
 		System.out.println("In ReservationsPanel resID: " + resID);
 		displayResultPanel.getViewport().remove(displayResult);
-		
-		//show all the things immediately
+
+		// Date Picker stuff
+		p = new Properties();
+		model = new UtilDateModel();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+
+		// show all the things immediately
 		Vector<String> colNames = new Vector<String>();
 		colNames.add("Start Day Time");
 		colNames.add("Duration");
@@ -161,5 +225,4 @@ public class OwnerReservationsPanel extends JPanel{
 		}
 	}
 
-		
 }
