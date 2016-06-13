@@ -20,7 +20,7 @@ public class SQLRestaurant {
 		}
 		try {
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_b9x8", "a82200106");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_x8b9", "a51845139");
 			stmt = con.createStatement();
 
 
@@ -493,16 +493,21 @@ public class SQLRestaurant {
 		System.out.println("In getTablesForRestaurant resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
-		String query = "select distinct tid " + "from tablebooking " + "where rid=" + resID;
+		String query = "select distinct tid, tablesize, numbooked " + "from hastable " + "where rid=" + resID;
 
 		try {
 			rs = stmt.executeQuery(query);
 			System.out.println(query);
 			while (rs.next()) {
 				String tid = String.valueOf(rs.getInt("tid"));
+				String tablesize = String.valueOf(rs.getInt("tablesize"));
+				String numbooked = String.valueOf(rs.getInt("numbooked"));
 
 				Vector<String> newStr = new Vector<String>();
 				newStr.add(tid);
+				newStr.add(tablesize);
+				newStr.add(numbooked);
+				
 				result.add(newStr);
 			}
 		} catch (Exception e) {
@@ -528,7 +533,7 @@ public class SQLRestaurant {
 
 	public boolean deleteTable(String rid, String tid) {
 		boolean result = false;
-		String query = "DELETE FROM tablebooking WHERE rid = " + rid + " and tid = '" + tid + "'";
+		String query = "DELETE FROM hastable WHERE rid = " + rid + " and tid = '" + tid + "'";
 		System.out.println("table delete: "+query);
 		try {
 			int rs = stmt.executeUpdate(query);

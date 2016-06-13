@@ -105,6 +105,8 @@ public class OwnerTablesPanel extends JPanel{
 		//column names
 		Vector<String> colNames = new Vector<String>();
 		colNames.add("Table ID");
+		colNames.add("Table Size");
+		colNames.add("Number Booked");
 
 		resID = parent.getRestaurantID();
 		Vector<Vector> data = s.getTablesForRestaurant(resID);
