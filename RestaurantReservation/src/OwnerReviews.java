@@ -68,7 +68,6 @@ public class OwnerReviews extends JPanel {
 
 	public void start() {
 		this.resID = parent.getRestaurantID();
-		System.out.println("OwnerReviews rid: " + resID);
 		
 		Vector<String> colNames = new Vector<String>();
 		colNames.add("User");
