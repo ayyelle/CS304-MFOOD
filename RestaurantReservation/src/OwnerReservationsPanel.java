@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -14,13 +13,11 @@ import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -29,6 +26,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+@SuppressWarnings("serial")
 public class OwnerReservationsPanel extends JPanel {
 
 	RestaurantPanel parent;
@@ -45,10 +43,12 @@ public class OwnerReservationsPanel extends JPanel {
 	// pick date
 	UtilDateModel model;
 	Properties p;
+	boolean updateDate;
 
 	// new reservation variables
 	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
 
+	@SuppressWarnings("static-access")
 	public OwnerReservationsPanel(RestaurantPanel parent, JPanel restaurantCards) {
 
 		this.parent = parent;
@@ -79,13 +79,22 @@ public class OwnerReservationsPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				Date today = new Date();
 				Date selectedDate = (Date) datePicker.getModel().getValue();
+				String formattedDate = formatDate(selectedDate);
+				String formattedDateEnd = formatDatePlusOne(selectedDate);
 				if (selectedDate.before(today)) {
-					JOptionPane.showMessageDialog(null, "Oops! Selected day must be in the future.", "Date Missing",
-							JOptionPane.PLAIN_MESSAGE);
-
+					try{
+						JOptionPane.showMessageDialog(null, "Oops! Selected day must be in the future.", 
+								"Date Missing",JOptionPane.PLAIN_MESSAGE);
+					}catch(Exception e){
+						e.getMessage();
+					}
+					start("","");
 				} else {
-					System.out.println("Date Selected: "+selectedDate);
+					System.out.println("Date Selected: "+formattedDate);
+					start(formattedDate, formattedDateEnd);
 					//do stuff
+					
+					
 //					boolean result = s.getReservationsByDate(selectedDate);
 //					if (result) {
 //						String success = "Success! Customer confirmed for " + selectedTime + " on "
@@ -125,7 +134,7 @@ public class OwnerReservationsPanel extends JPanel {
 				System.out.println("Reservation to be deleted: " + startdaytime_del + " " + tid_del + " " + rid_del
 						+ " " + username_del);
 				s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
-				update();
+				start("","");
 			}
 		});
 
@@ -163,7 +172,7 @@ public class OwnerReservationsPanel extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent evt) {
-				start();
+				start("","");
 			}
 		});
 	}
@@ -172,12 +181,50 @@ public class OwnerReservationsPanel extends JPanel {
 		return parent.getRestaurantID();
 	}
 
-	private void update() {
-		displayResultPanel.getViewport().remove(displayResult);
-		start();
+//	private void update() {
+//		displayResultPanel.getViewport().remove(displayResult);
+//		start();
+//	}
+	
+	@SuppressWarnings("deprecation")
+	private String formatDate(Date date) {
+		int day = date.getDate();
+		int month = date.getMonth()+1;
+		int year = date.getYear()+1900;
+		String result;
+		
+		if(day<10 && month<10){
+			result = year + "-0" + month + "-0" + day + " 01:00:00.000000";
+		}else if(day<10 && month>=10){
+			result = year + "-"+month+"-0"+day + " 01:00:00.000000";
+		}else if(day>=10 && month<10){
+			result = year + "-0"+month+"-"+day + " 01:00:00.000000";
+		}else{
+			result = year + "-"+month+"-"+day + " 01:00:00.000000";
+		}
+		return result;
+	}
+	@SuppressWarnings("deprecation")
+	private String formatDatePlusOne(Date date) {
+		int day = date.getDate()+1;
+		int month = date.getMonth()+1;
+		int year = date.getYear()+1900;
+		String result;
+		
+		if(day<10 && month<10){
+			result = year + "-0" + month + "-0" + day + " 01:00:00.000000";
+		}else if(day<10 && month>=10){
+			result = year + "-"+month+"-0"+day + " 01:00:00.000000";
+		}else if(day>=10 && month<10){
+			result = year + "-0"+month+"-"+day + " 01:00:00.000000";
+		}else{
+			result = year + "-"+month+"-"+day + " 01:00:00.000000";
+		}
+		return result;
 	}
 
-	public void start() {
+	@SuppressWarnings("rawtypes")
+	public void start(String newDate, String newDateEnd) {
 		this.resID = parent.getRestaurantID();
 		System.out.println("In ReservationsPanel resID: " + resID);
 		displayResultPanel.getViewport().remove(displayResult);
@@ -201,8 +248,24 @@ public class OwnerReservationsPanel extends JPanel {
 		colNames.add("Customer Username");
 
 		SQLRestaurant s = new SQLRestaurant();
-
-		Vector<Vector> data = s.getReservations(resID);
+		Vector<Vector> data;
+		if(!newDate.isEmpty()){
+			data = s.getReservationsByDate(resID, newDate, newDateEnd);
+			System.out.println("getReservationsByDate returned data:"+data);
+		}else{
+			data = s.getReservations(resID);
+			System.out.println("getReservationsByDate returned data:"+data);
+		}
+		if (data.size() == 0) {
+			try{
+				JOptionPane.showMessageDialog(null, "No Reservations!","No Reservations", 
+						JOptionPane.PLAIN_MESSAGE);
+			}catch(Exception e){
+				e.getMessage();
+			}
+			return;
+		}
+		
 		displayResult = new JTable(data, colNames);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -219,10 +282,7 @@ public class OwnerReservationsPanel extends JPanel {
 
 		displayResult.setRowHeight(40);
 		displayResultPanel.getViewport().add(displayResult);
-		if (data.size() == 0) {
-			JOptionPane.showMessageDialog(null, "There are no reservations for this restaurant yet!",
-					"No Reviews Found", JOptionPane.PLAIN_MESSAGE);
-		}
+		
 	}
 
 }
