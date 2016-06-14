@@ -493,6 +493,46 @@ public class SQLRestaurant {
 		}
 		return result;
 	}
+	
+	//projection
+	public Vector<Vector> getSelectReservations(String resID, String selected) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
+		format.setTimeZone(TimeZone.getDefault());
+		//System.out.println("In getReservations resID: " + resID);
+		ResultSet rs;
+		Vector<Vector> result = new Vector<Vector>();
+		String query = "select startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "
+				+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID;
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Timestamp starttimestamp = rs.getTimestamp("startdaytime");
+				String starttime = format.format(starttimestamp).toString();
+				String partysize = String.valueOf(rs.getInt("partysize"));
+				String duration = rs.getString("duration");
+				String tid = String.valueOf(rs.getInt("tid"));
+				String rid = String.valueOf(rs.getInt("rid"));
+				String customerFirstName = rs.getString("firstname");
+				String customerLastName = rs.getString("lastname");
+				String username = rs.getString("username");
+				String customerName = customerFirstName + " " + customerLastName;
+
+				Vector<String> newStr = new Vector<String>();
+				newStr.add(starttime);
+				newStr.add(duration);
+				newStr.add(partysize);
+				newStr.add(tid);
+				newStr.add(rid);
+				newStr.add(customerName);
+				newStr.add(username);
+				// System.out.println(comments);
+				result.add(newStr);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	//get the restaurant's reservations, select dates
 	public Vector<Vector> getReservationsByDate(String resID, String d, String df) {
 		System.out.println("In getReservationsByDate resID: " + resID + " date: "+d);
