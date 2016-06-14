@@ -1,0 +1,13 @@
+Project Description (Requirement for Wednesday's hand-in)
+Our application, Order Up, provides both customers, restaurant employees, and restaurant owners an easy way to create and manage restaurant reservations.
+The customer is able to create new reservations, as well as see future reservations and delete future reservations. To help them make good decisions
+about where they want to eat, the application provides functionalities like viewing/adding reviews, seeing the ratings for restaurants and viewing 
+the menus of the restaurants.
+
+From the restaurant's perspective, they are able to keep track of what reservations they have made, and also make reservations on their side.
+Owner's can manage various aspect of their restaurants such as adding new menu items, changing their restaurant's name/location, and adding
+more employee logins.
+
+#Changes to Schema:
+(If use trigger code): Added new attribute, numBookings to hasTable to keep track of the total number of reservations ever requested on that table. 
+(If do any image work): Added new attribute, img, to restaurant, so an image of the restaurant can be stored along with the restaurant's general information.
