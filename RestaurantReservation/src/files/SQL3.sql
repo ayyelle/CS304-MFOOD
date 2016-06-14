@@ -422,7 +422,7 @@ insert into HasTable values (5, 8, 100, 0);
 insert into HasTable values (6, 8, 100, 0);
 insert into HasTable values (7, 20, 100, 0);
 
-insert into HasTable values (1, 4, 101, 0);
+insert into HasTable values (1, 2, 101, 0);
 insert into HasTable values (2, 4, 101, 0);
 insert into HasTable values (3, 4, 101, 0);
 insert into HasTable values (4, 6, 101, 0);
@@ -439,7 +439,7 @@ insert into HasTable values (3, 4, 103, 0);
 insert into HasTable values (4, 4, 103, 0);
 insert into HasTable values (5, 4, 103, 0);
 
-insert into HasTable values (1, 6, 104, 0);
+insert into HasTable values (1, 2, 104, 0);
 insert into HasTable values (2, 6, 104, 0);
 insert into HasTable values (3, 6, 104, 0);
 insert into HasTable values (4, 6, 104, 0);
@@ -467,11 +467,20 @@ create table TableBooking(
 END;
 /
 
-insert into tablebooking values (TO_TIMESTAMP('2016-05-16 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 2, 1, 'aleong');
-insert into tablebooking values (TO_TIMESTAMP('2016-05-20 17:00:00', 'yyyy-mm-dd hh24:mi:ss'), 4, 2, 3, 2, 'lcoombe');
-insert into tablebooking values (TO_TIMESTAMP('2016-05-25 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 5, 'jwong');
-insert into tablebooking values (TO_TIMESTAMP('2016-05-17 19:00:00', 'yyyy-mm-dd hh24:mi:ss'), 6, 2, 4, 3, 'aleong');
-insert into tablebooking values (TO_TIMESTAMP('2016-05-18 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 4, 'lliu');
+insert into tablebooking values (TO_TIMESTAMP('2016-06-18 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 2, 1, 'aleong');
+insert into tablebooking values (TO_TIMESTAMP('2016-06-20 17:00:00', 'yyyy-mm-dd hh24:mi:ss'), 4, 2, 3, 2, 'lcoombe');
+insert into tablebooking values (TO_TIMESTAMP('2016-06-25 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 5, 'jwong');
+insert into tablebooking values (TO_TIMESTAMP('2016-06-19 19:00:00', 'yyyy-mm-dd hh24:mi:ss'), 6, 2, 4, 3, 'aleong');
+insert into tablebooking values (TO_TIMESTAMP('2016-07-18 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 4, 'lliu');
+insert into tablebooking values (TO_TIMESTAMP('2016-07-18 16:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 100, 'aleong');
+insert into tablebooking values (TO_TIMESTAMP('2016-07-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 100, 'lcoombe');
+insert into tablebooking values (TO_TIMESTAMP('2016-07-10 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 100, 'lliu');
+
+insert into tablebooking values (TO_TIMESTAMP('2016-08-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 101, 'lcoombe');
+insert into tablebooking values (TO_TIMESTAMP('2016-09-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 102, 'lcoombe');
+insert into tablebooking values (TO_TIMESTAMP('2016-10-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 103, 'lcoombe');
+
+
 
 Create table EmployeeWorkAt(
   EID int,
