@@ -55,14 +55,12 @@ public class MainApp implements ItemListener {
 						cl.show(cards, "Home");
 						cl.show(cards, "RestaurantOwner");
 						restId = userInfo.get(1);
-						System.out.println(restId);
 					} else if (userType.equals("EMP")) {
 						CardLayout cl = (CardLayout)(cards.getLayout());
 						cl.show(cards, "Home");
 						cl.show(cards, "RestaurantEmployee");
 						restId = userInfo.get(1);	
 						empID = workerID.getText();
-						System.out.println("MainApp Emp RID: " + restId + " empID: "+ empID);
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Login failed! try again");

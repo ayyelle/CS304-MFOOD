@@ -42,7 +42,6 @@ public class CustomerDeleteReservation extends JPanel {
 		this.parent = parent;
 		s = new SQLRestaurant();
 		sc= new SQLCustomer();
-		//this.customerId = parent.getCustomerID();
 
 		tableBookings = sc.getReservationsAsString(customerId);
 		this.setLayout(new GridBagLayout());
@@ -64,14 +63,6 @@ public class CustomerDeleteReservation extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String booking = (String) restaurantComboBox.getSelectedItem();
-				//String restaurantName = booking.substring(0, booking.indexOf("-") + 1);
-				//System.out.println("restaurant name in delete " + restaurantName);
-				//String startDayTime = booking.substring(booking.indexOf("-") + 1, booking.indexOf("-")+4);
-				//System.out.println(startDayTime);
-				//String partySize = booking.substring(booking.indexOf("-") + 5,booking.indexOf("-")+6);
-				//System.out.println(partySize);
-				//String tid = booking.substring(booking.indexOf("-") + 6);
-				//System.out.println(tid);
 				if (booking == null){
 					JOptionPane.showMessageDialog(null, "You have no reservations to cancel!", "No Reservations", JOptionPane.PLAIN_MESSAGE);
 					return;
@@ -79,29 +70,18 @@ public class CustomerDeleteReservation extends JPanel {
 				
 				String[] b = booking.split("-"); 
 				String one = b[0];
-				//System.out.println("split one " + one);
 				String two = b[1];
-				//System.out.println("split two " + two);
 				String three = b[2];
-				//System.out.println("split three " + three);
 				String four = b[3];
-				//System.out.println("split four " + four);
 				String five = b[4];
-				//System.out.println("split five " + five);
 				String six = b[5];
-				//System.out.println("split six " + six);
 				String seven = b[6];
-				//System.out.println("table id is " + seven);
 				String tid=seven;
 				
 				String locationConcat = one+"-"+two;
-				//System.out.println("location concated is" + locationConcat);
 				String startDayTimeC = three+"-"+four+"-"+five;
-				//System.out.println("startday time concat is " + startDayTimeC);
 				String[] splitfive = five.split(" ");
 				String dateC = three+":"+four+":"+splitfive[0];
-
-				//System.out.println(booking);
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd");
 				Date date = new Date();
@@ -111,27 +91,12 @@ public class CustomerDeleteReservation extends JPanel {
 					JOptionPane.showMessageDialog(null, "Cannot cancel same day reservation", "Call Restaurant", JOptionPane.PLAIN_MESSAGE);
 					return;	
 				}
-				//Vector<String> colNames = new Vector<String>();
-				//colNames.add("Food Name");
-				//colNames.add("Price");
 
-				//SQLRestaurant s = new SQLRestaurant();
 				Boolean result = sc.deleteBooking(locationConcat,startDayTimeC,customerId,tid);
 				if (result){
 					JOptionPane.showMessageDialog(null, "Your selected reservation has been cancelled!", "Successful", JOptionPane.PLAIN_MESSAGE);
 					start();
 				}
-				//Vector<Vector> data = s.getMenuItems(restaurant);
-				//displayResult = new JTable(data, colNames);
-
-				//displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
-				//displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
-
-				//displayResult.setRowHeight(40);
-				//displayResultPanel.getViewport().add(displayResult);
-				//if (data.size() == 0) {
-				//JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
-				//}
 
 			}
 
@@ -165,7 +130,6 @@ public class CustomerDeleteReservation extends JPanel {
 
 		c.gridx = 1;
 		c.gridy = 4;
-		//this.add(displayResultPanel, c);
 
 		addComponentListener(new ComponentAdapter() {
 			@Override

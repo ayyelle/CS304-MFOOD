@@ -100,7 +100,6 @@ public class CustomerFilterReviewsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String ratingSelection = (String) ratingOptions.getSelectedItem();
-				System.out.println("Selection:" + ratingSelection);
 				int numResults = fillTable(ratingSelection);
 				if (numResults == 0) {
 					String noResultsStr = "No restaurants found with all ratings above " + ratingSelection + ". Try a lower rating!";
