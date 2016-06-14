@@ -157,7 +157,6 @@ public class OwnerAddReservation extends JPanel {
 		formPanel = new JPanel();
 		formPanel.setPreferredSize(new Dimension(10, 10));
 		formPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
 		
 		title = new JLabel("Add A Reservation");
 		title.setFont(new Font(title.getName(), Font.PLAIN, 30));

@@ -493,6 +493,59 @@ public class SQLRestaurant {
 		}
 		return result;
 	}
+	//get the restaurant's reservations, select dates
+	public Vector<Vector> getReservationsByDate(String resID, String d, String df) {
+		System.out.println("In getReservationsByDate resID: " + resID + " date: "+d);
+		ResultSet rs;
+		Vector<Vector> result = new Vector<Vector>();
+		//there's no reason for this not to work, but it doesn't
+//		String query = 
+//				"SELECT startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username " 
+//				+ " FROM tablebooking t, customer c "
+//				+ " where c.username=t.username "
+//				+ " AND to_date(CAST(startdaytime AS DATE), 'YY-MM-DD')=to_date('"+d+"', 'YYYY-MM-DD')"
+//				+ " AND t.rid="+resID;
+		String query = "SELECT startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username " 
+				+"FROM tablebooking t, customer c  "
+				+"WHERE c.username=t.username  "
+				+"AND startdaytime>to_timestamp('"+d+"','YYYY-MM-DD HH:MI:SS.FF') "
+				+"AND startdaytime<to_timestamp('"+df+"','YYYY-MM-DD HH:MI:SS.FF') "
+				+"AND t.rid=1";
+		System.out.println("getReservationsByDate query: "+query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				System.out.println("THERE IS A NEXT");
+				String starttime = rs.getString("startdaytime");
+				String partysize = String.valueOf(rs.getInt("partysize"));
+				String duration = rs.getString("duration");
+				String tid = String.valueOf(rs.getInt("tid"));
+				String rid = String.valueOf(rs.getInt("rid"));
+				String customerFirstName = rs.getString("firstname");
+				String customerLastName = rs.getString("lastname");
+				String username = rs.getString("username");
+				String customerName = customerFirstName + " " + customerLastName;
+
+				Vector<String> newStr = new Vector<String>();
+				newStr.add(starttime);
+				newStr.add(duration);
+				newStr.add(partysize);
+				newStr.add(tid);
+				newStr.add(rid);
+				newStr.add(customerName);
+				newStr.add(username);
+				System.out.println("getReservationsByDate newStr: "+newStr);
+				result.add(newStr);
+			}
+		} catch(NullPointerException e){
+			e.getMessage();
+		} catch (Exception e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
+		System.out.println("getReservationsByDate result: "+result);
+		return result;
+	}
 
 	// get List of tables for specific restaurant
 	public Vector<Vector> getTablesForRestaurant(String resID) {
