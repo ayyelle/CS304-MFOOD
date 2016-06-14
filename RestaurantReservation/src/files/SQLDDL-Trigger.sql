@@ -43,7 +43,7 @@ insert into restaurant values(
   2000,
  'Yoshi Nintendo',
  'tomokazu2',
- '!!.jpg'
+ 'images/Tomokazu-Broadway.jpg'
   );
 
 insert into restaurant values(
@@ -56,7 +56,7 @@ insert into restaurant values(
   3000,
   'Diego Gonzalez',
   'lasmargaritas3',
-  '!!.jpg'
+  'images/lasmargaritas-kitsilano.jpg'
   );
 
 insert into restaurant values(
@@ -69,7 +69,7 @@ insert into restaurant values(
   4000,
   'Jill Hipstar',
   'jhip',
-  '!!.jpg'
+  'images/burgoo-lonsdale.jpg'
   );
 
 insert into restaurant values(
@@ -82,7 +82,7 @@ insert into restaurant values(
   5000,
  'Mario Joey',
  'marioj',
- '!!.jpg'
+ 'images/joeys-broadway.jpg'
   );
 
 insert into restaurant values(
@@ -108,7 +108,7 @@ insert into restaurant values(
   7000,
  'Steph Vardalos',
  'svard', 
- '!!.png'
+ 'images/stephos-westend.jpg'
   );
 
 insert into restaurant values(
@@ -121,7 +121,7 @@ insert into restaurant values(
   8000,
  'Nico Schuermans',
  'nicocham',
- '!!.png'
+ 'images/chambar-downtown.jpg'
   );
 
 insert into restaurant values(
@@ -134,20 +134,20 @@ insert into restaurant values(
   9000,
  'Trevor Bird',
  'birdy',
- 'fable-kitchen.png'
+ 'images/fable-kitchen.jpg'
   );
 
 insert into restaurant values(
   10,
-  'Jethros Fine Grub',
-  '3420 Dunbar Street',
+  'Hitoe Sushi',
+  '3347 W 4th Ave',
   'Vancouver',
-  'Dunbar',
-  'Diner',
+  'Kitsilano',
+  'Sushi',
   1000,
- 'Emily-Jane Stuart',
- 'ejGrub', 
- '!!.png'
+ 'Amy Chan',
+ 'achan', 
+ 'images/hitoe-kitsilano.jpg'
   );
 
 
@@ -194,6 +194,40 @@ insert into MenuItem values (3, 'Tomato Soup', 8.00, 5);
 insert into MenuItem values (4, 'Lobster Grilled Cheese', 15.00, 1);
 insert into MenuItem values (5, 'Chicken Teriyaki', 7.50, 2);
 insert into MenuItem values (6, 'Tacos', 10.00, 3);
+
+insert into MenuItem values (7, 'Tagine', 16.00, 6);
+insert into MenuItem values (8, 'Wolves Breakfast', 16.00, 6);
+insert into MenuItem values (9, 'Cassoulet', 17.00, 6);
+insert into MenuItem values (10, 'La Sante', 13.00, 6);
+insert into MenuItem values (11, 'Granola', 8.00, 6);
+ 
+insert into MenuItem values (12, 'Lamb Souvlaki', 13.95, 7); 
+insert into MenuItem values (13, 'Pork Pita Souvlaki', 8.95, 7);
+insert into MenuItem values (14, 'Steamed Clams', 10.95, 7);
+insert into MenuItem values (15, 'Spanakopita', 7.95, 7);
+insert into MenuItem values (16, 'Greek Salad', 7.95, 7);
+insert into MenuItem values (17, 'Marinated Artichokes', 6.95, 7);
+
+insert into MenuItem values (18, 'Pastilla', 21.00, 8);
+insert into MenuItem values (19, 'Salade du Printemps', 13.00, 8);
+insert into MenuItem values (20, 'Fruits de Mer', 18.00, 8);
+insert into MenuItem values (21, 'Coquotte', 29.00, 8);
+insert into MenuItem values (22, 'Canard et Gnocchi', 34.00, 8);
+insert into MenuItem values (23, 'Pastilla', 21.00, 8);
+
+insert into MenuItem values (24, 'Wild BC Salmon', 26.00, 9);
+insert into MenuItem values (25, 'Halibut', 21.00, 9);
+insert into MenuItem values (26, 'Onion Gnocchi', 21.00, 9);
+insert into MenuItem values (27, 'Smoked Duck Breast', 27.00, 9);
+insert into MenuItem values (28, 'Moroccan Lamb', 28.00, 9);
+insert into MenuItem values (29, 'Zucchini Tagliatelle', 19.00, 9);
+
+insert into MenuItem values (30, 'Spicy California Roll', 12.95, 10);
+insert into MenuItem values (31, 'Avocado Roll', 3.50, 10);
+insert into MenuItem values (32, 'Salmon Roll', 2.50, 10);
+insert into MenuItem values (33, 'Spicy Tuna Roll', 3.95, 10);
+insert into MenuItem values (34, 'Chicken Teriyaki Don', 10.95, 10);
+insert into MenuItem values (35, 'Tuna Don', 12.95, 10);
 
 create table HasTable(
   TID int,

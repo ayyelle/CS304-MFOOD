@@ -23,7 +23,7 @@ public class SQLRestaurant {
 		}
 		try {
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_x8b9", "a51845139");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
 			stmt = con.createStatement();
 
 
@@ -36,24 +36,19 @@ public class SQLRestaurant {
 	public ArrayList<String> getCredentials(String rid, String eid, String password) {
 		ResultSet rs;
 		ArrayList<String> result = new ArrayList<String>();
-		// !!HACKY! FIX!
 		try {
 			//Check if owner first
-			//int ridInt = Integer.parseInt(rid);
 			String query = "Select * FROM restaurant WHERE oid = '" + eid + "' and ownerpassword = '" + password + "' and rid = '" + rid + "'";
-			//System.out.println(query);
 			rs = stmt.executeQuery(query);
 			if(rs.next()) {
 				result.add("OWNER");
 				result.add(String.valueOf(rs.getInt("rid")));
-				//System.out.println(query);
 			} else {
 				//Now, check if employee.
 				ResultSet rsEmp;
 				String queryEmp = "Select * FROM employeeworkat WHERE rid = '" + rid + "' and eid = '" + eid
 						+ "' and password = '" + password + "'";
 				rsEmp = stmt.executeQuery(queryEmp);
-				//System.out.println(queryEmp);
 
 				if (rsEmp.next()) {
 					result.add("EMP");
@@ -167,8 +162,7 @@ public class SQLRestaurant {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				String foodName = rs.getString("name");
-				String price = String.valueOf(rs.getInt("price"));
-
+				String price = String.valueOf(rs.getFloat("price"));
 				//System.out.println(foodName + " " + price);
 				Vector<String> v = new Vector<String>();
 				v.add(foodName);
@@ -192,7 +186,7 @@ public class SQLRestaurant {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				String foodName = rs.getString("name");
-				String price = String.valueOf(rs.getInt("price"));
+				String price = String.valueOf(rs.getFloat("price"));
 
 				//System.out.println(foodName + " " + price);
 				Vector<String> v = new Vector<String>();
@@ -629,14 +623,18 @@ public class SQLRestaurant {
 		query += "'" + name + "',";
 		query += price + ",";
 		query += rid + ")";
-		//System.out.println("ADDING FOOD WITH QUERY :" + query);
 		try {
 			int rs = stmt.executeUpdate(query);
 			result = rs == 1 ? true : false;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			result = false;
+			if (e.getErrorCode() == 1) {
+				result = false;
+
+			} else {
+				result = false;
+
+			}
 		}
 
 		return result;
@@ -699,6 +697,29 @@ public class SQLRestaurant {
 
 		}
 
+		return result;
+	}
+	
+	public String getImage(String locationName) {
+		String name = getRestaurantFromString(locationName);
+		String location = getLocationFromString(locationName);
+		System.out.println(name + " " + location);
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select * from Restaurant where rid IN (select rid from restaurant where name='" + name
+				+ "'and location='" + location + "')";
+		String result = "";
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				result = rs.getString("img");
+			}
+			
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 
