@@ -52,7 +52,9 @@ public class OwnerReservationsPanel extends JPanel {
 	//pick columns
 	JList list;
 	private final int COLUMN_SIZE = 7;
-	private String[] columnList = {"startdaytime", "duration", "partysize", "tid", "rid", "firstname", "lastname", "c.username"};
+	private String[] columnList = {"startdaytime", "duration", "partysize", "tid", "rid", "firstname, lastname", "c.username"};
+	private String[] columnListNames = {"Start Day Time","Duration","Party Size",
+			"TID","RID","Customer Name","Customer Username"};
 	String selectedColumns;
 	Vector<String> colNames = new Vector<String>();
 	
@@ -63,14 +65,7 @@ public class OwnerReservationsPanel extends JPanel {
 
 	@SuppressWarnings("static-access")
 	public OwnerReservationsPanel(RestaurantPanel parent, JPanel restaurantCards) {
-		//columns
-		colNames.add("Start Day Time");
-		colNames.add("Duration");
-		colNames.add("Party Size");
-		colNames.add("TID");
-		colNames.add("RID");
-		colNames.add("Customer Name");
-		colNames.add("Customer Username");
+		
 		this.parent = parent;
 		this.restaurantCards = restaurantCards;
 		s = new SQLRestaurant();
@@ -259,7 +254,8 @@ public class OwnerReservationsPanel extends JPanel {
 		this.resID = parent.getRestaurantID();
 		//System.out.println("In ReservationsPanel resID: " + resID);
 		displayResultPanel.getViewport().remove(displayResult);
-
+		
+		
 		// Date Picker stuff
 		p = new Properties();
 		model = new UtilDateModel();
@@ -269,13 +265,14 @@ public class OwnerReservationsPanel extends JPanel {
 		p.put("text.year", "Year");
 
 		// show all the things immediately
+		colNames.clear(); //clear previous columns
 		SQLRestaurant s = new SQLRestaurant();
 		Vector<Vector> data = new Vector<Vector>();
 		if(!newDate.isEmpty()){
 			data = s.getReservationsByDate(resID, newDate, newDateEnd);
 			System.out.println("getReservationsByDate returned data:"+data);
 		}else if(indices!=null){
-			data = s.getSelectReservations(resID, showColumns);
+			data = s.getSelectReservations(resID, showColumns, indices);
 		}else{
 			data = s.getReservations(resID);
 			System.out.println("getReservationsByDate returned data:"+data);
@@ -290,20 +287,47 @@ public class OwnerReservationsPanel extends JPanel {
 			return;
 		}
 		
+		//columns
+		if(indices != null){
+			for(int i=0; i<indices.length; i++){
+				colNames.add(columnListNames[indices[i]]);
+			}
+		}else{
+			colNames.add("Start Day Time");
+			colNames.add("Duration");
+			colNames.add("Party Size");
+			colNames.add("TID");
+			colNames.add("RID");
+			colNames.add("Customer Name");
+			colNames.add("Customer Username");
+		}
+		
 		displayResult = new JTable(data, colNames);
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-		displayResult.getColumnModel().getColumn(0).setMinWidth(200);
-		displayResult.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-		displayResult.getColumnModel().getColumn(1).setMaxWidth(80);
-		displayResult.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-		displayResult.getColumnModel().getColumn(2).setMaxWidth(80);
-		displayResult.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-		displayResult.getColumnModel().getColumn(3).setMaxWidth(80);
-		displayResult.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-		displayResult.getColumnModel().getColumn(4).setMaxWidth(80);
-
+		
+		if(indices != null){
+			for(int i=0; i<indices.length; i++){
+				if(indices[i]==0){
+					displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+					displayResult.getColumnModel().getColumn(0).setMinWidth(200);
+				}else{
+					displayResult.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+					displayResult.getColumnModel().getColumn(i).setMinWidth(80);
+				}
+			}
+		}else{
+			displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+			displayResult.getColumnModel().getColumn(0).setMinWidth(200);
+			displayResult.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+			displayResult.getColumnModel().getColumn(1).setMaxWidth(80);
+			displayResult.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+			displayResult.getColumnModel().getColumn(2).setMaxWidth(80);
+			displayResult.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+			displayResult.getColumnModel().getColumn(3).setMaxWidth(80);
+			displayResult.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+			displayResult.getColumnModel().getColumn(4).setMaxWidth(80);
+		}
 		displayResult.setRowHeight(40);
 		displayResultPanel.getViewport().add(displayResult);
 		
