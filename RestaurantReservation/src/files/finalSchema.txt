@@ -1,0 +1,16 @@
+Restaurant(RID,name,street_address,city,location,cuisine,OID,ownerName,ownerPassword,img)
+	Location,Name -> RID
+	Location,Name is Unique, and can determine all other attributes.
+EmployeeWorkAt(EID,name,password,RID)
+	Foreign Key (RID) References Restaurant
+MenuItem(FID,name,price,RID)
+	Foreign Key (RID) References Restaurant
+Customer (UserName, password, firstName,lastName,phoneNum)
+Reviews (RID,UserName,Comments,Rating)
+	Foreign Key (RID) References Restaurant
+	Foreign Key (UserName) References Customer
+HasTable(TID, tablesize,RID,numBookings)
+	Foreign Key (RID) References Restaurant
+TableBooking(StartDayTime,TID,UserName, RID, partySize,duration)
+	Foreign Key(TID, RID) References HasTable
+	Foreign Key (UserName) References Customer
