@@ -162,6 +162,39 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
+	
+	public Vector<Vector> getMenuItems(String locationName, String option) {
+		ResultSet rs;
+		// Location Name string in form: Name-Location
+		String name = getRestaurantFromString(locationName);
+		String location = getLocationFromString(locationName);
+		String optionPrice = "min(price)";
+		if (option=="max") {
+				optionPrice = "max(price)";
+		}
+		Vector<Vector> results = new Vector<Vector>();
+		String query = "Select name, " + optionPrice;
+				query += " from MenuItem where rid IN (select rid from restaurant where name='" + name;
+				query += "'and location='" + location + "')";
+
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				String foodName = rs.getString("name");
+				String price = String.valueOf(rs.getFloat("price"));
+				Vector<String> v = new Vector<String>();
+				v.add(foodName);
+				v.add(price);
+				results.add(v);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return results;
+	}
+
 
 	public Vector<Vector> getRestaurantMenuItems(String rid) {
 		ResultSet rs;

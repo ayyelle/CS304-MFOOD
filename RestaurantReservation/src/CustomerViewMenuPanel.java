@@ -32,6 +32,7 @@ public class CustomerViewMenuPanel extends JPanel {
 	JTable displayResult;
 	SQLRestaurant s;
 	JLabel imgLabel;
+	JComboBox minmax;
 
 
 
@@ -46,6 +47,13 @@ public class CustomerViewMenuPanel extends JPanel {
 		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 		restaurantComboBox = new JComboBox(restaurantOptions);
 		restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
+		
+		// min max
+		Vector<String> options = new Vector<String>();
+		options.add("min");
+		options.add("max");
+		minmax = new JComboBox();
+		JLabel minmaxLabel = new JLabel("Min/Max Price: ", JLabel.TRAILING);
 
 		displayResult = new JTable();
 
@@ -55,11 +63,41 @@ public class CustomerViewMenuPanel extends JPanel {
 
 
 		imgLabel = new JLabel();
+		
+		JButton minmaxbutton = new JButton("Min or Max");
+		minmaxbutton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String minmaxSelection = (String) minmax.getSelectedItem();
+				String restaurant = (String) restaurantComboBox.getSelectedItem();
+				
+				Vector<String> colNames = new Vector<String>();
+				colNames.add("Food Name");
+				colNames.add("Price");
 
+				SQLRestaurant s = new SQLRestaurant();
+				Vector<Vector> data = s.getmenuitem(restaurant, minmaxSelection);
+				displayResult = new JTable(data, colNames);
+
+				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
+				displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
+
+				displayResult.setRowHeight(40);
+				displayResultPanel.getViewport().add(displayResult);
+				if (data.size() == 0) {
+					JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
+				}
+
+				String iconPath = s.getImage(restaurant);
+				Icon icon = new ImageIcon(getClass().getResource(iconPath));
+				imgLabel.setIcon(icon);
+
+			}
+
+		});
+		
 		submit = new JButton("Submit");
-
 		submit.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String restaurant = (String) restaurantComboBox.getSelectedItem();
@@ -113,13 +151,22 @@ public class CustomerViewMenuPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 3;
 		this.add(submit, c);
-
+		
+		// min max stuff
 		c.gridx = 1;
 		c.gridy = 4;
+		this.add(minmax);
+		
+		c.gridx = 1;
+		c.gridy = 5;
+		this.add(minmaxButton);
+
+		c.gridx = 1;
+		c.gridy = 6;
 		this.add(displayResultPanel, c);
 
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 7;
 		this.add(imgLabel, c);
 
 		addComponentListener(new ComponentAdapter() {
