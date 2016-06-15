@@ -76,7 +76,7 @@ public class CustomerViewMenuPanel extends JPanel {
 				colNames.add("Price");
 
 				SQLRestaurant s = new SQLRestaurant();
-				Vector<Vector> data = s.getmenuitem(restaurant, minmaxSelection);
+				Vector<Vector> data = s.getMenuItems(restaurant, minmaxSelection);
 				displayResult = new JTable(data, colNames);
 
 				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
@@ -159,7 +159,7 @@ public class CustomerViewMenuPanel extends JPanel {
 		
 		c.gridx = 1;
 		c.gridy = 5;
-		this.add(minmaxButton);
+		this.add(minmaxbutton);
 
 		c.gridx = 1;
 		c.gridy = 6;
