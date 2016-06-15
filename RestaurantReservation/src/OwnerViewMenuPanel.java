@@ -56,19 +56,13 @@ public class OwnerViewMenuPanel extends JPanel {
 
 		submit = new JButton("Show Menu");
 		
-
 		submit.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				displayResult();
-
 			}
-
 		});
-
 		
-
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = c.REMAINDER;
@@ -80,12 +74,8 @@ public class OwnerViewMenuPanel extends JPanel {
 		c.gridy = 1;
 		c.insets = new Insets(0, 0, 0, 0);
 
-		// this.add(restaurantLabel, c);
-
 		c.gridx = 0;
 		c.gridy = 2;
-
-		// this.add(restaurantComboBox, c);
 
 		c.insets = new Insets(10, 10, 10, 10);
 
@@ -106,8 +96,6 @@ public class OwnerViewMenuPanel extends JPanel {
 				public void actionPerformed(ActionEvent arg0) {
 					int row = displayResult.getSelectedRow();
 					String foodName = (String) displayResult.getValueAt(row, 0);
-					System.out.println("Food name to be deleted: " + foodName);
-					System.out.println("Restaurant ID: " + restaurantId);
 					deleteFoodItem(restaurantId, foodName);
 					update();
 				}

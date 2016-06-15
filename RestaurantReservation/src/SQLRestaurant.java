@@ -24,7 +24,7 @@ public class SQLRestaurant {
 		}
 		try {
 
-			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_l9t7", "a65123085");
+			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1522:ug", "ora_d1v8", "a71528095");
 			stmt = con.createStatement();
 
 		} catch (SQLException e) {
@@ -802,6 +802,21 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		
+		return result;
+	}
+	
+	public Boolean deleteReview(String rid, String userName, String comment) {
+		boolean result = false;
+		String query = "DELETE FROM reviews WHERE rid = " + rid; 
+				query += " and comments = '" + comment + "'";
+				query += " and username = '" + userName + "'";
+		try {
+			int rs = stmt.executeUpdate(query);
+			result = rs == 1 ? true : false;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 
