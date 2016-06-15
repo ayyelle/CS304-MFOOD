@@ -26,7 +26,8 @@ select r.rid, t.tid from restaurant r, hastable t " +
 				"and ((to_timestamp('" + requestTime +"', 'yyyy:mm:dd hh24:mi')) + interval '2' hour) > (tb.startDayTime))"; 
         
 insert into tablebooking values (TO_TIMESTAMP('" + requestTime+ "', 'yyyy-mm-dd hh24:mi:ss')," + partySize + ", 2, " + tid + ", " + rid + ", '" + customerID+ "')"; 
-select startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID; 
+select startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "
+				+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID + " order by startdaytime";
 select distinct tid, tablesize, numbooked " + "from hastable " + "where rid=" + resID; 
 select ownername from restaurant where rid = " + resID 
 DELETE FROM hastable WHERE rid = " + rid + " and tid = '" + tid + "'; 
@@ -56,3 +57,11 @@ UPDATE restaurant ";
 		update += "SET location = '" + location + "', ";
 		update += "name = '" + name + "' ";
 		update += "WHERE rid = " + rid 
+
+"SELECT " + selected
+				+ " FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
+				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
+				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID
+				+ " order by startdaytime ASC";
+Select * from Restaurant where rid IN (select rid from restaurant where name='" + name
+				+ "'and location='" + location + "')"
