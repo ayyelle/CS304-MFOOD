@@ -49,7 +49,6 @@ public class CustomerAddReviewPanel extends JPanel {
 		c.insets = new Insets(5,5,5,5);
 		
 		Vector<String> restaurantNames = sr.getRestaurants();
-		//System.out.println(restaurantNames);
 		
 		String[] ratingOptions = { "1", "2", "3", "4", "5" };
 
@@ -59,7 +58,6 @@ public class CustomerAddReviewPanel extends JPanel {
 		commentTextPane = new JScrollPane(comments);
 		commentTextPane.setPreferredSize(new Dimension(400, 100));
 		comments.setLineWrap(true);
-		//comments.setPreferredSize(new Dimension(10, 40));
 		commentsLabel = new JLabel("Comments: ", JLabel.TRAILING);
 		submit = new JButton("Submit");
 		restaurantComboBox = new JComboBox(restaurantNames);

@@ -10,6 +10,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Vector;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,106 +31,118 @@ public class CustomerViewMenuPanel extends JPanel {
 	JScrollPane displayResultPanel;
 	JTable displayResult;
 	SQLRestaurant s;
-	
+	JLabel imgLabel;
 
-	
+
+
 	public CustomerViewMenuPanel(CustomerPanel parent) {
 		this.parent = parent;
 		s = new SQLRestaurant();
-		
+
 		Vector<String> restaurantOptions = s.getRestaurants();
-	this.setLayout(new GridBagLayout());
-	GridBagConstraints c = new GridBagConstraints();
-	title = new JLabel("See Menu", JLabel.CENTER);
-	title.setFont(new Font(title.getName(), Font.PLAIN, 20));
-	restaurantComboBox = new JComboBox(restaurantOptions);
-	restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		title = new JLabel("See Menu", JLabel.CENTER);
+		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
+		restaurantComboBox = new JComboBox(restaurantOptions);
+		restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
 
-	displayResult = new JTable();
-	
-	displayResultPanel = new JScrollPane();
-	displayResultPanel.setPreferredSize(new Dimension(300, 300));
+		displayResult = new JTable();
 
-	submit = new JButton("Submit");
-	
-	submit.addActionListener(new ActionListener() {
+		displayResultPanel = new JScrollPane();
+		displayResultPanel.setPreferredSize(new Dimension(300, 300));
+		displayResultPanel.setMinimumSize(new Dimension(300, 300));
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			String restaurant = (String) restaurantComboBox.getSelectedItem();
 
-			System.out.println(restaurant);
-			Vector<String> colNames = new Vector<String>();
-			colNames.add("Food Name");
-			colNames.add("Price");
+		imgLabel = new JLabel();
 
-			SQLRestaurant s = new SQLRestaurant();
-			Vector<Vector> data = s.getMenuItems(restaurant);
-			displayResult = new JTable(data, colNames);
+		submit = new JButton("Submit");
 
-			displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
-			displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
-			
-			displayResult.setRowHeight(40);
-			displayResultPanel.getViewport().add(displayResult);
-			if (data.size() == 0) {
-				JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
+		submit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String restaurant = (String) restaurantComboBox.getSelectedItem();
+
+				Vector<String> colNames = new Vector<String>();
+				colNames.add("Food Name");
+				colNames.add("Price");
+
+				SQLRestaurant s = new SQLRestaurant();
+				Vector<Vector> data = s.getMenuItems(restaurant);
+				displayResult = new JTable(data, colNames);
+
+				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
+				displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
+
+				displayResult.setRowHeight(40);
+				displayResultPanel.getViewport().add(displayResult);
+				if (data.size() == 0) {
+					JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
+				}
+
+				String iconPath = s.getImage(restaurant);
+				Icon icon = new ImageIcon(getClass().getResource(iconPath));
+				imgLabel.setIcon(icon);
+
 			}
-			
-		}
-		
-	});
-	
-	c.gridx = 0;
-	c.gridy = 0;
-	c.gridwidth = c.REMAINDER;
-	c.anchor = c.PAGE_START;
-	c.insets = new Insets(30, 5, 5, 5);
-	this.add(title, c);
-	
-	
-	c.gridx = 0;
-	c.gridy = 1;
-	c.insets = new Insets(0, 0, 0, 0);
-	
-	this.add(restaurantLabel, c);
-	
-	c.gridx = 0;
-	c.gridy = 2;
 
-	this.add(restaurantComboBox, c);
-	
-	c.insets = new Insets(10, 10, 10, 10);
+		});
 
-	c.gridx = 1;
-	c.gridy = 3;
-	this.add(submit, c);
-	
-	c.gridx = 1;
-	c.gridy = 4;
-	this.add(displayResultPanel, c);
-    
-    addComponentListener(new ComponentAdapter() {
-        @Override
-        public void componentShown(ComponentEvent evt) {
-            start();
-        }
-    });
-    
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = c.REMAINDER;
+		c.anchor = c.PAGE_START;
+		c.insets = new Insets(30, 5, 5, 5);
+		this.add(title, c);
+
+
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 0, 0);
+
+		this.add(restaurantLabel, c);
+
+		c.gridx = 0;
+		c.gridy = 2;
+
+		this.add(restaurantComboBox, c);
+
+		c.insets = new Insets(10, 10, 10, 10);
+
+		c.gridx = 1;
+		c.gridy = 3;
+		this.add(submit, c);
+
+		c.gridx = 1;
+		c.gridy = 4;
+		this.add(displayResultPanel, c);
+
+		c.gridx = 0;
+		c.gridy = 5;
+		this.add(imgLabel, c);
+
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentShown(ComponentEvent evt) {
+				start();
+			}
+		});
+
 	}
-	
+
 	public void start() {
 		this.customerId = parent.getCustomerID();
 		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
-		
+
 		Vector<String> restaurants = s.getRestaurants();
-		
+
 		restaurantComboBox.removeAllItems();
 		for (int i = 0; i<restaurants.size(); i++) {
 			restaurantComboBox.addItem(restaurants.get(i));
 
 		}
 	}
-    
+
 }

@@ -101,12 +101,15 @@ public class OwnerRestaurantProperties extends JPanel {
 				if (name.equals("")||location.equals("")) {
 					JOptionPane.showMessageDialog(null,"Please fill in all textfields!", "Update Name", JOptionPane.PLAIN_MESSAGE);
 				} else {
-					boolean result = updateRestaurantName(restaurantId, name, location);
-					if (result) {
+					String result = updateRestaurantName(restaurantId, name, location);
+					if (result == "SUCCESS") {
 						JOptionPane.showMessageDialog(null,"Restaurant Name Updated!", "Update Name", JOptionPane.PLAIN_MESSAGE);
 						parent.start();
-					} else {
+					} else if (result == "PRIMARY_KEY_FAIL") {
 						JOptionPane.showMessageDialog(null,"The name/location combination specified is already in use. Please choose another combination!", "Update Name", JOptionPane.PLAIN_MESSAGE);
+
+					} else {
+						JOptionPane.showMessageDialog(null,"Names must be at least 3 characters long, and locations must be at least 4 characters long. Please edit and try again!", "Update Name", JOptionPane.PLAIN_MESSAGE);
 
 					}
 	
@@ -118,8 +121,8 @@ public class OwnerRestaurantProperties extends JPanel {
 		});
 	}
 	
-	private boolean updateRestaurantName(String rid, String name, String location) {
-		boolean result = s.updateRestaurantName(rid, name, location);
+	private String updateRestaurantName(String rid, String name, String location) {
+		String result = s.updateRestaurantName(rid, name, location);
 		return result;
 	}
 	

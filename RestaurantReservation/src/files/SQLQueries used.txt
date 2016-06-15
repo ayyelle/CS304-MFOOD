@@ -1,0 +1,58 @@
+SELECT * FROM restaurant; 
+Select * FROM customer where UserName = '" + username + "' and password = '" + password + "'; 
+Select RID FROM restaurant WHERE name = '" + rName + "' and location = '" + location + "'; 
+insert into reviews values ('" + comment + "', '" + rating +"', '" + restaurantID +"', '"+ currentUsername + "')
+Select * from TableBooking where UserName='" + username +"'; 
+insert into customer values ('" + username + "', '" + password +"', '" + firstName +"', '"+ lastName + "', '" + phoneNum + "') 
+delete from TableBooking WHERE StartDayTime = to_timestamp('" + startDayTime + "', 'YYYY-MM-DD HH24-mi-ss.FF') and rid = '" + restaurantID + "' and tid = '" + tid + "' and rid = '" + restaurantID + "'"; 
+Select * FROM restaurant WHERE oid = '" + eid + "' and ownerpassword = '" + password + "' and rid = '" + rid + "'";
+Select * FROM employeeworkat WHERE rid = '" + rid + "' and eid = '" + eid+ "' and password = '" + password + "'"; 
+Select * from reviews where rid IN (select rid from restaurant where name='" + name+ "'and location='" + location + "')"; 
+Select * from reviews where rid =" + rid; 
+Select name from employeeworkat where eid="+eid+" AND rid="+rid 
+Select * from MenuItem where rid IN (select rid from restaurant where name='" + name+ "'and location='" + location + "')";
+SELECT * FROM MenuItem WHERE rid = " + rid; 
+Select r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating) FROM CuisineMax m where m.cuisine = r.cuisine) 
+Select r.cuisine, AVG(re.rating) AS avgrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine 
+SELECT name, location FROM restaurant WHERE rid=" + rid 
+SELECT name, location FROM restaurant 
+select r.rid, t.tid from restaurant r, hastable t " + 
+				"where r.rid = t.rid and r.name = '" + name + "' and r.location = '" + location + "' and t.tablesize >=" + partySize + " "+
+				"MINUS " + 
+				"(select t.rid, t.tid " +
+				"from tablebooking tb, hastable t, restaurant r " +
+				"where t.tid = tb.tid and t.rid = tb.rid and r.name = '" + name + "' and r.location = '" + location + "' " +
+				"and ((to_timestamp('"+ requestTime +"', 'yyyy:mm:dd hh24:mi')) < (tb.startDaytime + interval'2' hour))" +
+				"and ((to_timestamp('" + requestTime +"', 'yyyy:mm:dd hh24:mi')) + interval '2' hour) > (tb.startDayTime))"; 
+        
+insert into tablebooking values (TO_TIMESTAMP('" + requestTime+ "', 'yyyy-mm-dd hh24:mi:ss')," + partySize + ", 2, " + tid + ", " + rid + ", '" + customerID+ "')"; 
+select startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID; 
+select distinct tid, tablesize, numbooked " + "from hastable " + "where rid=" + resID; 
+select ownername from restaurant where rid = " + resID 
+DELETE FROM hastable WHERE rid = " + rid + " and tid = '" + tid + "'; 
+select username from customer" 
+delete from TABLEBOOKING WHERE STARTDAYTIME = to_timestamp('" + startDayTime + "', 'YYYY-MM-DD HH24-mi-ss.FF') and rid = '" + rid + "' and tid = '" + tid + "' and username = '" + username + "' #
+select name, location, rating, comments, username" + " from reviews r, restaurant t "
+				+ "where r.rid = t.rid and " + ratingSelection + " <= ALL (select rating " + "from reviews r1 "
+				+ "where r1.rid = r.rid)"; 
+        
+INSERT INTO menuitem VALUES(";
+		query += fid + ",";
+		query += "'" + name + "',";
+		query += price + ",";
+		query += rid + ")"; 
+    
+DELETE FROM menuitem WHERE rid = " + RID + " and name = '" + foodName + "'"; 
+
+SET location = '" + location + "', "; #SET
+
+INSERT INTO employeeworkat VALUES (";
+		insert += eid + ", ";
+		insert += "'" + name + "', ";
+		insert += "'" + password + "', ";
+		insert += rid + ")"; 
+    
+UPDATE restaurant ";
+		update += "SET location = '" + location + "', ";
+		update += "name = '" + name + "' ";
+		update += "WHERE rid = " + rid 
