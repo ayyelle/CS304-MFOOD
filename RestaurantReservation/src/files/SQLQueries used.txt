@@ -12,7 +12,7 @@ Select * from reviews where rid =" + rid;
 Select name from employeeworkat where eid="+eid+" AND rid="+rid 
 Select * from MenuItem where rid IN (select rid from restaurant where name='" + name+ "'and location='" + location + "')";
 SELECT * FROM MenuItem WHERE rid = " + rid; 
-Select r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating) FROM CuisineMax m where m.cuisine = r.cuisine) 
+Select DISTINCT r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating) FROM CuisineMax m where m.cuisine = r.cuisine) 
 Select r.cuisine, AVG(re.rating) AS avgrating from restaurant r,reviews re where r.RID=re.RID group by r.cuisine 
 SELECT name, location FROM restaurant WHERE rid=" + rid 
 SELECT name, location FROM restaurant 
