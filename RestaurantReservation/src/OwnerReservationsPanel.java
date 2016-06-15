@@ -58,8 +58,6 @@ public class OwnerReservationsPanel extends JPanel {
 			"TID","RID","Customer Name","Customer Username"};
 	String selectedColumns;
 	Vector<String> colNames = new Vector<String>();
-	
-
 		
 	// new reservation variables
 	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
@@ -174,14 +172,18 @@ public class OwnerReservationsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row = displayResult.getSelectedRow();
-				String startdaytime_del = (String) displayResult.getValueAt(row, 0);
-				String tid_del = (String) displayResult.getValueAt(row, 3);
-				String rid_del = (String) displayResult.getValueAt(row, 4);
-				String username_del = (String) displayResult.getValueAt(row, 6);
-				System.out.println("Reservation to be deleted: " + startdaytime_del + " " + tid_del + " " + rid_del
-						+ " " + username_del);
-				s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
-				start("","",null,"");
+				try{
+					String startdaytime_del = (String) displayResult.getValueAt(row, 0);
+					String tid_del = (String) displayResult.getValueAt(row, 3);
+					String rid_del = (String) displayResult.getValueAt(row, 4);
+					String username_del = (String) displayResult.getValueAt(row, 6);
+					System.out.println("Reservation to be deleted: " + startdaytime_del + " " + tid_del + " " + rid_del
+							+ " " + username_del);
+					s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
+					start("","",null,"");
+				}catch(ArrayIndexOutOfBoundsException ex){
+					JOptionPane.showMessageDialog(null, "Must Display Day/Time, TID, RID, and Username To Delete Rows.");
+				}
 			}
 		});
 		// TODO: select columns
