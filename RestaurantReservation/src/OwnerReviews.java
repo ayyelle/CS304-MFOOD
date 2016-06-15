@@ -34,17 +34,24 @@ public class OwnerReviews extends JPanel {
 	// Restaurant Side
 	String ownerID;
 	String empID;
+	Boolean isOwner;
 
-	public OwnerReviews(RestaurantPanel parent) {
+	
+	public OwnerReviews(RestaurantPanel parent, String who) {
 		this.parent = parent;
 		s = new SQLRestaurant();
 
+		if(who.equals("emp")){
+			isOwner=false;
+		}else{
+			isOwner=true;
+		}
+		
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		title = new JLabel("View Reviews", JLabel.CENTER);
 		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 		displayResult = new JTable();
-		delete = new JButton("Delete Review");
 
 		displayResultPanel = new JScrollPane();
 		displayResultPanel.setPreferredSize(new Dimension(900, 400));
@@ -59,10 +66,7 @@ public class OwnerReviews extends JPanel {
 		c.gridx = 1;
 		c.gridy = 4;
 		this.add(displayResultPanel, c);
-		
-		c.gridx = 1;
-		c.gridy = 5;
-		this.add(delete, c);
+
 
 		addComponentListener(new ComponentAdapter() {
 			@Override
@@ -71,24 +75,30 @@ public class OwnerReviews extends JPanel {
 			}
 		});
 		
-		delete.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int row = displayResult.getSelectedRow();
-				String userName = (String) displayResult.getValueAt(row, 0);
-				String comment = (String) displayResult.getValueAt(row, 2);
-				if (deleteReview(resID, userName, comment)) {
-					update();
-					JOptionPane.showMessageDialog(null, "Review has been deleted!",
-														"Delete review", JOptionPane.PLAIN_MESSAGE);
-				} else {
-					JOptionPane.showMessageDialog(null, "Failed to delete review!",
-														"Delete review", JOptionPane.PLAIN_MESSAGE);
+		if(isOwner){
+			delete = new JButton("Delete Review");
+			c.gridx = 1;
+			c.gridy = 5;
+			this.add(delete, c);
+			delete.addActionListener(new ActionListener() {
+	
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					int row = displayResult.getSelectedRow();
+					String userName = (String) displayResult.getValueAt(row, 0);
+					String comment = (String) displayResult.getValueAt(row, 2);
+					if (deleteReview(resID, userName, comment)) {
+						update();
+						JOptionPane.showMessageDialog(null, "Review has been deleted!",
+															"Delete review", JOptionPane.PLAIN_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(null, "Failed to delete review!",
+															"Delete review", JOptionPane.PLAIN_MESSAGE);
+					}
 				}
-			}
-
-		});
+	
+			});
+		}
 	}
 
 	public void start() {
