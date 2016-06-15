@@ -172,12 +172,14 @@ public class CustomerReservationPanel extends JPanel {
 
 		//Date Picker stuff
 		model = new UtilDateModel();
+		model.setSelected(true);
 		p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 
+		
 		submit = new JButton("Submit Reservation Request");
 		
 		timeLabel = new JLabel("Select a reservation time:");

@@ -450,14 +450,20 @@ public class SQLRestaurant {
 	}
 
 	// projection
-	public Vector<Vector> getSelectReservations(String resID, String selected, int indices[]) {
+	public Vector<Vector> getSelectReservations(String resID, String selected, int indices[], String d, String df) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
 		format.setTimeZone(TimeZone.getDefault());
 		// System.out.println("In getReservations resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
-		String query = "select " + selected + " from customer c, tablebooking t "
-				+ "where c.username=t.username AND t.rid=" + resID;
+		//String query = "select " + selected + " from customer c, tablebooking t "
+		//		+ "where c.username=t.username AND t.rid=" + resID;
+		
+		String query = "SELECT " + selected
+				+ " FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
+				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
+				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID;
+		System.out.println(query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
