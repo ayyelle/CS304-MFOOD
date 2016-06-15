@@ -614,20 +614,23 @@ public class SQLRestaurant {
 		return result;
 	}
 
-	public boolean updateRestaurantName(String rid, String name, String location) {
-		boolean result = false;
+	public String updateRestaurantName(String rid, String name, String location) {
+		String result = "CHECK_FAIL";
 		String update = "UPDATE restaurant ";
 		update += "SET location = '" + location + "', ";
 		update += "name = '" + name + "' ";
 		update += "WHERE rid = " + rid;
 		try {
 			int rs = stmt.executeUpdate(update);
-			result = rs == 1 ? true : false;
+			result = rs == 1 ? (result = "SUCCESS") : (result = "CHECK_FAIL");
 
 		} catch (SQLException e) {
+			System.out.println(e.getErrorCode());
 			if (e.getErrorCode() == 1) {
 				// Primary key constraint violation
-				result = false;
+				result = "PRIMARY_KEY_FAIL";
+			} else if (e.getErrorCode() == 2290) {
+				result = "CHECK_FAIL";
 			}
 		}
 

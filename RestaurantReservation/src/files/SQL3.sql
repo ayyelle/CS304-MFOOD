@@ -17,7 +17,8 @@ create table restaurant (
   ownerName varchar(50),
   ownerPassword varchar(50) NOT NULL,
   img varchar(100),
-  unique(name, location)
+  unique(name, location), 
+  check (length(location)>3 and length(name)>2)
   );
 
 insert into restaurant values(
