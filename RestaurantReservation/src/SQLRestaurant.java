@@ -508,19 +508,24 @@ public class SQLRestaurant {
 
 	// get the restaurant's reservations, select dates
 	public Vector<Vector> getReservationsByDate(String resID, String d, String df) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
+		format.setTimeZone(TimeZone.getDefault());
 		System.out.println("In getReservationsByDate resID: " + resID + " date: " + d);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
 		String query = "SELECT startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "
 				+ "FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
 				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
-				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=1";
+				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID;
 		System.out.println("getReservationsByDate query: " + query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				System.out.println("THERE IS A NEXT");
-				String starttime = rs.getString("startdaytime");
+				Timestamp starttimestamp = rs.getTimestamp("startdaytime");
+				String starttime = format.format(starttimestamp).toString();
+
+				//String starttime = rs.getString("startdaytime");
 				String partysize = String.valueOf(rs.getInt("partysize"));
 				String duration = rs.getString("duration");
 				String tid = String.valueOf(rs.getInt("tid"));
