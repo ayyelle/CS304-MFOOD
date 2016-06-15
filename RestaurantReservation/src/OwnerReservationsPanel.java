@@ -31,54 +31,51 @@ import org.jdatepicker.impl.UtilDateModel;
 @SuppressWarnings("serial")
 public class OwnerReservationsPanel extends JPanel {
 
-	//TODO: reload this pane if date picker crashes.
-	
-	RestaurantPanel parent;
-	String resID;
-	JButton addReservation;
-	JButton deleteReservation;
-	JButton selectColumns;
-	JLabel restaurantLabel;
-	JLabel title;
-	JScrollPane displayResultPanel;
-	JTable displayResult;
-	SQLRestaurant s;
-	JPanel restaurantCards;
+	// TODO: reload this pane if date picker crashes.
+	// TODO: combine date and column selection
+
+	private RestaurantPanel parent;
+	private String resID;
+	private JButton addReservation;
+	private JButton deleteReservation;
+	private JButton selectColumns;
+	private JLabel restaurantLabel;
+	private JLabel title;
+	private JScrollPane displayResultPanel;
+	private JTable displayResult;
+	private SQLRestaurant s;
+	private JPanel restaurantCards;
 
 	// pick date
-	UtilDateModel model;
-	Properties p;
+	private UtilDateModel model;
+	private Properties p;
 	boolean updateDate;
-	//pick columns
-	JList list;
-	private final int COLUMN_SIZE = 7;
-	private String[] columnList = {"startdaytime", "duration", "partysize", "tid", "rid", "firstname, lastname", "c.username"};
-	private String[] columnListNames = {"Start Day Time","Duration","Party Size",
-			"TID","RID","Customer Name","Customer Username"};
-	String selectedColumns;
+	private String formattedDate = "";
+	private String formattedDateEnd = "";
+	// pick columns
+	private JList<String> list;
+	private String[] columnList = { "startdaytime", "duration", "partysize", "tid", "rid", "firstname, lastname",
+			"c.username" };
+	private String[] columnListNames = { "Start Day Time", "Duration", "Party Size", "TID", "RID", "Customer Name",
+			"Customer Username" };
+	String selectedColumns = "";
 	Vector<String> colNames = new Vector<String>();
-	
 
-		
 	// new reservation variables
 	String startdaytimeNew, partysizeNew, durationNew, tidNew, ridNew, usernameNew;
+	GridBagConstraints c;
+	JDatePanelImpl datePanel;
+	JDatePickerImpl datePicker;
 
 	@SuppressWarnings("static-access")
 	public OwnerReservationsPanel(RestaurantPanel parent, JPanel restaurantCards) {
-		
+
 		this.parent = parent;
 		this.restaurantCards = restaurantCards;
 		s = new SQLRestaurant();
-		p = new Properties();
-		model = new UtilDateModel();
-		
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
 
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 		title = new JLabel("View Reservations", JLabel.CENTER);
 		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 		displayResult = new JTable();
@@ -86,31 +83,34 @@ public class OwnerReservationsPanel extends JPanel {
 		displayResultPanel = new JScrollPane();
 		displayResultPanel.setPreferredSize(new Dimension(900, 400));
 
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-
+		p = new Properties();
+		model = new UtilDateModel();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 		datePicker.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Date today = new Date();
 				Date selectedDate = (Date) datePicker.getModel().getValue();
-				String formattedDate = formatDate(selectedDate);
-				String formattedDateEnd = formatDatePlusOne(selectedDate);
-				if (selectedDate.before(today)) {
-					try{
-						JOptionPane.showMessageDialog(null, "Oops! Selected day must be in the future.", 
-								"Date Missing",JOptionPane.PLAIN_MESSAGE);
-					}catch(Exception e){
+
+				if (selectedDate.before(today) || selectedDate.compareTo(today) == 0) {
+					try {
+						JOptionPane.showMessageDialog(null, "Oops! Selected day must be in the future.", "Date Missing",
+								JOptionPane.PLAIN_MESSAGE);
+					} catch (Exception e) {
 						e.getMessage();
 					}
-					start("","",null,"");
 				} else {
-					System.out.println("Date Selected: "+formattedDate);
-					start(formattedDate, formattedDateEnd,null,"");
+					System.out.println("Date Selected: " + formattedDate);
+					formattedDate = formatDate(selectedDate);
+					formattedDateEnd = formatDatePlusOne(selectedDate);
+					start(formattedDate, formattedDateEnd, null, "");
 				}
-
 			}
-
 		});
 
 		addReservation = new JButton("Add Reservation");
@@ -136,33 +136,34 @@ public class OwnerReservationsPanel extends JPanel {
 				System.out.println("Reservation to be deleted: " + startdaytime_del + " " + tid_del + " " + rid_del
 						+ " " + username_del);
 				s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
-				start("","",null,"");
+				start("", "", null, "");
 			}
 		});
-		// TODO: select columns
+
 		selectColumns = new JButton("Select Columns");
 		selectColumns.setPreferredSize(new Dimension(210, 25));
-		selectColumns.addActionListener(new ActionListener(){
+		selectColumns.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e){
-				//clear previous selection
-				selectedColumns="";
-				
-				list = new JList(new String[] {"Start Day Time", "Duration", "Party Size", "TID", "RID", "Customer Name", "Customer Username"});
+			public void actionPerformed(ActionEvent e) {
+				// clear previous selection
+				selectedColumns = "";
+
+				list = new JList<String>(new String[] { "Start Day Time", "Duration", "Party Size", "TID", "RID",
+						"Customer Name", "Customer Username" });
 				JOptionPane.showMessageDialog(null, list, "Select Column(s)", JOptionPane.PLAIN_MESSAGE);
-				System.out.println("Selected columns: "+Arrays.toString(list.getSelectedIndices()));
+				System.out.println("Selected columns: " + Arrays.toString(list.getSelectedIndices()));
 				int indices[] = list.getSelectedIndices();
-				for(int i=0; i<indices.length; i++){
-					System.out.println("index: "+ columnList[indices[i]]);
-					if(i==indices.length-1){
-						selectedColumns=selectedColumns.concat(columnList[indices[i]]);
-					}else{
-						selectedColumns=selectedColumns.concat(columnList[indices[i]]);
-						selectedColumns=selectedColumns.concat(", ");
+				for (int i = 0; i < indices.length; i++) {
+					System.out.println("index: " + columnList[indices[i]]);
+					if (i == indices.length - 1) {
+						selectedColumns = selectedColumns.concat(columnList[indices[i]]);
+					} else {
+						selectedColumns = selectedColumns.concat(columnList[indices[i]]);
+						selectedColumns = selectedColumns.concat(", ");
 					}
 				}
 				System.out.println("Select selectedColumns: " + selectedColumns);
-				start("","",indices, selectedColumns);
+				start("", "", indices, selectedColumns);
 			}
 		});
 
@@ -178,7 +179,7 @@ public class OwnerReservationsPanel extends JPanel {
 		c.gridy = 1;
 		c.insets = new Insets(0, 0, 3, 0);
 		this.add(selectColumns, c);
-		
+
 		c.weightx = 0.5;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -203,7 +204,7 @@ public class OwnerReservationsPanel extends JPanel {
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentShown(ComponentEvent evt) {
-				start("","",null,"");
+				start("", "", null, "");
 			}
 		});
 	}
@@ -211,126 +212,129 @@ public class OwnerReservationsPanel extends JPanel {
 	String getRestuarantID() {
 		return parent.getRestaurantID();
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	private String formatDate(Date date) {
 		int day = date.getDate();
-		int month = date.getMonth()+1;
-		int year = date.getYear()+1900;
+		int month = date.getMonth() + 1;
+		int year = date.getYear() + 1900;
 		String result;
-		
-		if(day<10 && month<10){
+
+		if (day < 10 && month < 10) {
 			result = year + "-0" + month + "-0" + day + " 01:00:00.000000";
-		}else if(day<10 && month>=10){
-			result = year + "-"+month+"-0"+day + " 01:00:00.000000";
-		}else if(day>=10 && month<10){
-			result = year + "-0"+month+"-"+day + " 01:00:00.000000";
-		}else{
-			result = year + "-"+month+"-"+day + " 01:00:00.000000";
+		} else if (day < 10 && month >= 10) {
+			result = year + "-" + month + "-0" + day + " 01:00:00.000000";
+		} else if (day >= 10 && month < 10) {
+			result = year + "-0" + month + "-" + day + " 01:00:00.000000";
+		} else {
+			result = year + "-" + month + "-" + day + " 01:00:00.000000";
 		}
 		return result;
 	}
+
 	@SuppressWarnings("deprecation")
 	private String formatDatePlusOne(Date date) {
-		int day = date.getDate()+1;
-		int month = date.getMonth()+1;
-		int year = date.getYear()+1900;
+		int day = date.getDate() + 1;
+		int month = date.getMonth() + 1;
+		int year = date.getYear() + 1900;
 		String result;
-		
-		if(day<10 && month<10){
+
+		if (day < 10 && month < 10) {
 			result = year + "-0" + month + "-0" + day + " 01:00:00.000000";
-		}else if(day<10 && month>=10){
-			result = year + "-"+month+"-0"+day + " 01:00:00.000000";
-		}else if(day>=10 && month<10){
-			result = year + "-0"+month+"-"+day + " 01:00:00.000000";
-		}else{
-			result = year + "-"+month+"-"+day + " 01:00:00.000000";
+		} else if (day < 10 && month >= 10) {
+			result = year + "-" + month + "-0" + day + " 01:00:00.000000";
+		} else if (day >= 10 && month < 10) {
+			result = year + "-0" + month + "-" + day + " 01:00:00.000000";
+		} else {
+			result = year + "-" + month + "-" + day + " 01:00:00.000000";
 		}
 		return result;
 	}
 
 	@SuppressWarnings("rawtypes")
 	public void start(String newDate, String newDateEnd, int indices[], String showColumns) {
-		this.resID = parent.getRestaurantID();
-		//System.out.println("In ReservationsPanel resID: " + resID);
-		displayResultPanel.getViewport().remove(displayResult);
-		
-		
-		// Date Picker stuff
-		p = new Properties();
-		model = new UtilDateModel();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
+		try {
 
-		// show all the things immediately
-		colNames.clear(); //clear previous columns
-		SQLRestaurant s = new SQLRestaurant();
-		Vector<Vector> data = new Vector<Vector>();
-		if(!newDate.isEmpty()){
-			data = s.getReservationsByDate(resID, newDate, newDateEnd);
-			System.out.println("getReservationsByDate returned data:"+data);
-		}else if(indices!=null){
-			data = s.getSelectReservations(resID, showColumns, indices);
-		}else{
-			data = s.getReservations(resID);
-			System.out.println("getReservationsByDate returned data:"+data);
-		}
-		if (data.isEmpty()) {
-			try{
-				JOptionPane.showMessageDialog(null, "No Reservations!","No Reservations", 
-						JOptionPane.PLAIN_MESSAGE);
-			}catch(Exception e){
-				e.getMessage();
+			this.resID = parent.getRestaurantID();
+			// System.out.println("In ReservationsPanel resID: " + resID);
+			displayResultPanel.getViewport().remove(displayResult);
+
+			// Date Picker stuff
+			p = new Properties();
+			model = new UtilDateModel();
+			p.put("text.today", "Today");
+			p.put("text.month", "Month");
+			p.put("text.month", "Month");
+			p.put("text.year", "Year");
+
+			// show all the things immediately
+			colNames.clear(); // clear previous columns
+			SQLRestaurant s = new SQLRestaurant();
+			Vector<Vector> data = new Vector<Vector>();
+			if (!newDate.isEmpty()) {
+				data = s.getReservationsByDate(resID, newDate, newDateEnd);
+				System.out.println("getReservationsByDate returned data:" + data);
+			} else if (indices != null) {
+				data = s.getSelectReservations(resID, showColumns, indices);
+			} else {
+				data = s.getReservations(resID);
+				System.out.println("getReservationsByDate returned data:" + data);
 			}
-			return;
-		}
-		
-		//columns
-		if(indices != null){
-			for(int i=0; i<indices.length; i++){
-				colNames.add(columnListNames[indices[i]]);
+
+			if (data.isEmpty()) {
+				//This option box is throwing a null pointer exception sometimes for some reason
+				//JOptionPane.showMessageDialog(null, "No Reservations!", "No Reservations", JOptionPane.PLAIN_MESSAGE);
+				//return;
+				System.out.println("No Data");
 			}
-		}else{
-			colNames.add("Start Day Time");
-			colNames.add("Duration");
-			colNames.add("Party Size");
-			colNames.add("TID");
-			colNames.add("RID");
-			colNames.add("Customer Name");
-			colNames.add("Customer Username");
-		}
-		
-		displayResult = new JTable(data, colNames);
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		if(indices != null){
-			for(int i=0; i<indices.length; i++){
-				if(indices[i]==0){
-					displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-					displayResult.getColumnModel().getColumn(0).setMinWidth(200);
-				}else{
-					displayResult.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-					displayResult.getColumnModel().getColumn(i).setMinWidth(80);
+
+			// columns
+			if (indices != null) {
+				for (int i = 0; i < indices.length; i++) {
+					colNames.add(columnListNames[indices[i]]);
 				}
+			} else {
+				colNames.add("Start Day Time");
+				colNames.add("Duration");
+				colNames.add("Party Size");
+				colNames.add("TID");
+				colNames.add("RID");
+				colNames.add("Customer Name");
+				colNames.add("Customer Username");
 			}
-		}else{
-			displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-			displayResult.getColumnModel().getColumn(0).setMinWidth(200);
-			displayResult.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-			displayResult.getColumnModel().getColumn(1).setMaxWidth(80);
-			displayResult.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-			displayResult.getColumnModel().getColumn(2).setMaxWidth(80);
-			displayResult.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-			displayResult.getColumnModel().getColumn(3).setMaxWidth(80);
-			displayResult.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-			displayResult.getColumnModel().getColumn(4).setMaxWidth(80);
+
+			displayResult = new JTable(data, colNames);
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+			if (indices != null) {
+				for (int i = 0; i < indices.length; i++) {
+					if (indices[i] == 0) {
+						displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+						displayResult.getColumnModel().getColumn(0).setMinWidth(200);
+					} else {
+						displayResult.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+						displayResult.getColumnModel().getColumn(i).setMinWidth(80);
+					}
+				}
+			} else {
+				displayResult.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+				displayResult.getColumnModel().getColumn(0).setMinWidth(200);
+				displayResult.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+				displayResult.getColumnModel().getColumn(1).setMaxWidth(80);
+				displayResult.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+				displayResult.getColumnModel().getColumn(2).setMaxWidth(80);
+				displayResult.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+				displayResult.getColumnModel().getColumn(3).setMaxWidth(80);
+				displayResult.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+				displayResult.getColumnModel().getColumn(4).setMaxWidth(80);
+			}
+			displayResult.setRowHeight(40);
+			displayResultPanel.getViewport().add(displayResult);
+
+		} catch (Exception e) {
+			e.getMessage();
 		}
-		displayResult.setRowHeight(40);
-		displayResultPanel.getViewport().add(displayResult);
-		
 	}
 
 }
