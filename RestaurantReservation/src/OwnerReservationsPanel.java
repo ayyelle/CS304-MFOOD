@@ -149,7 +149,7 @@ public class OwnerReservationsPanel extends JPanel {
 //					start("","",null,"");
 //				} else {
 					System.out.println("Date Selected: "+formattedDate);
-					start(formattedDate, formattedDateEnd,indices,"");
+					start(formattedDate, formattedDateEnd,indices,selectedColumns);
 //				}
 
 			}
@@ -314,10 +314,11 @@ public class OwnerReservationsPanel extends JPanel {
 		colNames.clear(); //clear previous columns
 		SQLRestaurant s = new SQLRestaurant();
 		Vector<Vector> data = new Vector<Vector>();
-		if(!newDate.isEmpty()){
-			data = s.getReservationsByDate(resID, newDate, newDateEnd);
-			System.out.println("getReservationsByDate returned data:"+data);
-		}else if(indices!=null){
+//		if(!newDate.isEmpty()){
+//			data = s.getReservationsByDate(resID, newDate, newDateEnd);
+//			System.out.println("getReservationsByDate returned data:"+data);
+//		}else 
+			if(indices!=null){
 			data = s.getSelectReservations(resID, showColumns, indices, newDate, newDateEnd);
 		}else{
 			data = s.getReservations(resID);

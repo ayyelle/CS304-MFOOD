@@ -458,7 +458,7 @@ public class SQLRestaurant {
 		Vector<Vector> result = new Vector<Vector>();
 		//String query = "select " + selected + " from customer c, tablebooking t "
 		//		+ "where c.username=t.username AND t.rid=" + resID;
-		
+		System.out.println("SELECTED: " + selected);
 		String query = "SELECT " + selected
 				+ " FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
 				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
