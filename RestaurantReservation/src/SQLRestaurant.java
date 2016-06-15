@@ -418,7 +418,7 @@ public class SQLRestaurant {
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
 		String query = "select startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "
-				+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID;
+				+ "from customer c, tablebooking t " + "where c.username=t.username AND t.rid=" + resID + " order by startdaytime";
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -462,7 +462,8 @@ public class SQLRestaurant {
 		String query = "SELECT " + selected
 				+ " FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
 				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
-				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID;
+				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID
+				+ " order by startdaytime ASC";
 		System.out.println(query);
 		try {
 			rs = stmt.executeQuery(query);
