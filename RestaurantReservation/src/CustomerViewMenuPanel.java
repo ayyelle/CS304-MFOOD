@@ -133,7 +133,6 @@ public class CustomerViewMenuPanel extends JPanel {
 
 	public void start() {
 		this.customerId = parent.getCustomerID();
-		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
 
 		Vector<String> restaurants = s.getRestaurants();

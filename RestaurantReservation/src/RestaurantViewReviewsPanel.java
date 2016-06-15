@@ -54,8 +54,6 @@ public class RestaurantViewReviewsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String restaurant = (String) restaurantComboBox.getSelectedItem();
-
-				System.out.println(restaurant);
 				Vector<String> colNames = new Vector<String>();
 				colNames.add("User");
 				colNames.add("Rating");
@@ -118,7 +116,6 @@ public class RestaurantViewReviewsPanel extends JPanel {
 
 	public void start() {
 		this.restaurantId = parent.getRestaurantID();
-		System.out.println("RID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
 		Vector<String> restaurants = s.getRestaurants();
 		

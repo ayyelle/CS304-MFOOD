@@ -55,8 +55,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			//String restaurant = (String) restaurantComboBox.getSelectedItem();
-			//System.out.println("RestaurantViewMenuPanel.java: " + restaurant);
 			Vector<String> colNames = new Vector<String>();
 			colNames.add("Food Name");
 			colNames.add("Price");
@@ -118,7 +116,6 @@ public class RestaurantViewMenuPanel extends JPanel {
 	
 	public void start() {
 		this.restaurantId = parent.getRestaurantID();
-		System.out.println("RESTAURANTVIEWMENUERID: " + restaurantId);
 		displayResultPanel.getViewport().remove(displayResult);
 	}
 

@@ -32,14 +32,11 @@ public class SQLCustomer {
 			stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM restaurant");
 			rs.next();
-			System.out.println(rs.getInt("rid"));
 			rs.next();
-			System.out.println(rs.getString("name"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	public boolean checkCredentials(String username, String password) {
@@ -48,21 +45,16 @@ public class SQLCustomer {
 		try {
 			String query = "Select * FROM customer where UserName = '" + username + "' and password = '" + password + "'";
 			rs = stmt.executeQuery(query);
-			System.out.println(query);
 			if (!rs.isBeforeFirst()) {
 				result = false;
 			} else {
 				result = true;
 			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return result;
-			
-		
+		return result;	
 	}
 	
 	
@@ -73,7 +65,6 @@ public class SQLCustomer {
 		//not yet working
 		String rName = sr.getRestaurantFromString(restaurantName);
 		String location = sr.getLocationFromString(restaurantName);
-
 		ResultSet results;
 		String getRestaurantID = "Select RID FROM restaurant WHERE name = '" + rName + "' and location = '" + location + "'";
 
@@ -82,19 +73,11 @@ public class SQLCustomer {
 			results.next();
 			restaurantID = results.getInt("rid");
 			results.next();
-			System.out.println("restaurant ID is " + restaurantID);
 		} catch (SQLException e1) {
-			System.out.println("failed to get rid");
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		System.out.println("restaurant id is now " + restaurantID);
-		System.out.println("comment is now " + comment);
-		System.out.println("rating is now" + rating);
 
-		System.out.println("username is now " + currentUsername);
-		
 		String query = "insert into reviews values ('" + comment + "', '" + rating +"', '" + restaurantID +"', '"+ currentUsername + "')";
 		try {
 			//TODO make sure this actually works 
@@ -106,20 +89,16 @@ public class SQLCustomer {
 		}
 		return result;
 	}
-	
-	
-	
+
 	public Vector<Vector> getReservations(String username) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
 		Vector<Vector> results = new Vector<Vector>();
 		String query = "Select * from TableBooking where UserName='" + username +"'";
-		System.out.println(query);
 		//DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date();
 		//java.util.Date date= new java.util.Date();
 		Timestamp ts_now = new Timestamp(today.getTime());
-		System.out.println("today's date is " + ts_now);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
@@ -132,10 +111,6 @@ public class SQLCustomer {
 				String partySize = String.valueOf(rs.getInt("PartySize"));
 				String rid = String.valueOf(rs.getInt("RID"));
 				String tid = String.valueOf(rs.getInt("TID"));
-				System.out.println("start day time from sql is " + startDayTime);
-				
-							
-				System.out.println(startDayTime + " " + partySize + " "+ " " + rid );
 				Vector<String> v = new Vector<String>();
 				String restaurantName = sr.getRestaurantFromRID(rid);
 				v.add(restaurantName);
@@ -156,10 +131,8 @@ public class SQLCustomer {
 	public Vector<String> getReservationsAsString(String username) {
 		ResultSet rs;
 		//Location Name string in form: Name-Location
-		System.out.println("username is " + username);
 		Vector<String> results = new Vector<String>();
 		String query = "Select * from TableBooking where UserName='" + username +"'";
-		System.out.println(query);
 		Date today = new Date();
 		//java.util.Date date= new java.util.Date();
 		Timestamp ts_now = new Timestamp(today.getTime());
@@ -174,8 +147,6 @@ public class SQLCustomer {
 				String partySize = String.valueOf(rs.getInt("PartySize"));
 				String rid = String.valueOf(rs.getInt("RID"));
 				String tid = String.valueOf(rs.getInt("TID"));
-							
-				System.out.println(startDayTime + " " + partySize + " "+ " " + rid );
 				String restaurantName = sr.getRestaurantFromRID(rid);
 			results.add(restaurantName+"-"+startDayTime+"-"+partySize+"-"+tid);	
 			}
@@ -183,7 +154,6 @@ public class SQLCustomer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("stringed is " + results);
 		return results;
 	}
 	
@@ -194,18 +164,15 @@ public class SQLCustomer {
 		try {
 			String query = "insert into customer values ('" + username + "', '" + password +"', '" + firstName +"', '"+ lastName + "', '" + phoneNum + "')";
 			int resultInt = stmt.executeUpdate(query);
-			System.out.println(query);
 			result = "Success";
 			
 			
 		} catch (SQLException e) {
-			System.out.println(e.getErrorCode());
 			if (e.getErrorCode() == 1) {
 				result = "NotUnique";
 			}
 		}
 		return result;
-		
 	}
 
 	public boolean deleteBooking(String restaurantName, String startDayTime, String username, String tid) {
@@ -214,26 +181,18 @@ public class SQLCustomer {
 		Boolean result = false;
 		String rName = sr.getRestaurantFromString(restaurantName);
 		String location = sr.getLocationFromString(restaurantName);
-		System.out.println("rname is " + rName);
-		System.out.println("location name is " + location);
-
 		ResultSet results;
 		String getRestaurantID = "Select RID FROM restaurant WHERE name = '" + rName + "' and location = '" + location + "'";
-
-	
 		try {
 			results = stmt.executeQuery(getRestaurantID);
 			results.next();
 			restaurantID = results.getInt("rid");
 			results.next();
-			System.out.println("restaurant ID is " + restaurantID);
 		} catch (SQLException e1) {
-			System.out.println("failed to get rid");
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-
 		String query = "delete from TableBooking WHERE StartDayTime = to_timestamp('" + startDayTime + "', 'YYYY-MM-DD HH24-mi-ss.FF') and rid = '" + restaurantID + "' and tid = '" + tid + "' and rid = '" + restaurantID + "'";
 		try {
 			//TODO make sure this actually works 

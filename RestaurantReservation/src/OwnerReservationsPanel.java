@@ -131,7 +131,6 @@ public class OwnerReservationsPanel extends JPanel {
 				//System.out.println("Selected columns: "+Arrays.toString(list.getSelectedIndices()));
 				int indices[] = list.getSelectedIndices();
 				for(int i=0; i<indices.length; i++){
-					System.out.println("index: "+ columnList[indices[i]]);
 					if(i==indices.length-1){
 						selectedColumns=selectedColumns.concat(columnList[indices[i]]);
 					}else{
@@ -148,7 +147,6 @@ public class OwnerReservationsPanel extends JPanel {
 //					}
 //					start("","",null,"");
 //				} else {
-					System.out.println("Date Selected: "+formattedDate);
 					start(formattedDate, formattedDateEnd,indices,selectedColumns);
 //				}
 
@@ -194,10 +192,8 @@ public class OwnerReservationsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e){
 				//clear previous selection
 				selectedColumns="";
-				System.out.println(list.toString());
 				list = new JList(new String[] {"Start Day Time", "Duration", "Party Size", "TID", "RID", "Customer Name", "Customer Username"});
 				JOptionPane.showMessageDialog(null, list, "Select Column(s)", JOptionPane.PLAIN_MESSAGE);
-				System.out.println("Selected columns: "+Arrays.toString(list.getSelectedIndices()));
 //				int indices[] = list.getSelectedIndices();
 //				for(int i=0; i<indices.length; i++){
 //					System.out.println("index: "+ columnList[indices[i]]);
@@ -322,7 +318,6 @@ public class OwnerReservationsPanel extends JPanel {
 			data = s.getSelectReservations(resID, showColumns, indices, newDate, newDateEnd);
 		}else{
 			data = s.getReservations(resID);
-			System.out.println("getReservationsByDate returned data:"+data);
 		}
 		if (data.isEmpty()) {
 			try{

@@ -58,8 +58,6 @@ public class OwnerViewReviewsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String restaurant = (String) restaurantComboBox.getSelectedItem();
-
-				System.out.println(restaurant);
 				Vector<String> colNames = new Vector<String>();
 				colNames.add("User");
 				colNames.add("Rating");
@@ -123,7 +121,6 @@ public class OwnerViewReviewsPanel extends JPanel {
 
 	public void start() {
 		this.customerId = parent.getCustomerID();
-		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
 		Vector<String> restaurants = s.getRestaurants();
 		

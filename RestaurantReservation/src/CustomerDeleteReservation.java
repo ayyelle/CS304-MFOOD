@@ -85,8 +85,6 @@ public class CustomerDeleteReservation extends JPanel {
 				
 				DateFormat dateFormat = new SimpleDateFormat("yyyy:MM:dd");
 				Date date = new Date();
-				System.out.println("date is " + dateC);
-				System.out.println(dateFormat.format(date));
 				if (dateC == dateFormat.format(date)){
 					JOptionPane.showMessageDialog(null, "Cannot cancel same day reservation", "Call Restaurant", JOptionPane.PLAIN_MESSAGE);
 					return;	
@@ -142,7 +140,6 @@ public class CustomerDeleteReservation extends JPanel {
 
 	public void start() {
 		this.customerId = parent.getCustomerID();
-		System.out.println(customerId);
 		displayResultPanel.getViewport().remove(displayResult);
 		
 		Vector<String> tableBookings = sc.getReservationsAsString(customerId);

@@ -40,7 +40,6 @@ public class OwnerTablesPanel extends JPanel{
 	public OwnerTablesPanel(RestaurantPanel parent) {
 		this.parent = parent;
 		this.resID = parent.getRestaurantID();
-		System.out.println("In TablesPanel resID: " + resID);
 		s = new SQLRestaurant();
 		
 		
@@ -59,8 +58,6 @@ public class OwnerTablesPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				int row = displayResult.getSelectedRow();
 				String tid = (String) displayResult.getValueAt(row, 0);
-				System.out.println("Table To Be Deleted: " + tid);
-				System.out.println("Restaurant ID: " + resID);
 				s.deleteTable(resID, tid);
 				update();
 			}

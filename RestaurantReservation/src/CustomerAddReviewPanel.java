@@ -99,14 +99,8 @@ public class CustomerAddReviewPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//Get information from the fields
 				String comment = comments.getText();
-				//System.out.println(comment);
-				
 				String selection = (String) restaurantComboBox.getSelectedItem();
-				//System.out.println(selection);
-				
 				String ratingSelection = (String) ratings.getSelectedItem();
-				//System.out.println(ratingSelection);
-				
 				comments.setText("");
 				if (comment.equals("")) {
 					JOptionPane.showMessageDialog(null,"Please enter a comment!", "Add Reviews", JOptionPane.PLAIN_MESSAGE);
@@ -138,12 +132,9 @@ public class CustomerAddReviewPanel extends JPanel {
 		
 	}
 	
-	
 	public void start() {
 		this.customerId = parent.getCustomerID();
-		System.out.println(customerId);
 		Vector<String> restaurants = sr.getRestaurants();
-		
 		restaurantComboBox.removeAllItems();
 		for (int i = 0; i<restaurants.size(); i++) {
 			restaurantComboBox.addItem(restaurants.get(i));

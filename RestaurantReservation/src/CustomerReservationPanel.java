@@ -213,9 +213,7 @@ public class CustomerReservationPanel extends JPanel {
 
 
 	public void start() {
-		this.customerId = parent.getCustomerID();
-		System.out.println("In CustomerReservationPanel customerId: " + customerId);
-		
+		this.customerId = parent.getCustomerID();		
 		Vector<String> restaurants = s.getRestaurants();
 		
 		restaurantComboBox.removeAllItems();

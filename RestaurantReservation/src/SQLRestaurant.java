@@ -462,25 +462,18 @@ public class SQLRestaurant {
 	public Vector<Vector> getSelectReservations(String resID, String selected, int indices[], String d, String df) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
 		format.setTimeZone(TimeZone.getDefault());
-		// System.out.println("In getReservations resID: " + resID);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
-		//String query = "select " + selected + " from customer c, tablebooking t "
-		//		+ "where c.username=t.username AND t.rid=" + resID;
-		System.out.println("SELECTED: " + selected);
 		String query = "SELECT " + selected
 				+ " FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
 				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
 				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID
 				+ " order by startdaytime ASC";
-		System.out.println(query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				Vector<String> newStr = new Vector<String>();
 				for (int i = 0; i < indices.length; i++) {
-					//{"startdaytime", "duration", "partysize", "tid", "rid", 
-					//"firstname", "lastname", "c.username"};
 					if (indices[i] == 0) {
 						Timestamp starttimestamp = rs.getTimestamp("startdaytime");
 						String starttime = format.format(starttimestamp).toString();
@@ -526,21 +519,17 @@ public class SQLRestaurant {
 	public Vector<Vector> getReservationsByDate(String resID, String d, String df) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
 		format.setTimeZone(TimeZone.getDefault());
-		System.out.println("In getReservationsByDate resID: " + resID + " date: " + d);
 		ResultSet rs;
 		Vector<Vector> result = new Vector<Vector>();
 		String query = "SELECT startdaytime, duration, partysize, tid, rid, firstname, lastname, c.username "
 				+ "FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
 				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
 				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=" +resID;
-		System.out.println("getReservationsByDate query: " + query);
 		try {
 			rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				System.out.println("THERE IS A NEXT");
 				Timestamp starttimestamp = rs.getTimestamp("startdaytime");
 				String starttime = format.format(starttimestamp).toString();
-
 				//String starttime = rs.getString("startdaytime");
 				String partysize = String.valueOf(rs.getInt("partysize"));
 				String duration = rs.getString("duration");
@@ -559,7 +548,6 @@ public class SQLRestaurant {
 				newStr.add(rid);
 				newStr.add(customerName);
 				newStr.add(username);
-				System.out.println("getReservationsByDate newStr: " + newStr);
 				result.add(newStr);
 			}
 		} catch (NullPointerException e) {
@@ -568,7 +556,6 @@ public class SQLRestaurant {
 			e.getMessage();
 			e.printStackTrace();
 		}
-		System.out.println("getReservationsByDate result: " + result);
 		return result;
 	}
 
@@ -748,7 +735,6 @@ public class SQLRestaurant {
 			result = rs == 1 ? (result = "SUCCESS") : (result = "CHECK_FAIL");
 
 		} catch (SQLException e) {
-			System.out.println(e.getErrorCode());
 			if (e.getErrorCode() == 1) {
 				// Primary key constraint violation
 				result = "PRIMARY_KEY_FAIL";
@@ -770,16 +756,13 @@ public class SQLRestaurant {
 		try {
 			int rs = stmt.executeUpdate(insert);
 			result = rs == 1 ? true : false;
-
 		}
 		catch (SQLException e) {
 			if (e.getErrorCode() == 1) {
 				// Integrity constraint violated -- not unique employee id
 				result = false;
 			}
-
 		}
-
 		return result;
 	}
 	
