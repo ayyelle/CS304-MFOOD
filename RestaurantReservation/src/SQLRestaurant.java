@@ -504,8 +504,8 @@ public class SQLRestaurant {
 			while (rs.next()) {
 				Vector<String> newStr = new Vector<String>();
 				for (int i = 0; i < indices.length; i++) {
-					//{"startdaytime", "duration", "partysize", "tid", "rid", 
-					//"firstname", "lastname", "c.username"};
+					// {"startdaytime", "duration", "partysize", "tid", "rid",
+					// "firstname", "lastname", "c.username"};
 					if (indices[i] == 0) {
 						Timestamp starttimestamp = rs.getTimestamp("startdaytime");
 						String starttime = format.format(starttimestamp).toString();
@@ -598,6 +598,67 @@ public class SQLRestaurant {
 			e.printStackTrace();
 		}
 		System.out.println("getReservationsByDate result: " + result);
+		return result;
+	}
+
+	// combination of select and projection
+	public Vector<Vector> getReservationsByDateColumn(String resID, String d, String df, String selected, int indices[]) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
+		format.setTimeZone(TimeZone.getDefault());
+		
+		System.out.println("In getReservationsByDateColumn resID: " + resID + " date: " + d);
+		ResultSet rs;
+		Vector<Vector> result = new Vector<Vector>();
+		String query = "SELECT " + selected 
+				+ "FROM tablebooking t, customer c  " + "WHERE c.username=t.username  "
+				+ "AND startdaytime>to_timestamp('" + d + "','YYYY-MM-DD HH:MI:SS.FF') "
+				+ "AND startdaytime<to_timestamp('" + df + "','YYYY-MM-DD HH:MI:SS.FF') " + "AND t.rid=1";
+		System.out.println("getReservationsByDate query: " + query);
+		try {
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Vector<String> newStr = new Vector<String>();
+				for (int i = 0; i < indices.length; i++) {
+					// {"startdaytime", "duration", "partysize", "tid", "rid",
+					// "firstname", "lastname", "c.username"};
+					if (indices[i] == 0) {
+						Timestamp starttimestamp = rs.getTimestamp("startdaytime");
+						String starttime = format.format(starttimestamp).toString();
+						newStr.add(starttime);
+					}
+					if (indices[i] == 1) {
+						String duration = rs.getString("duration");
+						newStr.add(duration);
+					}
+					if (indices[i] == 2) {
+						String partysize = String.valueOf(rs.getInt("partysize"));
+						newStr.add(partysize);
+					}
+					if (indices[i] == 3) {
+						String tid = String.valueOf(rs.getInt("tid"));
+						newStr.add(tid);
+					}
+					if (indices[i] == 4) {
+						String rid = String.valueOf(rs.getInt("rid"));
+						newStr.add(rid);
+					}
+					if (indices[i] == 5) {
+						String customerFirstName = rs.getString("firstname");
+						String customerLastName = rs.getString("lastname");
+						String customerName = customerFirstName + " " + customerLastName;
+						newStr.add(customerName);
+					}
+					if (indices[i] == 6) {
+						String username = rs.getString("username");
+						newStr.add(username);
+					}
+
+				}
+				result.add(newStr);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 
