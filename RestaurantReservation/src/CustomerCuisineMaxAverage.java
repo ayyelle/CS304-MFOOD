@@ -90,8 +90,8 @@ public class CustomerCuisineMaxAverage extends JPanel {
 				Vector<Vector> data = s.getAverageCuisine();
 				displayResult = new JTable(data, colNames);
 
-				displayResult.getColumnModel().getColumn(0).setMaxWidth(150);
-				displayResult.getColumnModel().getColumn(1).setMaxWidth(150);
+				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
+				displayResult.getColumnModel().getColumn(1).setMaxWidth(250);
 
 				displayResult.setRowHeight(40);
 				displayResultPanel.getViewport().add(displayResult);

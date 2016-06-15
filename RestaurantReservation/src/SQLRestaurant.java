@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -191,7 +192,7 @@ public class SQLRestaurant {
 
 		Vector<Vector> results = new Vector<Vector>();
 		// if only using this query, you get all cuisines with their max rating
-		String query2 = "Select r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating) FROM CuisineMax m where m.cuisine = r.cuisine)";
+		String query2 = "Select DISTINCT r.cuisine,re.rating, r.name, r.location FROM restaurant r, reviews re WHERE r.rid=re.rid and re.rating = (SELECT MAX(m.maxRating) FROM CuisineMax m where m.cuisine = r.cuisine)";
 		try {
 			rs2 = stmt.executeQuery(query2);
 			while (rs2.next()) {
@@ -219,6 +220,12 @@ public class SQLRestaurant {
 		}
 		return results;
 	}
+	
+	public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
+        return bd;
+    }
 
 	public Vector<Vector> getAverageCuisine() {
 		ResultSet rs;
@@ -229,7 +236,9 @@ public class SQLRestaurant {
 			while (rs.next()) {
 
 				String cuisine = rs.getString("cuisine");
-				String rating = String.valueOf(rs.getInt("avgrating"));
+				Float ratingValue = rs.getFloat("avgrating");
+				BigDecimal result = round(ratingValue,2);
+				String rating = String.valueOf(result);
 				Vector<String> v = new Vector<String>();
 				v.add(cuisine);
 				v.add(rating);
