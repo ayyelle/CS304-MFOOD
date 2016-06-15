@@ -182,7 +182,7 @@ public class OwnerReservationsPanel extends JPanel {
 					s.ownerDeleteBooking(rid_del, startdaytime_del, username_del, tid_del);
 					start("","",null,"");
 				}catch(ArrayIndexOutOfBoundsException ex){
-					JOptionPane.showMessageDialog(null, "Must Display Day/Time, TID, RID, and Username To Delete Rows.");
+					JOptionPane.showMessageDialog(null, "Must Display All Columns To Delete Rows.");
 				}
 			}
 		});
