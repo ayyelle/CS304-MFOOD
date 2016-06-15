@@ -163,38 +163,53 @@ public class SQLRestaurant {
 		return results;
 	}
 	
-	public Vector<Vector> getMenuItems(String locationName, String option) {
+	public String getPrice(String locationName, String option) {
 		ResultSet rs;
 		// Location Name string in form: Name-Location
 		String name = getRestaurantFromString(locationName);
 		String location = getLocationFromString(locationName);
-		String optionPrice = "min(price)";
-		if (option=="max") {
-				optionPrice = "max(price)";
+		String rid = getRidFromRestaurantName(locationName);
+		String price = "0";
+		
+			String optionPrice = "min(price)";
+			if (option=="Max price") {
+					optionPrice = "max(price)";
+			}
+			Vector<Vector> results = new Vector<Vector>();
+			String query = "SELECT " + optionPrice + " as price"
+					+ " from MenuItem where rid IN (select rid from restaurant where name='" + name
+					+ "' and location='" + location + "')";
+			System.out.println(query);
+					
+			try {
+				rs = stmt.executeQuery(query);
+				while (rs.next()) {
+					price = String.valueOf(rs.getFloat("price"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return price;
 		}
-		Vector<Vector> results = new Vector<Vector>();
-		String query = "Select name, " + optionPrice;
-				query += " from MenuItem where rid IN (select rid from restaurant where name='" + name;
-				query += "'and location='" + location + "')";
-
+	
+	public String getRidFromRestaurantName(String restaurantName){
+		String rid = "";
+		String name = getRestaurantFromString(restaurantName);
+		String location = getLocationFromString(restaurantName);
+		String query = "SELECT DISTINCT RID from restaurant where name= '" + name + "' and location='" + location + "')";
+		
 		try {
-			rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				String foodName = rs.getString("name");
-				String price = String.valueOf(rs.getFloat("price"));
-				Vector<String> v = new Vector<String>();
-				v.add(foodName);
-				v.add(price);
-				results.add(v);
-
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()){
+				rid = String.valueOf(rs.getInt("rid"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return results;
+		
+		return rid;
 	}
-
 
 	public Vector<Vector> getRestaurantMenuItems(String rid) {
 		ResultSet rs;

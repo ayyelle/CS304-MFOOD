@@ -33,6 +33,8 @@ public class CustomerViewMenuPanel extends JPanel {
 	SQLRestaurant s;
 	JLabel imgLabel;
 	JComboBox minmax;
+	JLabel minmaxPrice;
+	JLabel minmaxOptionLabel;
 
 
 
@@ -50,10 +52,14 @@ public class CustomerViewMenuPanel extends JPanel {
 		
 		// min max
 		Vector<String> options = new Vector<String>();
-		options.add("min");
-		options.add("max");
-		minmax = new JComboBox();
+		options.add("Show All");
+		options.add("Min price");
+		options.add("Max price");
+		minmax = new JComboBox(options);
 		JLabel minmaxLabel = new JLabel("Min/Max Price: ", JLabel.TRAILING);
+		
+		minmaxPrice = new JLabel("0", JLabel.TRAILING);
+		minmaxOptionLabel = new JLabel("", JLabel.TRAILING);
 
 		displayResult = new JTable();
 
@@ -64,42 +70,11 @@ public class CustomerViewMenuPanel extends JPanel {
 
 		imgLabel = new JLabel();
 		
-		JButton minmaxbutton = new JButton("Min or Max");
-		minmaxbutton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String minmaxSelection = (String) minmax.getSelectedItem();
-				String restaurant = (String) restaurantComboBox.getSelectedItem();
-				
-				Vector<String> colNames = new Vector<String>();
-				colNames.add("Food Name");
-				colNames.add("Price");
-
-				SQLRestaurant s = new SQLRestaurant();
-				Vector<Vector> data = s.getMenuItems(restaurant, minmaxSelection);
-				displayResult = new JTable(data, colNames);
-
-				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
-				displayResult.getColumnModel().getColumn(1).setMaxWidth(50);
-
-				displayResult.setRowHeight(40);
-				displayResultPanel.getViewport().add(displayResult);
-				if (data.size() == 0) {
-					JOptionPane.showMessageDialog(null, "There are no food items to view, try another restaurant!", "No Menu To Display", JOptionPane.PLAIN_MESSAGE);
-				}
-
-				String iconPath = s.getImage(restaurant);
-				Icon icon = new ImageIcon(getClass().getResource(iconPath));
-				imgLabel.setIcon(icon);
-
-			}
-
-		});
-		
 		submit = new JButton("Submit");
 		submit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				String optionSelection = (String) minmax.getSelectedItem();
 				String restaurant = (String) restaurantComboBox.getSelectedItem();
 
 				Vector<String> colNames = new Vector<String>();
@@ -108,6 +83,11 @@ public class CustomerViewMenuPanel extends JPanel {
 
 				SQLRestaurant s = new SQLRestaurant();
 				Vector<Vector> data = s.getMenuItems(restaurant);
+				String optionPrice = s.getPrice(restaurant, optionSelection);
+				
+				minmaxOptionLabel.setText(optionSelection);
+				minmaxPrice.setText(optionPrice);
+				
 				displayResult = new JTable(data, colNames);
 
 				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
@@ -148,25 +128,30 @@ public class CustomerViewMenuPanel extends JPanel {
 
 		c.insets = new Insets(10, 10, 10, 10);
 
-		c.gridx = 1;
-		c.gridy = 3;
-		this.add(submit, c);
-		
 		// min max stuff
-		c.gridx = 1;
-		c.gridy = 4;
+		c.gridx = 0;
+		c.gridy = 3;
 		this.add(minmax);
 		
-		c.gridx = 1;
+		c.gridx = 0;
+		c.gridy = 4;
+		this.add(minmaxOptionLabel);
+		
+		c.gridx = 0;
 		c.gridy = 5;
-		this.add(minmaxbutton);
-
+		this.add(minmaxPrice);
+		
 		c.gridx = 1;
 		c.gridy = 6;
+		this.add(submit, c);
+	
+
+		c.gridx = 1;
+		c.gridy = 7;
 		this.add(displayResultPanel, c);
 
 		c.gridx = 0;
-		c.gridy = 7;
+		c.gridy = 8;
 		this.add(imgLabel, c);
 
 		addComponentListener(new ComponentAdapter() {
