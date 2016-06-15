@@ -151,6 +151,7 @@ public class OwnerPanel extends JPanel implements RestaurantPanel {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout) (restaurantCards.getLayout());
 				cl.show(restaurantCards, "SeeReservations");
+			
 			}
 		});
 		
