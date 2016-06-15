@@ -56,12 +56,16 @@ public class EmployeePanel extends JPanel implements RestaurantPanel {
 		JButton seeReviewsButton = new JButton("Reviews");
 		JButton seeReservationsButton = new JButton("Reservations");
 		JButton seeMenuButton = new JButton("Menu Items");
+		JButton seeAllReviewsButton = new JButton("Filtered Reviews");
+
 
 		// all same width buttons
 		seeReviewsButton.setPreferredSize(new Dimension(160, 30));
 		seeReservationsButton.setPreferredSize(new Dimension(160, 30));
 		seeMenuButton.setPreferredSize(new Dimension(160, 30));
+		seeAllReviewsButton.setPreferredSize(new Dimension(160, 30));
 
+		
 		c.gridx = 0;
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.CENTER;
@@ -80,6 +84,9 @@ public class EmployeePanel extends JPanel implements RestaurantPanel {
 
 		c.gridy = 6;
 		toolbar.add(seeMenuButton, c);
+		
+		c.gridy = 7;
+		toolbar.add(seeAllReviewsButton, c);
 
 		toolbar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(toolbar, BorderLayout.WEST);
@@ -99,6 +106,9 @@ public class EmployeePanel extends JPanel implements RestaurantPanel {
 
 		JPanel seeMenu = new OwnerViewMenuPanel(this, "emp");
 		restaurantCards.add(seeMenu, "SeeMenu");
+		
+		JPanel seeAllReview = new OwnerFilterReviewsPanel(this);
+		restaurantCards.add(seeAllReview, "FilterReviews");
 
 		seeReviewsButton.addActionListener(new ActionListener() {
 			@Override
@@ -123,6 +133,15 @@ public class EmployeePanel extends JPanel implements RestaurantPanel {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout) (restaurantCards.getLayout());
 				cl.show(restaurantCards, "SeeMenu");
+				;
+			}
+		});
+		
+		seeAllReviewsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (restaurantCards.getLayout());
+				cl.show(restaurantCards, "FilterReviews");
 				;
 			}
 		});
