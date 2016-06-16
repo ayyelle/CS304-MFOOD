@@ -168,7 +168,7 @@ public class SQLRestaurant {
 		// Location Name string in form: Name-Location
 		String name = getRestaurantFromString(locationName);
 		String location = getLocationFromString(locationName);
-		String rid = getRidFromRestaurantName(locationName);
+		//String rid = getRidFromRestaurantName(locationName);
 		String price = "0";
 		
 			String optionPrice = "min(price)";
@@ -193,23 +193,6 @@ public class SQLRestaurant {
 			return price;
 		}
 	
-	public String getRidFromRestaurantName(String restaurantName){
-		String rid = "";
-		String name = getRestaurantFromString(restaurantName);
-		String location = getLocationFromString(restaurantName);
-		String query = "SELECT DISTINCT RID from restaurant where name= '" + name + "' and location='" + location + "')";
-		
-		try {
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()){
-				rid = String.valueOf(rs.getInt("rid"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return rid;
-	}
 
 	public Vector<Vector> getRestaurantMenuItems(String rid) {
 		ResultSet rs;

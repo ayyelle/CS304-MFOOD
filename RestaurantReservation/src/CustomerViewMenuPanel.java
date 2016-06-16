@@ -58,7 +58,7 @@ public class CustomerViewMenuPanel extends JPanel {
 		minmax = new JComboBox(options);
 		JLabel minmaxLabel = new JLabel("Min/Max Price: ", JLabel.TRAILING);
 		
-		minmaxPrice = new JLabel("0", JLabel.TRAILING);
+		minmaxPrice = new JLabel("", JLabel.TRAILING);
 		minmaxOptionLabel = new JLabel("", JLabel.TRAILING);
 
 		displayResult = new JTable();
@@ -135,15 +135,17 @@ public class CustomerViewMenuPanel extends JPanel {
 		
 		c.gridx = 0;
 		c.gridy = 4;
-		this.add(minmaxOptionLabel);
+		this.add(submit, c);
 		
 		c.gridx = 0;
 		c.gridy = 5;
+		this.add(minmaxOptionLabel);
+		
+		c.gridx = 0;
+		c.gridy = 6;
 		this.add(minmaxPrice);
 		
-		c.gridx = 1;
-		c.gridy = 6;
-		this.add(submit, c);
+
 	
 
 		c.gridx = 1;
