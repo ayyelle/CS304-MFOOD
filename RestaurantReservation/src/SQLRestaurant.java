@@ -143,7 +143,7 @@ public class SQLRestaurant {
 		String location = getLocationFromString(locationName);
 		Vector<Vector> results = new Vector<Vector>();
 		String query = "Select * from MenuItem where rid IN (select rid from restaurant where name='" + name
-				+ "'and location='" + location + "')";
+				+ "'and location='" + location + "') ORDER BY price";
 
 		try {
 			rs = stmt.executeQuery(query);
