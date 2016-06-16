@@ -46,7 +46,10 @@ public class MainApp implements ItemListener {
 				JOptionPane.showMessageDialog(null, inputs, "Restaurant Login", JOptionPane.PLAIN_MESSAGE);
 				if (restaurantID.getText().equals("") || password.getText().equals("") || workerID.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Please fill out all the fields!");
-				} else {
+				}else if(!(isInteger(restaurantID.getText())||!isInteger(workerID.getText()))){
+					JOptionPane.showMessageDialog(null, "IDs need to be integers, try again!");
+					
+				}else {
 					SQLRestaurant sql = new SQLRestaurant();
 					ArrayList<String> userInfo = sql.getCredentials(restaurantID.getText(), workerID.getText(), password.getText());
 					String userType = userInfo.get(0);
@@ -258,5 +261,18 @@ public class MainApp implements ItemListener {
 
 	public String getRestaurantID() {
 		return this.restId;
+	}
+	
+	
+	public static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    // only got here if we didn't return false
+	    return true;
 	}
 }
