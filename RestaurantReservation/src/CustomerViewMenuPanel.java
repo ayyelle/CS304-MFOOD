@@ -32,6 +32,9 @@ public class CustomerViewMenuPanel extends JPanel {
 	JTable displayResult;
 	SQLRestaurant s;
 	JLabel imgLabel;
+	JComboBox minmaxComboBox;
+	JLabel minmaxPrice;
+	JLabel minmaxOptionLabel;
 
 
 
@@ -46,6 +49,17 @@ public class CustomerViewMenuPanel extends JPanel {
 		title.setFont(new Font(title.getName(), Font.PLAIN, 20));
 		restaurantComboBox = new JComboBox(restaurantOptions);
 		restaurantLabel = new JLabel("Select a restaurant: ", JLabel.TRAILING);
+		
+		// min max
+		Vector<String> options = new Vector<String>();
+		//options.add("Show All");
+		options.add("Min price");
+		options.add("Max price");
+		minmaxComboBox = new JComboBox(options);
+		JLabel minmaxLabel = new JLabel("Min/Max Price: ", JLabel.TRAILING);
+		
+		minmaxPrice = new JLabel("", JLabel.TRAILING);
+		minmaxOptionLabel = new JLabel("", JLabel.TRAILING);
 
 		displayResult = new JTable();
 
@@ -55,13 +69,12 @@ public class CustomerViewMenuPanel extends JPanel {
 
 
 		imgLabel = new JLabel();
-
+		
 		submit = new JButton("Submit");
-
 		submit.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				String optionSelection = (String) minmaxComboBox.getSelectedItem();
 				String restaurant = (String) restaurantComboBox.getSelectedItem();
 
 				Vector<String> colNames = new Vector<String>();
@@ -70,6 +83,18 @@ public class CustomerViewMenuPanel extends JPanel {
 
 				SQLRestaurant s = new SQLRestaurant();
 				Vector<Vector> data = s.getMenuItems(restaurant);
+				String optionPrice = s.getPrice(restaurant, optionSelection);
+				
+				if (optionSelection == "Max price"){
+					minmaxOptionLabel.setText("Most Expensive Item On Menu :" );
+					
+				}else{
+					minmaxOptionLabel.setText("Cheapest Item On Menu :" );
+					
+				}
+				//minmaxOptionLabel.setText(optionSelection);
+				minmaxPrice.setText("$ "+optionPrice);
+				
 				displayResult = new JTable(data, colNames);
 
 				displayResult.getColumnModel().getColumn(0).setMaxWidth(250);
@@ -110,16 +135,34 @@ public class CustomerViewMenuPanel extends JPanel {
 
 		c.insets = new Insets(10, 10, 10, 10);
 
-		c.gridx = 1;
+		// min max stuff
+		c.gridx = 0;
 		c.gridy = 3;
-		this.add(submit, c);
-
-		c.gridx = 1;
+		this.add(minmaxComboBox,c);
+		
+		c.insets = new Insets(10, 10, 10, 10);
+		
+		c.gridx = 0;
 		c.gridy = 4;
+		this.add(submit, c);
+		
+		c.gridx = 0;
+		c.gridy = 5;
+		this.add(minmaxOptionLabel);
+		
+		c.gridx = 0;
+		c.gridy = 6;
+		this.add(minmaxPrice);
+		
+
+	
+
+		c.gridx = 0;
+		c.gridy = 7;
 		this.add(displayResultPanel, c);
 
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 8;
 		this.add(imgLabel, c);
 
 		addComponentListener(new ComponentAdapter() {
