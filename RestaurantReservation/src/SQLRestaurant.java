@@ -179,7 +179,6 @@ public class SQLRestaurant {
 			String query = "SELECT " + optionPrice + " as price"
 					+ " from MenuItem where rid IN (select rid from restaurant where name='" + name
 					+ "' and location='" + location + "')";
-			System.out.println(query);
 					
 			try {
 				rs = stmt.executeQuery(query);

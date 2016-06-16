@@ -66,14 +66,14 @@ public class CustomerPanel extends JPanel {
 		JButton seeMaxAverage = new JButton("See Highest or Average Ratings");
 		
 		//same width
-		seeReviewsButton.setPreferredSize(new Dimension(160, 30));
-		addReviewButton.setPreferredSize(new Dimension(160, 30));
-		reserveTable.setPreferredSize(new Dimension(160, 30));
-		seeReservationsButton.setPreferredSize(new Dimension(160, 30));
-		deleteReservationsButton.setPreferredSize(new Dimension(160, 30));
-		filterReviewsButton.setPreferredSize(new Dimension(160, 30));
-		seeMenuButton.setPreferredSize(new Dimension(160, 30));
-		seeMaxAverage.setPreferredSize(new Dimension(160, 30));
+		seeReviewsButton.setPreferredSize(new Dimension(230, 30));
+		addReviewButton.setPreferredSize(new Dimension(230, 30));
+		reserveTable.setPreferredSize(new Dimension(230, 30));
+		seeReservationsButton.setPreferredSize(new Dimension(230, 30));
+		deleteReservationsButton.setPreferredSize(new Dimension(230, 30));
+		filterReviewsButton.setPreferredSize(new Dimension(230, 30));
+		seeMenuButton.setPreferredSize(new Dimension(230, 30));
+		seeMaxAverage.setPreferredSize(new Dimension(230, 30));
 		
 		c.gridx = 0;
 		c.gridy = 0;
