@@ -1,7 +1,11 @@
-# CS304-MFOOD
-Note about the database connection from Lauren :) 
-- I added the classes12.zip to my build path, but make sure it's on yours when you pull the edits
-- I have my credentials in there, so just change that to yours :)
+Credential Requirements: 
+In SQLRestaurant.java and SQLCustomer.java, one must change the credentials to match the one they are using that is connected to UBC's Oracle DB. SQLRestaurant-line 27, SQLCustomer - line 31. 
 
-Also - make sure you have the DatePicker jar file in your buildpath:
-https://jdatepicker.org
+Jars required, can be found in our "JarsToUse" folder: classes12.zip and jdatepicker-1.3.4.jar
+
+Sample Login: 
+As a Owner, RID: 100, EID: 1001, password: sburgs1
+As an Employee, RID: 1001, EID: 121, password: bb101
+As a Customer, Username: lcoombe, password: 12345
+
+You can also create new customer and employee login credentials or read our SQL DDL for existing login credentials to use. 
