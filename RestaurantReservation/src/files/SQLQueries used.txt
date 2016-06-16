@@ -45,7 +45,7 @@ INSERT INTO menuitem VALUES(";
     
 DELETE FROM menuitem WHERE rid = " + RID + " and name = '" + foodName + "'"; 
 
-SET location = '" + location + "', "; #SET
+SET location = '" + location + "', ";
 
 INSERT INTO employeeworkat VALUES (";
 		insert += eid + ", ";
@@ -65,3 +65,12 @@ UPDATE restaurant ";
 				+ " order by startdaytime ASC";
 Select * from Restaurant where rid IN (select rid from restaurant where name='" + name
 				+ "'and location='" + location + "')"
+				
+DELETE FROM reviews WHERE rid = " + rid; 
+				query += " and comments = '" + comment + "'";
+				query += " and username = '" + userName + "';
+				
+				
+SELECT " + optionPrice + " as price"
+					+ " from MenuItem where rid IN (select rid from restaurant where name='" + name
+					+ "' and location='" + location + "')";
