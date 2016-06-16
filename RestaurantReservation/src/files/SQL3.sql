@@ -152,11 +152,11 @@ insert into restaurant values(
   );
 
 
-INSERT INTO restaurant VALUES (100, 'Stackhouse Burger Bar', '1224 Granville Street', 'Vancouver', 'Granville', 'steakhouse', 1001, 'Steak Burgs', 'sburgs1', 'images/stackhouseburgerbar-granville.jpg');
-INSERT INTO restaurant VALUES (101, 'Phnom Penh', '244 E Georgia Street', 'Vancouver', 'Chinatown', 'cambodian', 1010, 'Viet Pho', 'vpho101', 'images/phnompenh-chinatown.jpg');
-INSERT INTO restaurant VALUES (102, 'Pearl Castle Cafe', '3779 Sexmith Road', 'Richmond', 'Continental Center', 'taiwanese', 1020, 'Jack Hsu', 'jhsu102', 'images/pearlcastlecafe-continentalcenter.jpg');
-INSERT INTO restaurant VALUES (103, 'Ramen Jinya', '270 Robson', 'Vancouver', 'Downtown', 'japanese', 1030, 'Kuroko Basuke', 'kbas103', 'images/ramenjinya-downtown.jpg');
-INSERT INTO restaurant VALUES (104, 'Insadong', '403 North Road', 'Coquitlam', 'Loughheed Village', 'korean', 1040, 'Yoona Kim', 'ykim4', 'images/insadong-loughheedvillage.jpg');
+INSERT INTO restaurant VALUES (100, 'Stackhouse Burger Bar', '1224 Granville Street', 'Vancouver', 'Granville', 'Steakhouse', 1001, 'Steak Burgs', 'sburgs1', 'images/stackhouseburgerbar-granville.jpg');
+INSERT INTO restaurant VALUES (101, 'Phnom Penh', '244 E Georgia Street', 'Vancouver', 'Chinatown', 'Cambodian', 1010, 'Viet Pho', 'vpho101', 'images/phnompenh-chinatown.jpg');
+INSERT INTO restaurant VALUES (102, 'Pearl Castle Cafe', '3779 Sexmith Road', 'Richmond', 'Continental Center', 'Taiwanese', 1020, 'Jack Hsu', 'jhsu102', 'images/pearlcastlecafe-continentalcenter.jpg');
+INSERT INTO restaurant VALUES (103, 'Ramen Jinya', '270 Robson', 'Vancouver', 'Downtown', 'Japanese', 1030, 'Kuroko Basuke', 'kbas103', 'images/ramenjinya-downtown.jpg');
+INSERT INTO restaurant VALUES (104, 'Insadong', '403 North Road', 'Coquitlam', 'Loughheed Village', 'Korean', 1040, 'Yoona Kim', 'ykim4', 'images/insadong-loughheedvillage.jpg');
 
 INSERT INTO restaurant VALUES (120, 'Coast Restaurant', '1054 Alberni Street', 'Vancouver', 'West End', 'Seafood', 1120, 'Glowbal Group', 'ggroupcoast','images/coastrestaurant-westend.jpg');
 INSERT INTO restaurant VALUES (121, 'Guu Original', '838 Thurlow Street', 'Vancouver', 'West End', 'Japanese', 1221, 'Jenna Wong', 'jwong','images/guuoriginal-westend.jpg');
@@ -476,6 +476,7 @@ insert into tablebooking values (TO_TIMESTAMP('2016-07-18 20:00:00', 'yyyy-mm-dd
 insert into tablebooking values (TO_TIMESTAMP('2016-07-18 16:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 100, 'aleong');
 insert into tablebooking values (TO_TIMESTAMP('2016-07-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 100, 'lcoombe');
 insert into tablebooking values (TO_TIMESTAMP('2016-07-10 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 100, 'lliu');
+insert into tablebooking values (TO_TIMESTAMP('2016-07-18 20:00:00', 'yyyy-mm-dd hh24:mi:ss'), 6, 2, 5, 100, 'lliu');
 
 insert into tablebooking values (TO_TIMESTAMP('2016-08-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 101, 'lcoombe');
 insert into tablebooking values (TO_TIMESTAMP('2016-09-08 18:00:00', 'yyyy-mm-dd hh24:mi:ss'), 2, 2, 1, 102, 'lcoombe');
